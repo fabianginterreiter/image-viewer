@@ -33,10 +33,6 @@ app.config(['$routeProvider',
         templateUrl: 'templates/galleries/gallery.html',
         controller: 'GalleryCtrl'
       }).
-      when('/galleries/:id/delete', {
-        templateUrl: 'templates/galleries/gallery_delete.html',
-        controller: 'GalleryDeleteCtrl'
-      }).
       when('/galleries/:id/details', {
         templateUrl: 'templates/galleries/details.html',
         controller: 'GalleryDetailsCtrl'

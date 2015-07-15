@@ -97,7 +97,13 @@ app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'Do
     });
   };
 
-  
+  $scope.deleteGallery = function() {
+    Dialogs.delete('Delete', 'Do you really want to delete: ' + $scope.gallery.name, function() {
+      $http.delete('/api/galleries/' + $scope.gallery.id).success(function() {
+        $location.path('/galleries');
+      });
+    });
+  };
 
   $scope.downloadGallery = function(width) {
     DownloadService.gallery($scope.gallery, width);
