@@ -42,15 +42,18 @@ router.post('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
   var id = req.param('id');
-  database.connect(function(err, client, done) {
-    client.query('SELECT * FROM tags WHERE id = $1', [id], function(err, result) {
-      var tag = result.rows[0];
-      client.query('SELECT images.* FROM images JOIN image_tag ON images.id = image_tag.image_id WHERE image_tag.tag_id = $1 ORDER BY images.created_at', [id], function(err, result) {
-        done();
-        tag.images = result.rows;
-        res.send(tag);
-      });
-    });
+
+  require('../controllers/tag').get(id, function(err, tag) {
+
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    if (!tag) {
+      return res.status(404).send('No entry');
+    }
+
+    res.send(tag);
   });
 });
 
