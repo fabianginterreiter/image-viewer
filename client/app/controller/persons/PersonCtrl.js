@@ -34,4 +34,12 @@ app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'Dow
   $scope.edit = function() {
   	PersonService.edit($scope.person);
   };
+
+  $scope.delete = function() {
+    Dialogs.delete('Test', 'Deletsososo', function() {
+      $http.delete('/api/persons/' + $scope.person.id).success(function() {
+        $location.path('/persons');
+      });
+    });
+  }
 }]);

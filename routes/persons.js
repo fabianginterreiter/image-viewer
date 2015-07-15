@@ -73,4 +73,19 @@ router.get('/:id/persons/:person_id/images', function(req, res) {
   });
 });
 
+router.delete('/:id', function(req, res) {
+  var id = req.param('id');
+  database.connect(function(err, client, done) {
+    client.query('DELETE FROM persons WHERE id = $1', [id], function(err, result) {
+      done();
+      
+      if (err) {
+        return res.status(500).send("fehler");
+      }
+
+      res.send("OK");
+    });
+  });
+});
+
 module.exports = router;
