@@ -1,54 +1,54 @@
 <div class="options" ng-style="{'visibility': {{toolbar ? 'visible' : 'hidden'}}}">
-      <div class="left" ng-click="image.selected = !image.selected" ng-if="selectable">
-        <span class="glyphicon glyphicon-check" ng-if="image.selected"></span>
-        <span ng-if="!image.selected" class="glyphicon glyphicon-unchecked"></span>
-        <span class="hidden-xs"> Select</span>
-      </div>
+  <div class="left" ng-click="image.selected = !image.selected" ng-if="selectable">
+    <span class="glyphicon glyphicon-check" ng-if="image.selected"></span>
+    <span ng-if="!image.selected" class="glyphicon glyphicon-unchecked"></span>
+    <span class="hidden-xs"> Select</span>
+  </div>
 
-      <div class="left" ng-click="open(image)" ng-if="link">
-        <span class="glyphicon glyphicon-link">
-        </span><span class="hidden-xs"> Link</span>
-      </div>
+  <div class="left" ng-click="open(image)" ng-if="link">
+    <span class="glyphicon glyphicon-link"></span>
+    <span class="hidden-xs"> Link</span>
+  </div>
 
-      <div class="left" ng-click="setCoordinates()">
-        <span class="glyphicon glyphicon-link">
-        </span><span class="hidden-xs"> Coordinates</span>
-      </div>
+  <div class="left" ng-click="setCoordinates()">
+    <span class="glyphicon glyphicon-link">
+    </span><span class="hidden-xs"> Coordinates</span>
+  </div>
 
-      <div class="left" ng-click="create()">
-        <span class="glyphicon glyphicon-th" style="margin-bottom: -1px"></span>
-        <span class="hidden-xs"> Create Gallery</span>
-      </div>
+  <div class="left" ng-click="create()">
+    <span class="glyphicon glyphicon-th" style="margin-bottom: -1px"></span>
+    <span class="hidden-xs"> Create Gallery</span>
+  </div>
 
-      <div class="left" ng-click="addToGallery()">
-        <span class="glyphicon glyphicon-plus" style="margin-bottom: -1px"></span>
-        <span class="hidden-xs"> Add</span>
-      </div>
+  <div class="left" ng-click="addToGallery()">
+    <span class="glyphicon glyphicon-plus" style="margin-bottom: -1px"></span>
+    <span class="hidden-xs"> Add</span>
+  </div>
 
-      <div class="left" ng-click="showPersons = !showPersons; loadPersons()" >
-        <span class="glyphicon glyphicon-check" ng-if="showPersons"></span>
-        <span ng-if="!showPersons" class="glyphicon glyphicon-unchecked"></span>
-        <span class="hidden-xs"> Show Persons</span>
-      </div>
+  <div class="left" ng-click="showPersons = !showPersons; loadPersons()" >
+    <span class="glyphicon glyphicon-check" ng-if="showPersons"></span>
+    <span ng-if="!showPersons" class="glyphicon glyphicon-unchecked"></span>
+    <span class="hidden-xs"> Show Persons</span>
+  </div>
 
-      <div class="left">
-        <span class="dropdown" dropdown on-toggle="toggled(open)">
-            <span class="dropdown-toggle" dropdown-toggle>
-              <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
-          <span class="hidden-xs"> Image</span>
-            </span>
-            <ul class="dropdown-menu">
-              <li><a href="/api/images/{{image.id}}/resize" download="{{image.name}}">Original Size</a></li>
-              <li class="divider"></li>
-              <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">1920</a></li>
-              <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">1280</a></li>
-              <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">800</a></li>
-            </ul>
-          </span>
-      </div>
-      <div class="right" ng-click="setFullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></div>
-
+  <div class="left">
+    <span class="dropdown" dropdown on-toggle="toggled(open)">
+      <span class="dropdown-toggle" dropdown-toggle>
+        <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
+        <span class="hidden-xs"> Image</span>
+      </span>
+      <ul class="dropdown-menu">
+        <li><a href="/api/images/{{image.id}}/resize" download="{{image.name}}">Original Size</a></li>
+        <li class="divider"></li>
+        <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">1920</a></li>
+        <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">1280</a></li>
+        <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">800</a></li>
+      </ul>
+    </span>
+  </div>
+  <div class="right" ng-click="setFullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></div>
 </div>
+
 <div style="position: relative; display: block; text-align: center;" id="images">
   <div id="image">
     <img ng-src="{{src}}" ng-click="click($event)" ng-load="loaded($event);">
