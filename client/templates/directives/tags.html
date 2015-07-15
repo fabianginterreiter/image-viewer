@@ -1,11 +1,11 @@
-<div style="height: 40px; margin: 10px 0">
-
 <script type="text/ng-template" id="my-custom-template">
-<a href="#/tags/{{data.id}}" style="color: white;"><span ng-bind="$getDisplayText()"></span></a>
-<a class="remove-button" ng-click="$removeTag()" ng-bind="::$$removeTagSymbol"></a>
+  <a href="#/tags/{{data.id}}" style="color: white;"><span ng-bind="$getDisplayText()"></span></a>
+  <a class="remove-button" ng-click="$removeTag()" ng-bind="::$$removeTagSymbol"></a>
 </script>
 
-<tags-input ng-model="image.tags" on-tag-added="onTagAdded($tag)" on-tag-removed="onTagRemoved($tag)" template="my-custom-template">
-  <auto-complete source="loadTags($query)"></auto-complete>
-</tags-input>
+<div style="height: 40px; margin: 10px 0">
+  <tags-input ng-model="image.tags" on-tag-added="onTagAdded($tag)" 
+      on-tag-removed="onTagRemoved($tag)" template="my-custom-template">
+    <auto-complete source="loadTags($query)"></auto-complete>
+  </tags-input>
 </div>
