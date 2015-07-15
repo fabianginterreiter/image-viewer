@@ -2,7 +2,6 @@ app.controller('ImageViewerCtrl', ['$scope', '$modalInstance', '$http', 'image',
   $scope.images = images;
   $scope.image = image;
   $scope.selectable = selectable != 'false';
-  console.log("Image: " + $scope.selectable);
   $scope.length = images.length;
 
   $scope.position = 0;
@@ -76,9 +75,7 @@ app.directive('viewImage', function() {
               scope.click();
             });
 
-            console.log("#" + attributes.selectable);
             scope.selectable = attributes.selectable;
-
         },
         controller : ['$scope' , '$modal' , function($scope, $modal) {
           $scope.click = function() {
