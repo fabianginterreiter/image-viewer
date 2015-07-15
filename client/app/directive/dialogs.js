@@ -60,7 +60,7 @@ app.factory('Dialogs', function($modal) {
           $scope.message = message;
 
           $scope.waiting = true;
-          $scope.seconds = 2;
+          $scope.seconds = 6;
 
           var countDown = function() {
             $scope.seconds--;
