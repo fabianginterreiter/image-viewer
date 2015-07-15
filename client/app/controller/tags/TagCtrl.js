@@ -1,5 +1,5 @@
-app.controller('TagCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'Dialogs', '$location', 'usSpinnerService', function($scope, $http, $routeParams, $window, DownloadService, Dialogs, $location, usSpinnerService) {
+app.controller('TagCtrl', ['$scope', '$http', function($scope, $http) {
   $http.get('/api/tags/' + $routeParams.id).success(function(data) {
-  	$scope.tag = data;
+    $scope.tag = data;
   });
 }]);
