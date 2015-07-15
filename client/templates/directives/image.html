@@ -1,0 +1,38 @@
+<div class="modal-header">
+<div class="pull-right">
+
+<div class="btn-group" role="group">
+<button ng-click="previous()" class="btn btn-info btn-sm glyphicon glyphicon-chevron-left" ng-class="{'disabled' : !hasPrevious()}"></button>
+<button ng-click="next()" class="btn btn-info btn-sm glyphicon glyphicon-chevron-right" ng-class="{'disabled' : !hasNext()}"></button>
+</div>
+<button ng-click="cancel()" class="btn btn-default btn-sm glyphicon glyphicon-remove"></button>
+</div>
+  
+  <h4 class="modal-title">{{image.title}} <small ng-if="image.title !== image.name">({{image.name}})</small></h4>
+</div>
+
+
+
+<div class="modal-body">
+<div class="row">
+<div class="col-xs-12">
+<div style="position: relative;" ng-mousemove="mm()">
+  <show image="image" preload="images" toolbar="true" selectable="selectable" link="true" />
+  <!--<div class="previous" ng-click="previous()" id="previous">
+	<div class="previousButton m"></div>  	
+  </div>
+  <div class="f" ng-dblclick="setFullscreen()"></div>
+  <div class="next" ng-click="next()" id="next">
+  	<div class="nextButton m"></div>
+  </div>
+  <div class="title m">
+  	{{image.name}} <span ng-if="length > 1">({{position + 1}} / {{length}})</span>
+  </div>-->
+  
+</div>
+</div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()">Close</button>
+</div>

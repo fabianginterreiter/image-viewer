@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h3 class="modal-title">Select Gallery</h3>
+</div>
+
+<div class="modal-body">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+  </div>
+
+  <div class="list-group">
+    <a ng-click="add(gallery)" class="list-group-item" ng-repeat="gallery in galleries | filter:search | limitTo:10 | orderBy:['-updated_at', 'name']">
+      {{gallery.name}} <small ng-if="gallery.path">({{gallery.path}})</small>
+    </a>
+  </div>
+
+  
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

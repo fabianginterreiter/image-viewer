@@ -1,0 +1,74 @@
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Search</h1>
+    <p>Specific search for images</p>
+    <div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" style="text-align: right">
+      <button class="btn btn-success" ng-click="search()">Search</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Persons</h3>
+      <tags-input ng-model="persons" style="height: 40px;" display-property="name" add-from-autocomplete-only="true" placeholder="Add a Person">
+        <auto-complete source="loadPersons($query)"></auto-complete>
+      </tags-input>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Tags</h3> 
+      <tags-input ng-model="tags" style="height: 40px;" display-property="text" add-from-autocomplete-only="true" placeholder="Add a tag">
+        <auto-complete source="loadTags($query)"></auto-complete>
+      </tags-input>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Galleries</h3>
+      <tags-input ng-model="galleries" style="height: 40px;" display-property="name" add-from-autocomplete-only="true" placeholder="Add a gallery">
+        <auto-complete source="loadGalleries($query)"></auto-complete>
+      </tags-input>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Date</h3>
+      <div style="display:inline-block">
+        <div>
+          <input type="checkbox" ng-model="useMinDate" id="useMinDate"> <label for="useMinDate">Min Date</label>
+        </div>
+        <div style="display:inline-block; position: relative;">
+          <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 10; opacity:0.2; background-color: #999999" ng-if="!useMinDate"></div>
+          <datepicker ng-model="minDate" show-weeks="true" class="well well-sm"></datepicker>
+        </div>
+      </div>
+      <div style="display:inline-block">
+        <div>
+          <input type="checkbox" ng-model="useMaxDate" id="useMaxDate"> <label for="useMaxDate">Max Date</label>
+        </div>
+        <div style="display:inline-block; position: relative;">
+          <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 10; opacity:0.2; background-color: #999999" ng-if="!useMaxDate"></div>
+          <datepicker ng-model="maxDate" show-weeks="true" class="well well-sm" data-disabled="disabledMaxDate()"></datepicker>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" style="text-align: right">
+      <button class="btn btn-success" ng-click="search()">Search</button>
+    </div>
+  </div>
+</div>

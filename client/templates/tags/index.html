@@ -1,0 +1,42 @@
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Tags</h1>
+    <p></p>
+    <div>
+      <button class="btn btn-primary" ng-click="create()">Create</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<ol class="breadcrumb">
+  <li><a href="#/tags">Tags</a></li>
+</ol>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-12">
+
+<table class="table">
+<thead>
+<tr>
+<th>Tag</th><th>Number of images</th>
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="tag in tags track by $index">
+  <td><a href="#/tags/{{tag.id}}">{{tag.text}}</a></td>
+  <td>{{tag.count}}</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+
+</div>

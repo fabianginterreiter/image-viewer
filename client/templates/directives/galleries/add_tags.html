@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h3 class="modal-title">Select Gallery</h3>
+</div>
+
+<div class="modal-body" style="height: 200px;">
+  <tags-input ng-model="tags">
+    <auto-complete source="loadTags($query)"></auto-complete>
+  </tags-input>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-success" ng-click="add()">Add</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

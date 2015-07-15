@@ -1,0 +1,93 @@
+
+
+app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService) {
+  $scope.download = function(width) {
+    DownloadService.images(getSelected(), width);
+  };
+
+  $scope.loaded = false;
+
+  var elements = [];
+
+  $scope.elements = elements;
+  if ($scope.elements.length > 0) {
+    $scope.last = $scope.elements[$scope.elements.length - 1];
+  } else {
+    $scope.last = {
+      name : 'Home'
+    };
+  }
+
+  setTimeout(function() {
+    if (!$scope.images) {
+      usSpinnerService.spin('browse');
+    }
+  }, 10);
+  
+
+  var id = $routeParams.id ? $routeParams.id : 0;
+	$http.get('/api/directories/' + id).success(function(data) {
+    $scope.name = data.name;
+    $scope.images = data.images;
+    $scope.directories = data.directories;
+    $scope.navigation = data.navigation;
+    
+    usSpinnerService.stop('browse');
+
+    $scope.loaded = true;
+	}).error(function(data, status, headers, config) {
+    usSpinnerService.stop('browse');
+
+    
+  });
+
+  $scope.isImage = function(file) {
+    return (file && file.filename && file.filename.endsWith('JPG'));
+  };
+
+  $scope.delete = function() {
+    var selected = getSelected();
+    Dialogs.confirm('Delete', 'Delete selected images?', function() {
+      var ids = [];
+      selected.forEach(function(image) {
+        ids.push(image.id);
+      });
+
+      $http.delete('/api/images/' + ids.join('+')).success(function() {
+        _.forEach(selected, function(image) {
+          var index = $scope.images.indexOf(image);
+          if (index >= 0) {
+            $scope.images.splice(index, 1);
+          }
+        });
+      });
+    });
+  };
+
+
+  $scope.allSelected = false;
+  $scope.selectAll = function() {
+    _.forEach($scope.images, function(image) {
+      image.selected = !$scope.allSelected;
+    });
+    $scope.allSelected = !$scope.allSelected;
+  };
+
+  var getSelected = function() {
+    var selected = [];
+
+    _.forEach($scope.images, function(file) {
+      if (file.selected) {
+        selected.push(file);
+      }
+    });
+
+    return selected;
+  };
+
+
+
+  $scope.createFolder = function() {
+
+  };
+}]);

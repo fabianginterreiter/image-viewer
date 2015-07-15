@@ -1,0 +1,31 @@
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>{{person.name}}</h1>
+    <p></p>
+    <div>
+      <button class="btn btn-primary" ng-click="edit()">Edit</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<ol class="breadcrumb">
+  <li><a href="#/persons">Persons</a></li>
+  <li><a href="#/persons/{{person.id}}">{{person.name}}</a>
+</ol>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-12">
+
+<thumbnails images="person.images" view="view" toolbar="true"></thumbnails>
+
+</div>
+</div>
+
+</div>

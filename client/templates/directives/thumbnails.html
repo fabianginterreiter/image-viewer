@@ -1,0 +1,121 @@
+<div ng-if="images.length > 0">
+<fixed top="51" ng-if="toolbar">
+  <div class="container" style="z-index: 1029 !important; background-color: white;">
+  <div class="col-md-12">
+    <div class="options">
+      <div class="left" ng-click="selectAll()" ng-select-all="images">
+        <span class="glyphicon glyphicon-check" ng-if="allSelected"></span>
+        <span ng-if="!allSelected" class="glyphicon glyphicon-unchecked"></span>
+        <span class="hidden-xs"> Select all</span>
+      </div>
+
+      <div class="left">
+        <span class="dropdown" dropdown on-toggle="toggled(open)">
+            <span class="dropdown-toggle" dropdown-toggle>
+              <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
+          <span class="hidden-xs"> Images</span>
+            </span>
+            <ul class="dropdown-menu">
+              <li><a ng-click="download()">Fullsize</a></li>
+              <li class="divider"></li>
+              <li><a ng-click="download(1920)">1920</a></li>
+              <li><a ng-click="download(1280)">1280</a></li>
+              <li><a ng-click="download(800)">800</a></li>
+            </ul>
+          </span>
+      </div>
+
+      <div class="left" ng-click="create()">
+        <span class="glyphicon glyphicon-th" style="margin-bottom: -1px"></span>
+        <span class="hidden-xs"> Create Gallery</span>
+      </div>
+
+      <div class="left" ng-click="addToGallery()">
+        <span class="glyphicon glyphicon-plus" style="margin-bottom: -1px"></span>
+        <span class="hidden-xs"> Add</span>
+      </div>
+
+       <div class="left" ng-click="addTags()">
+        <span class="glyphicon glyphicon-plus" style="margin-bottom: -1px"></span>
+        <span class="hidden-xs"> Add Tags</span>
+      </div>
+
+      <div class="left">
+        <span class="dropdown" dropdown on-toggle="toggled(open)">
+          <span class="dropdown-toggle" dropdown-toggle>
+            <span class="glyphicon glyphicon-menu-hamburger" style="margin-bottom: -1px"></span>
+        <span class="hidden-xs"> Other</span>
+          </span>
+          <ul class="dropdown-menu">
+            <li><a>Set Gallery Image</a></li>
+          </ul>
+        </span>
+      </div>
+
+<div class="left" ng-init="view = 'preview'">
+        <span class="dropdown" dropdown on-toggle="toggled(open)">
+            <span class="dropdown-toggle" dropdown-toggle>
+              <span class="glyphicon glyphicon-eye-open" style="margin-bottom: -1px"></span>
+          <span class="hidden-xs"> View</span>
+            </span>
+            <ul class="dropdown-menu">
+              <li><a ng-click="view = 'preview'"><span class="glyphicon glyphicon-th"></span> Preview</a></li>
+              <li class="divider"></li>
+              <li><a ng-click="view = 'details'"><span class="glyphicon glyphicon-list-alt"></span> Details</a></li>
+            </ul>
+          </span>
+      </div>
+
+<div class="right" ng-click="top()">
+        <span class="glyphicon glyphicon-arrow-up" style="margin-bottom: -1px"></span>
+      </div>
+
+  </div>
+    </div>
+  </div>
+</fixed>
+
+<div id="thumbs">
+<div ng-switch="view">
+    
+    <div ng-switch-when="details">
+    	
+    	<table class="table table-bordered">
+    	<thead><tr>
+        <th></th>
+    		<th>Name</th>
+    		<th>Date</th>
+    		<th>Size</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+    	<tr ng-repeat="image in images track by $index | orderBy:'created_at'" ng-class="{'selected' : image.selected}">
+        <td><input type="checkbox" ng-model="image.selected"></td>
+    	<td style="width: 100%;"><a view-image="image" style="cursor:pointer">{{image.name}}</a></td>
+    	<td class="nowrap">{{image.created_at | getDate}}</td>
+    	<td class="nowrap">{{image.size | getFilesize}}</td>
+    	</tr>
+    	</tbody>
+    	</table>
+
+    </div>
+  
+
+
+<div ng-switch-default>
+        <div ng-repeat="file in images track by $index | orderBy:'created_at'" class="thumbnail2" ng-class="{ 'selected' : file.selected, 'hover' : file.hover }" ng-mouseenter="file.hover = true" ng-mouseleave="file.hover = false">
+   <div view-image="file" class="oppaa" selectable="{{toolbar}}"></div>
+   <div class="mark"></div>
+   <img data-srcset="/api/images/{{file.id}}/thumb?height={{file.thumb_height}}" height="{{file.thumb_height}}" width="{{file.thumb_width}}" class="lazyload" ng-if="!file.hide">
+   <div class="h teee" ng-click="file.selected = !file.selected">{{file.name}}</div>
+ </div>
+ <div style="clear:both"></div>
+
+    </div>
+</div>
+  
+</div>
+ <div style="text-align: center;padding: 20px;" ng-if="hidden">
+	<button class="btn btn-primary btn-lg" ng-click="reload()">Load more</button> 	
+ </div>
+ </div>

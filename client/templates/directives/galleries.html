@@ -1,0 +1,11 @@
+
+<div class="list-group" ng-if="galleries.length > 0">
+    <a href="#/galleries/{{g.id}}" class="list-group-item" ng-repeat="g in galleries | orderBy:'name'" style="min-height: 80px">
+      <img ng-src="/api/images/{{g.image_id}}/thumb?height=60" class="img-rounded pull-left" ng-if="g.image_id != 0">
+      <div class="pull-left" style="padding-left: 10px;">
+        <h4 class="list-group-item-heading">{{g.name}}</h4>
+        <p class="list-group-item-text">{{g.description}}</p>
+      </div>
+      <div class="clear: both"></div>
+    </a>
+</div>

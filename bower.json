@@ -1,0 +1,60 @@
+{
+  "name": "images",
+  "version": "0.0.0",
+  "authors": [
+    "Fabian Ginterreiter <fabian.ginterreiter@gmail.com>"
+  ],
+  "description": "image viewer",
+  "main": "bower.json",
+  "moduleType": [
+    "es6"
+  ],
+  "keywords": [
+    "asdf"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.1",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "lodash": "~3.9.3",
+    "angular-route": "~1.4.1",
+    "screenfull": "~2.0.0",
+    "spin": "~1.1.6",
+    "angular-spinner": "~0.6.1",
+    "lazysizes": "~1.1.3",
+    "ng-tags-input": "~2.3.0",
+    "angular-ui-bootstrap-bower": "~0.13.0",
+    "allmighty-autocomplete": "*",
+    "ng-load": "~1.0.2",
+    "OpenLayers": "https://github.com/openlayers/ol3/releases/download/v3.7.0/v3.7.0-dist.zip",
+    "at-table": "~1.0.4"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.min.js",
+        "dist/css/bootstrap.min.css",
+        "dist/fonts/*.*"
+      ]
+    },
+    "OpenLayers": {
+      "main": [
+        "ol.js",
+        "ol.css"
+      ]
+    },
+    "at-table": {
+      "main": [
+        "dist/angular-table.min.js"
+      ]
+    }
+  }
+}

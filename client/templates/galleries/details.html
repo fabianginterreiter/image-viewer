@@ -1,0 +1,75 @@
+
+<div ng-if="gallery">
+<div class="jumbotron">
+  <div class="container">
+    <h1>{{gallery.name}}</h1>
+    <p>{{gallery.description}} {{gallery.images.length}} images.</p>
+    <div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+
+
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#/galleries">Galleries</a></li>
+
+      <li ng-repeat="g in gallery.parents | orderBy:'-order'"><a href="#/galleries/{{g.id}}">{{g.name}}</a></li>
+
+      <li><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
+      <li class="active">Details</li>
+    </ol>
+    </div>
+  </div>
+
+  <div class="row">
+  <div class="col-md-12">
+  <p>Images with GPS data: <a href="#/galleries/{{gallery.id}}?gps=true">{{imagesWithGps}}</a></p>
+  <p>Images without GPS data: <a href="#/galleries/{{gallery.id}}?gps=false">{{imagesWithoutGps}}</a></p>
+  </div>
+</div>
+
+<div class="row">
+
+<div class="col-md-4">
+<h2>Directories</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="directory in directories">
+    <a class="badge" href="#/galleries/{{gallery.id}}?directory={{directory.id}}">{{directory.count}}</a>
+    <a href="#/browse/{{directory.id}}">{{directory.name}}</a>
+  </li>
+</ul>
+<div class="alert alert-info" ng-if="directories.length === 0">There are no directories.</div>
+</div>
+
+<div class="col-md-4">
+<h2>Tags</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="tag in tags">
+    <a class="badge" href="#/galleries/{{gallery.id}}?tag={{tag.id}}">{{tag.count}}</a>
+    <a href="#/tags/{{tag.id}}">{{tag.text}}</a>
+  </li>
+</ul>
+<div class="alert alert-info" ng-if="tags.length === 0">There are no tags.</div>
+</div>
+
+<div class="col-md-4">
+<h2>Persons</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="person in persons">
+    <a class="badge" href="#/galleries/{{gallery.id}}?person={{person.id}}">{{person.count}}</a>
+    <a href="#/persons/{{person.id}}">{{person.name}}</a>
+  </li>
+</ul>
+<div class="alert alert-info" ng-if="persons.length === 0">There are no persons.</div>
+</div>
+</div>
+
+</div>
+
+</div>

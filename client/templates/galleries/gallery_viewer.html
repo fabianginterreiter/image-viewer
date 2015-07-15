@@ -1,0 +1,27 @@
+<div class="container">
+
+	<div class="row">
+<ol class="breadcrumb">
+  <li><a href="#/galleries">Galleries</a></li>
+  <li><a href="#/galleries/{{gallery._id}}">{{gallery.name}}</a></li>
+  <li><a href="#/galleries/{{gallery._id}}/image/{{image._id}}">{{image.filename}}</a></li>
+</ol>
+
+  <div class="row">
+  <div class="col-xs-6">
+  	<button type="button" class="btn btn-default">Previous</button>
+  </div>
+  <div class="col-xs-6" style="text-align: right;">
+  	<button type="button" class="btn btn-default">Next</button>
+  </div>
+  </div>
+
+  <div class="row">
+  	
+  <div class="col-xs-12">
+  	<div style="overflow: auto" id="image">
+	  <show image="image">
+	</div>
+	</div>
+  </div>
+</div>

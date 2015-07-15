@@ -1,0 +1,13 @@
+<br>
+<div class="container">
+  <div class="alert alert-danger" role="alert">
+    <p>Do you really want to delete the gallery {{gallery.name}}</p>
+    <div style="text-align: right">
+		<a href="#/galleries/{{gallery.id}}" class="btn btn-success">Cancel</a>
+		<button class="btn btn-danger" ng-disabled="waiting" ng-click="deleteGallery()">
+		  <span ng-if="!waiting">Delete</span>
+		  <span ng-if="waiting">{{seconds}} Seconds</span>
+		</button>
+    </div>
+  </div>
+</div>

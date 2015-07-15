@@ -1,0 +1,59 @@
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>Persons</h1>
+    <p></p>
+    <div>
+      <button class="btn btn-primary" ng-click="create()">Create</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<ol class="breadcrumb">
+  <li><a href="#/persons">Persons</a></li>
+</ol>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-6">
+<input type="text" class="" ng-change="updateFilteredList()" ng-model="query">
+<table class="table" at-table at-paginated at-list="filteredList" at-config="config">
+<thead>
+</thead>
+<tbody>
+<tr>
+  <td at-sortable at-attribute="name"><a href="#/persons/{{item.id}}">{{item.name}}</a></td>
+  <td at-implicit at-sortable at-attribute="count" at-initial-sorting="desc"></td>
+</tr>
+</tbody>
+</table>
+
+<at-pagination at-list="filteredList" at-config="config"></at-pagination>
+
+</div>
+
+<div class="col-md-6">
+<table class="table">
+<thead>
+<tr>
+<th>Image</th><th>Number of Persons</th>
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="image in images track by $index">
+  <td><a href="#/images/{{image.id}}">{{image.name}}</a></td>
+  <td>{{image.count}}</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+</div>
+
+</div>

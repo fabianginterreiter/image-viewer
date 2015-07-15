@@ -1,0 +1,62 @@
+<html ng-app="imageApp">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Viewer</title>
+
+  <!-- vendor:css -->
+  <!-- endinject -->
+
+  <!-- app:css -->
+  <!-- endinject -->
+
+  <link href="stylesheets/style.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Viewer</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav" ng-controller="NavCtrl">
+          <li ng-class="{'active' : isActive('galleries')}"><a href="#/galleries">Galleries</a></li>
+          <li ng-class="{'active' : isActive('tags')}"><a href="#/tags">Tags</a></li>
+          <li ng-class="{'active' : isActive('persons')}"><a href="#/persons">Persons</a></li>
+          <li ng-class="{'active' : isActive('browse')}"><a href="#/browse">Browse</a></li>
+          <li ng-class="{'active' : isActive('search')}"><a href="#/search">Search</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right" ng-controller="NavCtrl">
+          <li ng-class="{'active' : isActive('config')}"><a href="#/config">Config</a></li>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Fabian <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Settings</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Change User</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <div ng-view></div>
+
+  <!-- vendor:js -->
+  <!-- endinject -->
+
+  <!-- app:js -->
+  <!-- endinject -->
+</body>
+</html>

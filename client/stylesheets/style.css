@@ -1,0 +1,184 @@
+.p_i {
+	width: 200px;
+	float: left;
+}
+
+.jumbotron {
+  padding: 0 0 20px 0 !important;
+}
+
+.options {
+	height: 50px;
+	font-size: 14px;
+	background-color: white;
+	z-index: 1029 !important;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+
+.options > .left {
+	float: left;
+	padding: 15px 10px 15px 10px;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.options > .right {
+	float: right;
+	padding: 15px 10px 15px 10px;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+tr.selected td {
+background-color: #f0f0f0;
+}
+
+div.thumbnail2 {
+	margin: 2px;
+	display: block; 
+	float: left; 
+	position: relative;
+}
+
+div.thumbnail2 .oppaa {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 800;
+}
+
+div.thumbnail2 .teee {
+	position: absolute;
+	z-index: 1000;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 5px;
+	overflow: hidden;
+	opacity: 0;
+	color: white;
+	transition:opacity 0.2s linear;
+}
+div.thumbnail2 .teee:hover {
+	cursor: pointer;
+}
+
+.hover .h {
+	opacity: 1 !important;
+}
+
+div.thumbnail2 div.mark {
+	z-index: 500;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(255,255,255,0.0);
+}
+
+div.selected > div.mark {
+	background: rgba(150,150,255,0.5);
+}
+
+body {
+margin-top: 50px;
+}
+
+.fullscreen {
+background-color: black;
+width: 100%;
+height: 100%;
+text-align: center;
+}
+
+.f {
+	position: absolute; 
+	top: 0; 
+	bottom: 0; 
+	left: 33%; 
+	right: 33%; 
+	cursor: pointer;
+}
+
+.previous {
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	bottom: 0; 
+	width: 33%;
+	cursor: pointer;
+}
+
+.previousButton {
+	position: absolute;
+	top: 8px;
+	left: 10px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 10px 18px 10px 0;
+	border-color: transparent #afafaf transparent transparent;
+	opacity:0;
+	transition:opacity 0.3s linear;
+}
+
+.next {
+	position: absolute; 
+	top: 0; 
+	right: 0; 
+	bottom: 0; 
+	width: 33%;
+	cursor: pointer;
+}
+
+.nextButton {
+	position: absolute;
+	top: 8px;
+	right: 10px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 10px 18px 10px 0;
+	border-color: transparent #afafaf transparent transparent;
+	transform: rotate(180deg);
+	opacity:0;
+	transition:opacity 0.3s linear;
+}
+
+.title {
+	position: absolute;
+	top: 5px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	color: #ffffff;
+	opacity:0;
+	transition:opacity 0.3s linear;
+	font-size: 1.3em;
+}
+
+.visible .m {
+	opacity: 0.6;
+}
+
+.row > .navbar-collapse.collapse {
+display: block!important;
+}
+
+.row > .navbar-nav>li, .row.navbar-nav {
+float: left !important;
+}
+
+.row > .navbar-nav.navbar-right:last-child {
+margin-right: -15px !important;
+}
+
+.row > .navbar-right {
+float: right!important;
+}

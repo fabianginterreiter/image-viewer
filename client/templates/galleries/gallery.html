@@ -1,0 +1,102 @@
+
+<div ng-if="gallery">
+<div class="jumbotron">
+  <div class="container">
+    <h1>{{gallery.name}}</h1>
+    <p>{{gallery.description}} {{gallery.images.length}} images.</p>
+    <div>
+      <button class="btn btn-primary" ng-click="edit()">Edit</button>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          Download <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a ng-click="downloadGallery()">Fullsize</a></li>
+          <li class="divider"></li>
+          <li><a ng-click="downloadGallery(1920)">1920</a></li>
+          <li><a ng-click="downloadGallery(1280)">1280</a></li>
+          <li><a ng-click="downloadGallery(800)">800</a></li>
+        </ul>
+      </div>
+
+      <a class="btn btn-danger" ng-click="delete()">Delete</a>
+      <a class="btn btn-success" href="#/galleries/{{gallery.id}}/details">Details</a>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          Options <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a ng-click="changeGalleryImage()">Set Gallery Image</a></li>
+          <li class="divider"></li>
+          <li><a href="#/galleries/{{gallery.id}}/delete">Delete</a></li>
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#/galleries">Galleries</a></li>
+
+      <li ng-repeat="g in gallery.parents | orderBy:'-order'"><a href="#/galleries/{{g.id}}">{{g.name}}</a></li>
+
+      <li><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
+    </ol>
+    </div>
+  </div>
+
+  <div class="row" ng-if="gallery.galleries.length > 0">
+  <div class="col-md-12">
+  <galleries galleries="gallery.galleries"></galleries>
+  </div>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+<div ng-if="tag" class="alert alert-info" role="alert">
+Filtered by Tag <strong><a href="#/tags/{{tag.id}}">{{tag.text}}</a></strong>.
+<a class="close" href="#/galleries/{{gallery.id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+<div ng-if="directory" class="alert alert-info" role="alert">
+Filtered by Directory <strong><a href="#/browse/{{directory.id}}">{{directory.name}}</a></strong>.
+<a class="close" href="#/galleries/{{gallery.id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+
+<div ng-if="person" class="alert alert-info" role="alert">
+Filtered by person <strong><a href="#/persons/{{person.id}}">{{person.name}}</a></strong>.
+<a class="close" href="#/galleries/{{gallery.id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+
+<div ng-if="gps" class="alert alert-info" role="alert">
+Filtered for images <strong ng-if="gpsValue">containing GPS information</strong><strong ng-if="!gpsValue">containing no GPS information</strong>.
+<a class="close" href="#/galleries/{{gallery.id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="container">
+  <div class="row">
+  <div class="col-md-12">
+
+<thumbnails images="gallery.images" view="view" toolbar="true"></thumbnails>
+  	
+    </div>
+  </div>
+
+</div>
+</div>
+<span us-spinner="{color: black}" spinner-key="browse"></span>
