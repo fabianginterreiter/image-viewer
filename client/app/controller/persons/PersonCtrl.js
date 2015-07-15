@@ -32,7 +32,7 @@ app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'Dow
   });
 
   $scope.edit = function() {
-  	PersonService.edit($scope.person);
+    PersonService.edit($scope.person);
   };
 
   $scope.delete = function() {
@@ -41,5 +41,5 @@ app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'Dow
         $location.path('/persons');
       });
     });
-  }
+  };
 }]);
