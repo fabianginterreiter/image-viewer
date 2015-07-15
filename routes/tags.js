@@ -68,8 +68,9 @@ router.put('/:id', function(req, res) {
 });
 
 router.delete('/:id', function(req, res) {
+  var id = req.param('id');
   database.connect(function(err, client, done) {
-    client.query('DELETE tags WHERE id = ', [req.param('id')], function(err, result) {
+    client.query('DELETE FROM tags WHERE id = $1', [id], function(err, result) {
       done();
       res.send('OK');
     });
