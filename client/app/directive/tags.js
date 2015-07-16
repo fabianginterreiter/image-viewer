@@ -6,7 +6,7 @@ app.directive('tags', function() {
       };
 
       $scope.onTagAdded = function(tag) {
-        $http.post('/api/images/' + $scope.id + '/tags', tag).success(function(data) {
+        $http.post('/api/images/' + $scope.image.id + '/tags', tag).success(function(data) {
           if (!tag.id) {
             tag.id = data.id;
           }
@@ -15,7 +15,7 @@ app.directive('tags', function() {
 
       $scope.onTagRemoved = function(tag) {
         if (tag.id) {
-          $http.delete('/api/images/' + $scope.id + '/tags/' + tag.id);	
+          $http.delete('/api/images/' + $scope.image.id + '/tags/' + tag.id);	
         }
       };
     },
