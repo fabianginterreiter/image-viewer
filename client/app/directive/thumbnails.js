@@ -98,6 +98,10 @@ app.directive('thumbnails', function() {
     GalleryService.create(getSelected());
   };
 
+  $scope.setView = function(type) {
+    $scope.view = type;
+  };
+
 
       $scope.$watchCollection('images', function(images) {
         if (!images) {
