@@ -132,9 +132,11 @@ app.directive('show', function() {
       var click_y = 0;
       var click_x = 0;
 
-      var object = angular.element("#person_definer");
+      
 
       $scope.click = function(event) {
+        var object = angular.element("#person_definer");
+
         click_y = event.offsetY / event.target.clientHeight;
         click_x = event.offsetX / event.target.clientWidth;
 
