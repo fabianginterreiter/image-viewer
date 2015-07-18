@@ -55,6 +55,13 @@
       "main": [
         "dist/angular-table.min.js"
       ]
+    },
+    "ng-tags-input": {
+      "main": [
+        "ng-tags-input.min.js",
+        "ng-tags-input.min.css",
+        "ng-tags-input.bootstrap.min.css"
+      ]
     }
   }
 }

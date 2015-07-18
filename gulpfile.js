@@ -70,6 +70,7 @@ gulp.task('index', ['javascript', 'stylesheet', 'bower', 'images'], function() {
   .pipe(inject(gulp.src(['vendor/**/*.*'], { cwd: 'public/'}).pipe(order([
     "*/jquery.js",
     "*/bootstrap.min.js",
+    "*/ng-tags-input.min.css",
     "*/angular.js",
     "*"
   ])), {name: 'vendor'}))
