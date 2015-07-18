@@ -5,25 +5,4 @@
 
 <show image="image" toolbar="true" ng-if="image" selectable="false"></show>
 
-<a href="#/browse/{{image.directory.id}}">{{image.directory.name}}</a>
-
-Width: {{image.width}}
-Height: {{image.height}}
-Size: {{image.size | getFilesize}}
-Created at: {{image.created_at}}
-
-<ul>
-<li ng-repeat="person in image.persons"><a href="#/persons/{{person.id}}">{{person.name}}</a></li>
-</ul>
-
-<ul>
-<li ng-repeat="gallery in image.galleries"><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
-</ul>
-
-<ul>
-<li ng-repeat="tag in image.tags"><a href="#/tags/{{tag.id}}">{{tag.text}}</a></li>
-</ul>
-
-<tags image="image"></tags>
-
 </div>

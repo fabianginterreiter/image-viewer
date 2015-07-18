@@ -37,6 +37,20 @@
     </span>
   </div>
 
+  <div class="left" ng-init="view = 'image'">
+    <span class="dropdown" dropdown on-toggle="toggled(open)">
+      <span class="dropdown-toggle" dropdown-toggle>
+        <span class="glyphicon glyphicon-eye-open" style="margin-bottom: -1px"></span>
+        <span class="hidden-xs"> View</span>
+      </span>
+      <ul class="dropdown-menu">
+        <li><a ng-click="setView('image')"><span class="glyphicon glyphicon-th"></span> Preview</a></li>
+        <li class="divider"></li>
+        <li><a ng-click="setView('details')"><span class="glyphicon glyphicon-list-alt"></span> Details</a></li>
+      </ul>
+    </span>
+  </div>
+
   <div class="left">
     <span class="dropdown" dropdown on-toggle="toggled(open)">
       <span class="dropdown-toggle" dropdown-toggle>
@@ -53,26 +67,70 @@
   <div class="right" ng-click="setFullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></div>
 </div>
 
-<div style="position: relative; display: block; text-align: center;" id="images">
-  <div id="image">
-    <img ng-src="{{src}}" ng-click="click($event)" ng-load="loaded($event);">
+<div ng-switch="view">
 
-    <div style="position: absolute; top: 50%; left: 0; right: 0; text-align: center;">
-      <span class="glyphicon" ng-class="{'glyphicon-unchecked' : !image.selected, 'glyphicon-check' : image.selected}" style="font-size: 60px; color: white; opacity:0; transition:opacity 0.1s linear;" id="checkIcon"></span>
+  <div ng-switch-when="details">
+    <h3>Details</h3>
+    <div class="row">
+      <div class="col-md-12">
+        <a href="#/browse/{{image.directory.id}}">{{image.directory.name}}</a>
+
+Width: {{image.width}}
+Height: {{image.height}}
+Size: {{image.size | getFilesize}}
+Created at: {{image.created_at}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <tags image="image"></tags>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Persons</h4>
+        <ul>
+          <li ng-repeat="person in image.persons | orderBy:'name'"><a href="#/persons/{{person.id}}">{{person.name}}</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-6">
+        <h4>Galleries</h4>
+        <ul>
+          <li ng-repeat="gallery in image.galleries"><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div style="position: absolute; width: 300px; z-index: 100; visibility: hidden;" class="panel panel-default" id="person_definer">
-  	<div class="panel-heading">
-      <button type="button" class="close" ng-click="personClose()"><span aria-hidden="true">&times;</span></button>
-  	  Mark Person
-  	</div>
-  	<div class="panel-body">
-  		<autocomplete ng-model="person" data="persons" on-type="updatePersons" attr-input-class="form-control" attr-class="p_i" on-select="personSelect" attr-input-id="personSelector"></autocomplete>
-  		<button type="button" class="btn btn-success" ng-click="personSelect(person)"><span class="glyphicon glyphicon-plus"></span></button>
-  		<div style="clear:both;"></div>
-  	</div>
+
+  <div ng-switch-default>
+    <div style="position: relative; display: block; text-align: center;" id="images">
+      <div id="image">
+        <img ng-src="{{src}}" ng-click="click($event)" ng-load="loaded($event);">
+
+        <div style="position: absolute; top: 50%; left: 0; right: 0; text-align: center;">
+          <span class="glyphicon" ng-class="{'glyphicon-unchecked' : !image.selected, 'glyphicon-check' : image.selected}" style="font-size: 60px; color: white; opacity:0; transition:opacity 0.1s linear;" id="checkIcon"></span>
+        </div>
+      </div>
+
+      <div style="position: absolute; width: 300px; z-index: 100; visibility: hidden;" class="panel panel-default" id="person_definer">
+      	<div class="panel-heading">
+          <button type="button" class="close" ng-click="personClose()"><span aria-hidden="true">&times;</span></button>
+      	  Mark Person
+      	</div>
+      	<div class="panel-body">
+      		<autocomplete ng-model="person" data="persons" on-type="updatePersons" attr-input-class="form-control" attr-class="p_i" on-select="personSelect" attr-input-id="personSelector"></autocomplete>
+      		<button type="button" class="btn btn-success" ng-click="personSelect(person)"><span class="glyphicon glyphicon-plus"></span></button>
+      		<div style="clear:both;"></div>
+      	</div>
+      </div>
+
+      <div ng-if="showPersons" ng-repeat="person in image.persons" style="position: absolute; background: #AFAFAF; color: #434343; z-index: 50; padding: 1px 5px; border: 1px solid #787878;" ng-style="{'left': {{offsetLeft + person.x * image_width}} + 'px', 'top': {{person.y * image_height}} + 'px'}"><a href="#/persons/{{person.id}}">{{person.name}}</a> <a ng-click="deletePerson(person)">X</a>
+      </div>
+    </div>
+    <span us-spinner="{color: '#000'}" spinner-key="spinner-1"></span>
   </div>
 
-  <div ng-if="showPersons" ng-repeat="person in image.persons" style="position: absolute; background: #AFAFAF; color: #434343; z-index: 50; padding: 1px 5px; border: 1px solid #787878;" ng-style="{'left': {{offsetLeft + person.x * image_width}} + 'px', 'top': {{person.y * image_height}} + 'px'}"><a href="#/persons/{{person.id}}">{{person.name}}</a> <a ng-click="deletePerson(person)">X</a></div>
 </div>
-<span us-spinner="{color: '#000'}" spinner-key="spinner-1"></span>
