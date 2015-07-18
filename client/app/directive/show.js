@@ -181,8 +181,8 @@ app.directive('show', function() {
       $scope.personClose = function() {
         $scope.person = '';
         $scope.persons = [];
-
-        object.css('visibility', 'hidden');
+        
+        angular.element("#person_definer").css('visibility', 'hidden');
       };
 
       $scope.loadPersons = function() {
