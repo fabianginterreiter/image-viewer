@@ -15,16 +15,6 @@
     </span><span class="hidden-xs"> Coordinates</span>
   </div>
 
-  <div class="left" ng-click="create()">
-    <span class="glyphicon glyphicon-th" style="margin-bottom: -1px"></span>
-    <span class="hidden-xs"> Create Gallery</span>
-  </div>
-
-  <div class="left" ng-click="addToGallery()">
-    <span class="glyphicon glyphicon-plus" style="margin-bottom: -1px"></span>
-    <span class="hidden-xs"> Add</span>
-  </div>
-
   <div class="left" ng-click="showPersons = !showPersons; loadPersons()" >
     <span class="glyphicon glyphicon-check" ng-if="showPersons"></span>
     <span ng-if="!showPersons" class="glyphicon glyphicon-unchecked"></span>
@@ -46,6 +36,20 @@
       </ul>
     </span>
   </div>
+
+  <div class="left">
+    <span class="dropdown" dropdown on-toggle="toggled(open)">
+      <span class="dropdown-toggle" dropdown-toggle>
+        <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
+        <span class="hidden-xs"> Options</span>
+      </span>
+      <ul class="dropdown-menu">
+        <li><a ng-click="create()">Create Gallery</a></li>
+        <li><a ng-click="addToGallery()">Add to Gallery</a></li>
+      </ul>
+    </span>
+  </div>
+
   <div class="right" ng-click="setFullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></div>
 </div>
 
