@@ -276,6 +276,15 @@ app.directive('show', function() {
           } else {
             $scope.view = type;
           }
+        } else if (type === 'exif') {
+          if (!image.exif) {
+            $http.get('/api/images/' + image.id + '/exif').success(function(exif) {
+              image.exif = JSON.stringify(exif);
+              $scope.view = type;
+            });
+          } else {
+            $scope.view = type;
+          }
         } else {
           $scope.view = type;
         }

@@ -47,6 +47,7 @@
         <li><a ng-click="setView('image')"><span class="glyphicon glyphicon-th"></span> Preview</a></li>
         <li class="divider"></li>
         <li><a ng-click="setView('details')"><span class="glyphicon glyphicon-list-alt"></span> Details</a></li>
+        <li><a ng-click="setView('exif')"><span class="glyphicon glyphicon-list-alt"></span> Exif</a></li>
       </ul>
     </span>
   </div>
@@ -101,6 +102,15 @@ Created at: {{image.created_at}}
         <ul>
           <li ng-repeat="gallery in image.galleries"><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <div ng-switch-when="exif">
+    <h3>Exif</h3>
+    <div class="row">
+      <div class="col-md-12">
+        {{image.exif}}    
       </div>
     </div>
   </div>
