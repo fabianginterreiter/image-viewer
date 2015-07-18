@@ -79,21 +79,24 @@ Created at: {{image.created_at}}
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-12">
-        <tags image="image"></tags>
-      </div>
-    </div>
+    
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <h4>Persons</h4>
         <ul>
           <li ng-repeat="person in image.persons | orderBy:'name'"><a href="#/persons/{{person.id}}">{{person.name}}</a></li>
         </ul>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
+        <h4>Tags</h4>
+        <ul>
+          <li ng-repeat="tag in image.tags"><a href="#/tags/{{tag.id}}">{{tag.text}}</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
         <h4>Galleries</h4>
         <ul>
           <li ng-repeat="gallery in image.galleries"><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
@@ -136,6 +139,7 @@ Created at: {{image.created_at}}
       <div ng-if="showPersons" ng-repeat="person in image.persons" style="position: absolute; background: #AFAFAF; color: #434343; z-index: 50; padding: 1px 5px; border: 1px solid #787878;" ng-style="{'left': {{offsetLeft + person.x * image_width}} + 'px', 'top': {{person.y * image_height}} + 'px'}"><a href="#/persons/{{person.id}}">{{person.name}}</a> <a ng-click="deletePerson(person)">X</a>
       </div>
     </div>
+    <tags image="image"></tags>
     <span us-spinner="{color: '#000'}" spinner-key="spinner-1"></span>
   </div>
 

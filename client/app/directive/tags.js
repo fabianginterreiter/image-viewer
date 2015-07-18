@@ -1,6 +1,14 @@
 app.directive('tags', function() {
   return {
     controller : function($scope, $http) {
+      $scope.$watch('image', function(image) {
+        if (!image.tags) {
+          $http.get('/api/images/' + $scope.image.id + '/tags').success(function(tags) {
+            image.tags = tags;
+          });
+        }  
+      });
+
       $scope.loadTags = function(query) {
         return $http.get('/api/tags?query=' + query);
       };

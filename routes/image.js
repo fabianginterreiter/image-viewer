@@ -202,6 +202,15 @@ router.get('/:id', function(req, res) {
   });
 });
 
+router.get('/:id/tags', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT tags.* FROM tags JOIN image_tag ON image_tag.tag_id = tags.id WHERE image_tag.image_id = $1', [req.param('id')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+
 router.get('/:id/persons', function(req, res) {
   var id = req.param('id');
   database.connect(function(err, client, done) {
