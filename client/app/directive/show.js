@@ -266,7 +266,7 @@ app.directive('show', function() {
 
       $scope.setView = function(type) {
         if (type === 'details') {
-          if (!image.persons) {
+          if (!image.directory) {
             $http.get('/api/images/' + image.id).success(function(data) {
 
               for(var k in data) {
