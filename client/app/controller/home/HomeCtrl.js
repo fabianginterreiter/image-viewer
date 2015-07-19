@@ -10,4 +10,13 @@ app.controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
   $http.get('/api/images?action=updated').success(function(data) {
     $scope.updated = data;
   });
+
+  $http.get('/api/tags').success(function(tags) {
+  	_.forEach(tags, function(tag) {
+  	  tag.weight = tag.count;
+      tag.link = '#/tags/' + tag.id;
+  	});
+
+  	$scope.tags = tags;
+  });
 }]);

@@ -35,7 +35,8 @@
     "allmighty-autocomplete": "*",
     "ng-load": "~1.0.2",
     "OpenLayers": "https://github.com/openlayers/ol3/releases/download/v3.7.0/v3.7.0-dist.zip",
-    "at-table": "~1.0.4"
+    "at-table": "~1.0.4",
+    "angular-jqcloud": "~1.0.1"
   },
   "overrides": {
     "bootstrap": {
