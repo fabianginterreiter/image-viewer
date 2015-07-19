@@ -4,6 +4,7 @@
     <h1>Search</h1>
     <p ng-if="persons.length > 0">
     Persons: <span ng-repeat="person in persons | orderBy:'name'"><a  href="#/persons/{{person.id}}">{{person.name}}</a> </span>
+    <span ng-if="personsOnly">(only)</span>
     </p>
     <p ng-if="tags.length > 0">
     Tags: <span ng-repeat="tag in tags | orderBy:'text'"><a  href="#/tags/{{tag.id}}">{{tag.text}}</a> </span>

@@ -39,6 +39,8 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
     $scope.maxDate = new Date(values[0], values[1] - 1, values[2]);
   }
 
+  $scope.personsOnly = $routeParams.personsOnly === 'true';
+
   $scope.loadPersons = function(query) {
   	return $http.get('/api/persons?query='+query);
   };
@@ -68,9 +70,15 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
   $scope.search = function() {
     var options = {
       persons: getIds($scope.persons),
+      
       tags: getIds($scope.tags),
       galleries: getIds($scope.galleries)
     };
+
+    if ($scope.personsOnly) {
+      options.personsOnly = 'true';  
+    }
+    
 
     if ($scope.useMinDate) {
       options.minDate = getFormattedDate($scope.minDate);

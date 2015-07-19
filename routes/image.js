@@ -87,9 +87,14 @@ router.get('/', function(req, res) {
       conditions.push('1 = 1');
 
       if (req.param('persons')) {
-        _.forEach(req.param('persons').split(','), function(id) {
+        var personIds = req.param('persons').split(',');
+        _.forEach(personIds, function(id) {
           conditions.push('EXISTS (SELECT 1 FROM image_person WHERE images.id = image_person.image_id AND image_person.person_id = ' + id + ')');
         });
+
+        if (req.param('personsOnly') === 'true') {
+          conditions.push('EXISTS (SELECT count(image_person.image_id) FROM image_person WHERE image_person.image_id = images.id GROUP BY image_person.image_id HAVING count(image_person.image_id) = ' + personIds.length + ')');
+        }
       }
 
       if (req.param('tags')) {
