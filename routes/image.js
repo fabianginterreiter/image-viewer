@@ -95,7 +95,11 @@ router.get('/', function(req, res) {
         if (req.param('personsOnly') === 'true') {
           conditions.push('EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id GROUP BY image_person.image_id HAVING count(image_person.image_id) = ' + personIds.length + ')');
         }
+      } else if (req.param('personsOnly') === 'true') {
+        conditions.push('NOT EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id)');
       }
+
+
 
       if (req.param('tags')) {
         var tagIds = req.param('tags').split(',');
@@ -106,6 +110,8 @@ router.get('/', function(req, res) {
         if (req.param('tagsOnly') === 'true') {
           conditions.push('EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id GROUP BY image_tag.image_id HAVING count(image_tag.image_id) = ' + tagIds.length + ')');
         }
+      } else if (req.param('tagsOnly') === 'true') {
+        conditions.push('NOT EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id)');
       }
 
       if (req.param('galleries')) {
@@ -117,6 +123,8 @@ router.get('/', function(req, res) {
         if (req.param('galleriesOnly') === 'true') {
           conditions.push('EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id GROUP BY gallery_image.image_id HAVING count(gallery_image.image_id) = ' + galleryIds.length + ')');
         }
+      } else if (req.param('galleriesOnly') === 'true') {
+        conditions.push('NOT EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id)');
       }
 
       if (req.param('minDate')) {
