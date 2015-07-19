@@ -40,6 +40,8 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
   }
 
   $scope.personsOnly = $routeParams.personsOnly === 'true';
+  $scope.tagsOnly = $routeParams.tagsOnly === 'true';
+  $scope.galleriesOnly = $routeParams.galleriesOnly === 'true';
 
   $scope.loadPersons = function(query) {
   	return $http.get('/api/persons?query='+query);
@@ -78,8 +80,15 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
     if ($scope.personsOnly) {
       options.personsOnly = 'true';  
     }
-    
 
+    if ($scope.tagsOnly) {
+      options.tagsOnly = 'true';  
+    }
+
+    if ($scope.galleriesOnly) {
+      options.galleriesOnly = 'true';  
+    }
+    
     if ($scope.useMinDate) {
       options.minDate = getFormattedDate($scope.minDate);
     }

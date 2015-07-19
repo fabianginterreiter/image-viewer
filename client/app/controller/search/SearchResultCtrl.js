@@ -6,6 +6,8 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
   var maxDate = $routeParams.maxDate;
 
   $scope.personsOnly = $routeParams.personsOnly === 'true';
+  $scope.tagsOnly = $routeParams.tagsOnly === 'true';
+  $scope.galleriesOnly = $routeParams.galleriesOnly === 'true';
 
   $scope.persons = [];
   $scope.tags = [];
@@ -64,6 +66,14 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
 
   if ($scope.personsOnly) {
     options.push('personsOnly=true');
+  }
+
+  if ($scope.tagsOnly) {
+    options.push('tagsOnly=true');
+  }
+
+  if ($scope.galleriesOnly) {
+    options.push('galleriesOnly=true');
   }
 
   $http.get('/api/images?action=search&' + options.join('&')).success(function(data) {

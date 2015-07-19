@@ -93,20 +93,30 @@ router.get('/', function(req, res) {
         });
 
         if (req.param('personsOnly') === 'true') {
-          conditions.push('EXISTS (SELECT count(image_person.image_id) FROM image_person WHERE image_person.image_id = images.id GROUP BY image_person.image_id HAVING count(image_person.image_id) = ' + personIds.length + ')');
+          conditions.push('EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id GROUP BY image_person.image_id HAVING count(image_person.image_id) = ' + personIds.length + ')');
         }
       }
 
       if (req.param('tags')) {
-        _.forEach(req.param('tags').split(','), function(id) {
+        var tagIds = req.param('tags').split(',');
+        _.forEach(tagIds, function(id) {
           conditions.push('EXISTS (SELECT 1 FROM image_tag WHERE images.id = image_tag.image_id AND image_tag.tag_id = ' + id + ')');
         });
+
+        if (req.param('tagsOnly') === 'true') {
+          conditions.push('EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id GROUP BY image_tag.image_id HAVING count(image_tag.image_id) = ' + tagIds.length + ')');
+        }
       }
 
       if (req.param('galleries')) {
-        _.forEach(req.param('galleries').split(','), function(id) {
+        var galleryIds = req.param('galleries').split(',');
+        _.forEach(galleryIds, function(id) {
           conditions.push('EXISTS (SELECT 1 FROM gallery_image WHERE images.id = gallery_image.image_id AND gallery_image.gallery_id = ' + id + ')');
         });
+
+        if (req.param('galleriesOnly') === 'true') {
+          conditions.push('EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id GROUP BY gallery_image.image_id HAVING count(gallery_image.image_id) = ' + galleryIds.length + ')');
+        }
       }
 
       if (req.param('minDate')) {

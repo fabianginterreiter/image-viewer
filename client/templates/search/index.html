@@ -31,6 +31,7 @@
       <tags-input ng-model="tags" style="height: 40px;" display-property="text" add-from-autocomplete-only="true" placeholder="Add a tag">
         <auto-complete source="loadTags($query)"></auto-complete>
       </tags-input>
+      <input type="checkbox" id="tagsOnly" ng-model="tagsOnly" value="true"> <label for="tagsOnly">Tags only</label>
     </div>
   </div>
 
@@ -40,6 +41,7 @@
       <tags-input ng-model="galleries" style="height: 40px;" display-property="name" add-from-autocomplete-only="true" placeholder="Add a gallery">
         <auto-complete source="loadGalleries($query)"></auto-complete>
       </tags-input>
+      <input type="checkbox" id="galleriesOnly" ng-model="galleriesOnly" value="true"> <label for="galleriesOnly">Galleries only</label>
     </div>
   </div>
 
