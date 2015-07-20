@@ -10,7 +10,7 @@
     <span class="hidden-xs"> Link</span>
   </div>
 
-  <div class="left" ng-click="showPersons = !showPersons; loadPersons()" >
+  <div class="left" ng-click="showPersons = !showPersons;" >
     <span class="glyphicon glyphicon-check" ng-if="showPersons"></span>
     <span ng-if="!showPersons" class="glyphicon glyphicon-unchecked"></span>
     <span class="hidden-xs"> Show Persons</span>
@@ -117,26 +117,15 @@ Created at: {{image.created_at}}
   <div ng-switch-default>
     <div style="position: relative; display: block; text-align: center;" id="images">
       <div id="image">
-        <img ng-src="{{src}}" ng-click="click($event)" ng-load="loaded($event);">
+        <img ng-src="{{src}}" ng-load="loaded($event);">
 
         <div style="position: absolute; top: 50%; left: 0; right: 0; text-align: center;">
           <span class="glyphicon" ng-class="{'glyphicon-unchecked' : !image.selected, 'glyphicon-check' : image.selected}" style="font-size: 60px; color: white; opacity:0; transition:opacity 0.1s linear;" id="checkIcon"></span>
         </div>
       </div>
 
-      <div style="position: absolute; width: 300px; z-index: 100; visibility: hidden;" class="panel panel-default" id="person_definer">
-      	<div class="panel-heading">
-          <button type="button" class="close" ng-click="personClose()"><span aria-hidden="true">&times;</span></button>
-      	  Mark Person
-      	</div>
-      	<div class="panel-body">
-      		<autocomplete ng-model="person" data="persons" on-type="updatePersons" attr-input-class="form-control" attr-class="p_i" on-select="personSelect" attr-input-id="personSelector"></autocomplete>
-      		<button type="button" class="btn btn-success" ng-click="personSelect(person)"><span class="glyphicon glyphicon-plus"></span></button>
-      		<div style="clear:both;"></div>
-      	</div>
-      </div>
-
-      <div ng-if="showPersons" ng-repeat="person in image.persons" style="position: absolute; background: #AFAFAF; color: #434343; z-index: 50; padding: 1px 5px; border: 1px solid #787878;" ng-style="{'left': {{offsetLeft + person.x * image_width}} + 'px', 'top': {{person.y * image_height}} + 'px'}"><a href="#/persons/{{person.id}}">{{person.name}}</a> <a ng-click="deletePerson(person)">X</a>
+      <persons left="offsetLeft" width="image_width" height="image_height" show="showPersons" image="image"></persons>
+      
       </div>
     </div>
     <tags image="image"></tags>

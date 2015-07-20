@@ -116,11 +116,6 @@ app.directive('show', function() {
           return;
         }
 
-        if ($scope.showPersons) {
-          $scope.loadPersons();
-        }
-
-
         update();
         usSpinnerService.spin('spinner-1');
       });
@@ -128,79 +123,6 @@ app.directive('show', function() {
       $scope.$watch('preload', function(preload) {
         ImageCache.addImages(preload);
       }); 
-
-      var click_y = 0;
-      var click_x = 0;
-
-      
-
-      $scope.click = function(event) {
-        var object = angular.element("#person_definer");
-
-        click_y = event.offsetY / event.target.clientHeight;
-        click_x = event.offsetX / event.target.clientWidth;
-
-        object.css('top', event.target.offsetTop + event.offsetY + 'px');
-        object.css('left', (event.target.offsetLeft + event.offsetX - 150) + 'px');
-        object.css('visibility', 'visible');
-
-        $timeout(function() {
-          angular.element('#personSelector').focus();
-        }, 100);
-
-      };
-
-      $scope.persons = [];
-
-      $scope.updatePersons = function(person) {
-        $http.get('/api/persons?query=' + person).success(function(data) {
-          $scope.persons = [];
-          _.forEach(data, function(person) {
-            $scope.persons.push(person.name);
-          });
-        });
-      };
-
-      $scope.personSelect = function(person) {
-        var person = {
-          name: person,
-          x: click_x,
-          y: click_y
-        };
-
-        $http.post('/api/images/' + image.id + '/persons', person).success(function(data) {
-          if (!image.persons) {
-            image.persons = [];
-          }
-          image.persons.push(data);
-        });
-
-        $scope.personClose();
-      };
-
-      $scope.personClose = function() {
-        $scope.person = '';
-        $scope.persons = [];
-
-        angular.element("#person_definer").css('visibility', 'hidden');
-      };
-
-      $scope.loadPersons = function() {
-        if (!$scope.image.persons) {
-          $http.get('/api/images/' + image.id + '/persons').success(function(data) {
-            $scope.image.persons = data;
-          });
-        }
-      };
-
-      $scope.deletePerson = function(person) {
-        console.log("Delete person: " + person.id);
-        $http.delete('/api/images/' + image.id + '/persons/' + person.id).success(function(data) {
-          _.remove($scope.image.persons, function(n) {
-            return n.person_id === person.id;
-          });
-        });
-      };
 
       $scope.open = function(image) {
         $location.path('/images/' + image.id);
