@@ -52,7 +52,8 @@ router.get('/', function(req, res) {
   switch (action) {
     case 'random':
       database.connect(function(err, client, done) {
-        client.query('SELECT * FROM images ORDER BY random() LIMIT 10;', [], function(err, result) {
+        var limit = req.param('limit') ? req.param('limit') : '10';
+        client.query('SELECT * FROM images ORDER BY random() LIMIT $1;', [limit], function(err, result) {
           done();
           res.send(result.rows);
         });

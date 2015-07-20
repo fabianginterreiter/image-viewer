@@ -1,5 +1,4 @@
 app.factory('PersonService', function($modal, $http, Dialogs) {
-
 return {
   edit : function(person, callback) {
   $modal.open({

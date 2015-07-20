@@ -65,6 +65,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/home/index.html',
         controller: 'HomeCtrl'
       }).
+      when('/random', {
+        templateUrl: 'templates/random/index.html',
+        controller: 'RandomCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });

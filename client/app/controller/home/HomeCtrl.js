@@ -3,7 +3,7 @@ app.controller('HomeCtrl', ['$scope', '$http', function($scope, $http) {
   	$scope.newest = data;
   });
 
-  $http.get('/api/images?action=random').success(function(data) {
+  $http.get('/api/images?action=random&limit=10').success(function(data) {
     $scope.random = data;
   });
 
