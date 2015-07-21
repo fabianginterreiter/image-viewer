@@ -1,0 +1,23 @@
+<div class="row">
+<div class="col-md-12">
+<div ng-if="tag" class="alert alert-info" role="alert">
+Filtered by Tag <strong><a href="#/tags/{{tag.id}}">{{tag.text}}</a></strong>.
+<a class="close" href="#/{{type}}/{{id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+<div ng-if="directory" class="alert alert-info" role="alert">
+Filtered by Directory <strong><a href="#/browse/{{directory.id}}">{{directory.name}}</a></strong>.
+<a class="close" href="#/{{type}}/{{id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+
+<div ng-if="person" class="alert alert-info" role="alert">
+Filtered by person <strong><a href="#/persons/{{person.id}}">{{person.name}}</a></strong>.
+<a class="close" href="#/{{type}}/{{id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+
+<div ng-if="gps" class="alert alert-info" role="alert">
+Filtered for images <strong ng-if="gpsValue">containing GPS information</strong><strong ng-if="!gpsValue">containing no GPS information</strong>.
+<a class="close" href="#/{{type}}/{{id}}"><span aria-hidden="true">&times;</span></a>
+</div>
+
+</div>
+</div>

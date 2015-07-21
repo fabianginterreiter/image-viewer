@@ -25,25 +25,46 @@ app.factory('TagService', function($modal, $http, Dialogs) {
   }
 });
 
-app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dialogs', '$location', function($scope, $http, $routeParams, TagService, Dialogs, $location) {
-  var person = $routeParams.personId;
-
-  if (person) {
-    $http.get('/api/tags/' + $routeParams.id + '/persons/' + person).success(function(data) {
-      $scope.person = data;
-    });
-  }
-
-  $http.get('/api/tags/' + $routeParams.id).success(function(data) {
-    if (person) {
-      $http.get('/api/tags/' + $routeParams.id + '/persons/' + person + '/images').success(function(images) {
-        data.images = images;
-        $scope.tag = data;
+app.factory('FilterService', function() {
+  return {
+    filter : function(http, routeParams, type, callback) {
+      var id = routeParams.id;
+      http.get('/api/' + type + '/' + id).success(function(object) {
+        if (routeParams.personId) {
+          http.get('/api/' + type + '/' + id + '/persons/' + routeParams.personId + '/images').success(function(images) {
+            object.images = images;
+            callback(null, object);
+          });
+        } else if (routeParams.directoryId) {
+          http.get('/api/' + type + '/' + id + '/directories/' + routeParams.directoryId + '/images').success(function(images) {
+            object.images = images;
+            callback(null, object);
+          });
+        } else if (routeParams.tagId) {
+          http.get('/api/' + type + '/' + id + '/tags/' + routeParams.tagId + '/images').success(function(images) {
+            object.images = images;
+            callback(null, object);
+          });
+        } else if (routeParams.gps) {
+          gpsValue = routeParams.gps === 'true';
+          $http.get('/api/' + type + '/' + id + '/images?gps=' + gps).success(function(images) {
+            object.images = images;
+            callback(null, object);
+          });
+        } else {
+          callback(null, object);
+        }
       });
-    } else {
-      $scope.tag = data;  
     }
-  });
+  };
+});
+
+app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dialogs', '$location', 'FilterService', function($scope, $http, $routeParams, TagService, Dialogs, $location, FilterService) {
+  var id = $routeParams.id;
+
+  FilterService.filter($http, $routeParams, 'tags', function(err, tag) {
+      $scope.tag = tag;
+    });
 
   $scope.edit = function() {
   	TagService.edit($scope.tag);

@@ -29,6 +29,14 @@ app.config(['$routeProvider',
         templateUrl: 'templates/tags/show.html',
         controller: 'TagCtrl'
       }).
+      when('/tags/:id/directories/:directoryId', {
+        templateUrl: 'templates/tags/show.html',
+        controller: 'TagCtrl'
+      }).
+      when('/tags/:id/tags/:tagId', {
+        templateUrl: 'templates/tags/show.html',
+        controller: 'TagCtrl'
+      }).
       when('/tags/:id/details', {
         templateUrl: 'templates/tags/details.html',
         controller: 'TagDetailsCtrl'

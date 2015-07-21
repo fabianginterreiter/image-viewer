@@ -1,66 +1,9 @@
-app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'GalleryService', 'Dialogs', '$location', 'usSpinnerService', function($scope, $http, $routeParams, $window, DownloadService, GalleryService, Dialogs, $location, usSpinnerService) {
+app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'GalleryService', 'Dialogs', '$location', 'usSpinnerService', 'FilterService', function($scope, $http, $routeParams, $window, DownloadService, GalleryService, Dialogs, $location, usSpinnerService, FilterService) {
 
-  var directory = $routeParams.directoryId;
-  var tag = $routeParams.tagId;
-  var person = $routeParams.personId;
-  var id = $routeParams.id;
-  var gps = $routeParams.gps;
-
-  if (directory) {
-    $http.get('/api/galleries/' + id + '/directories/' + directory).success(function(data) {
-      $scope.directory = data;
-    }); 
-  }
-
-  if (tag) {
-    $http.get('/api/galleries/' + id + '/tags/' + tag).success(function(data) {
-      $scope.tag = data;
-    }); 
-  }
-
-  if (person) {
-    $http.get('/api/galleries/' + id + '/persons/' + person).success(function(data) {
-      $scope.person = data;
-    });
-  }
-
-  if (gps) {
-    $scope.gps = true;
-    $scope.gpsValue = gps === 'true';
-  }
-
-  $http.get('/api/galleries/' + id).success(function(data) {
-    if (directory) {
-      $http.get('/api/galleries/' + id + '/directories/' + directory + '/images').success(function(images) {
-        data.images = images;
-        $scope.gallery = data;
-        usSpinnerService.stop('browse');  
-      });
-    } else if (tag) {
-      $http.get('/api/galleries/' + id + '/tags/' + tag + '/images').success(function(images) {
-        data.images = images;
-        $scope.gallery = data;
-        usSpinnerService.stop('browse');  
-      });
-    } else if (person) {
-      $http.get('/api/galleries/' + id + '/persons/' + person + '/images').success(function(images) {
-        data.images = images;
-        $scope.gallery = data;
-        usSpinnerService.stop('browse');  
-      });
-    } else if (gps) {
-      $http.get('/api/galleries/' + id + '/images?gps=' + gps).success(function(images) {
-        data.images = images;
-        $scope.gallery = data;
-        usSpinnerService.stop('browse');  
-      });
-    } else {
-      $scope.gallery = data;  
+  FilterService.filter($http, $routeParams, 'galleries', function(err, gallery) {
+      $scope.gallery = gallery;
       usSpinnerService.stop('browse');
-    }
-  });
-
-
+    });
 
     setTimeout(function() {
     if (!$scope.images) {
