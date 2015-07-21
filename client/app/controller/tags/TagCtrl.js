@@ -26,8 +26,23 @@ app.factory('TagService', function($modal, $http, Dialogs) {
 });
 
 app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dialogs', '$location', function($scope, $http, $routeParams, TagService, Dialogs, $location) {
+  var person = $routeParams.personId;
+
+  if (person) {
+    $http.get('/api/tags/' + $routeParams.id + '/persons/' + person).success(function(data) {
+      $scope.person = data;
+    });
+  }
+
   $http.get('/api/tags/' + $routeParams.id).success(function(data) {
-    $scope.tag = data;
+    if (person) {
+      $http.get('/api/tags/' + $routeParams.id + '/persons/' + person + '/images').success(function(images) {
+        data.images = images;
+        $scope.tag = data;
+      });
+    } else {
+      $scope.tag = data;  
+    }
   });
 
   $scope.edit = function() {

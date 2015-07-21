@@ -12,8 +12,6 @@
 
 <div class="container">
 
-
-
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
@@ -40,7 +38,7 @@
 <h2>Directories</h2>
 <ul class="list-group">
   <li class="list-group-item" ng-repeat="directory in directories">
-    <a class="badge" href="#/galleries/{{gallery.id}}?directory={{directory.id}}">{{directory.count}}</a>
+    <a class="badge" href="#/galleries/{{gallery.id}}/directories/{{directory.id}}">{{directory.count}}</a>
     <a href="#/browse/{{directory.id}}">{{directory.name}}</a>
   </li>
 </ul>
@@ -51,7 +49,7 @@
 <h2>Tags</h2>
 <ul class="list-group">
   <li class="list-group-item" ng-repeat="tag in tags">
-    <a class="badge" href="#/galleries/{{gallery.id}}?tag={{tag.id}}">{{tag.count}}</a>
+    <a class="badge" href="#/galleries/{{gallery.id}}/tags/{{tag.id}}">{{tag.count}}</a>
     <a href="#/tags/{{tag.id}}">{{tag.text}}</a>
   </li>
 </ul>
@@ -62,7 +60,7 @@
 <h2>Persons</h2>
 <ul class="list-group">
   <li class="list-group-item" ng-repeat="person in persons">
-    <a class="badge" href="#/galleries/{{gallery.id}}?person={{person.id}}">{{person.count}}</a>
+    <a class="badge" href="#/galleries/{{gallery.id}}/persons/{{person.id}}">{{person.count}}</a>
     <a href="#/persons/{{person.id}}">{{person.name}}</a>
   </li>
 </ul>

@@ -25,6 +25,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/tags/show.html',
         controller: 'TagCtrl'
       }).
+      when('/tags/:id/persons/:personId', {
+        templateUrl: 'templates/tags/show.html',
+        controller: 'TagCtrl'
+      }).
       when('/tags/:id/details', {
         templateUrl: 'templates/tags/details.html',
         controller: 'TagDetailsCtrl'
@@ -34,6 +38,18 @@ app.config(['$routeProvider',
         controller: 'GalleriesCtrl'
       }).
       when('/galleries/:id', {
+        templateUrl: 'templates/galleries/gallery.html',
+        controller: 'GalleryCtrl'
+      }).
+      when('/galleries/:id/persons/:personId', {
+        templateUrl: 'templates/galleries/gallery.html',
+        controller: 'GalleryCtrl'
+      }).
+      when('/galleries/:id/tags/:tagId', {
+        templateUrl: 'templates/galleries/gallery.html',
+        controller: 'GalleryCtrl'
+      }).
+      when('/galleries/:id/directories/:directoryId', {
         templateUrl: 'templates/galleries/gallery.html',
         controller: 'GalleryCtrl'
       }).

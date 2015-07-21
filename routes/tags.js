@@ -97,4 +97,22 @@ router.get('/:id/persons', function(req, res) {
   });
 });
 
+router.get('/:tagId/persons/:personId', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT * FROM persons WHERE id = $1', [req.param('personId')], function(err, result) {
+      done();
+      res.send(result.rows[0]);
+    });
+  });
+});
+
+router.get('/:tagId/persons/:personId/images', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id JOIN image_tag ON images.id = image_tag.image_id WHERE image_person.person_id = $1 AND image_tag.tag_id = $2 ORDER BY images.created_at;', [req.param('personId'), req.param('tagId')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+  
 module.exports = router;

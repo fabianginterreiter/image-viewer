@@ -26,7 +26,7 @@
 <h2>Persons</h2>
 <ul class="list-group">
   <li class="list-group-item" ng-repeat="person in persons">
-    <a class="badge" href="#/galleries/{{gallery.id}}?person={{person.id}}">{{person.count}}</a>
+    <a class="badge" href="#/tags/{{tag.id}}/persons/{{person.id}}">{{person.count}}</a>
     <a href="#/persons/{{person.id}}">{{person.name}}</a>
   </li>
 </ul>

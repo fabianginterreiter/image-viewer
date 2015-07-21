@@ -1,8 +1,8 @@
 app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'GalleryService', 'Dialogs', '$location', 'usSpinnerService', function($scope, $http, $routeParams, $window, DownloadService, GalleryService, Dialogs, $location, usSpinnerService) {
 
-  var directory = $routeParams.directory;
-  var tag = $routeParams.tag;
-  var person = $routeParams.person;
+  var directory = $routeParams.directoryId;
+  var tag = $routeParams.tagId;
+  var person = $routeParams.personId;
   var id = $routeParams.id;
   var gps = $routeParams.gps;
 
