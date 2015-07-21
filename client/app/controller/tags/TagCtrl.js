@@ -25,39 +25,7 @@ app.factory('TagService', function($modal, $http, Dialogs) {
   }
 });
 
-app.factory('FilterService', function() {
-  return {
-    filter : function(http, routeParams, type, callback) {
-      var id = routeParams.id;
-      http.get('/api/' + type + '/' + id).success(function(object) {
-        if (routeParams.personId) {
-          http.get('/api/' + type + '/' + id + '/persons/' + routeParams.personId + '/images').success(function(images) {
-            object.images = images;
-            callback(null, object);
-          });
-        } else if (routeParams.directoryId) {
-          http.get('/api/' + type + '/' + id + '/directories/' + routeParams.directoryId + '/images').success(function(images) {
-            object.images = images;
-            callback(null, object);
-          });
-        } else if (routeParams.tagId) {
-          http.get('/api/' + type + '/' + id + '/tags/' + routeParams.tagId + '/images').success(function(images) {
-            object.images = images;
-            callback(null, object);
-          });
-        } else if (routeParams.gps) {
-          gpsValue = routeParams.gps === 'true';
-          http.get('/api/' + type + '/' + id + '/images?gps=' + gpsValue).success(function(images) {
-            object.images = images;
-            callback(null, object);
-          });
-        } else {
-          callback(null, object);
-        }
-      });
-    }
-  };
-});
+
 
 app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dialogs', '$location', 'FilterService', function($scope, $http, $routeParams, TagService, Dialogs, $location, FilterService) {
   var id = $routeParams.id;

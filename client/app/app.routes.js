@@ -77,6 +77,22 @@ app.config(['$routeProvider',
         templateUrl: 'templates/persons/show.html',
         controller: 'PersonCtrl'
       }).
+      when('/persons/:id/details', {
+        templateUrl: 'templates/persons/details.html',
+        controller: 'PersonCtrl'
+      }).
+      when('/persons/:id/persons/:personId', {
+        templateUrl: 'templates/persons/show.html',
+        controller: 'PersonCtrl'
+      }).
+      when('/persons/:id/tags/:tagId', {
+        templateUrl: 'templates/persons/show.html',
+        controller: 'PersonCtrl'
+      }).
+      when('/persons/:id/directories/:directoryId', {
+        templateUrl: 'templates/persons/show.html',
+        controller: 'PersonCtrl'
+      }).
       when('/search', {
         templateUrl: 'templates/search/index.html',
         controller: 'SearchCtrl'

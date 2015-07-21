@@ -8,19 +8,19 @@ app.directive('filterInformation', function() {
       var directory = $routeParams.directoryId;
 
       if (person) {
-        $http.get('/api/tags/' + id + '/persons/' + person).success(function(data) {
+        $http.get('/api/' + $scope.type + '/' + id + '/persons/' + person).success(function(data) {
           $scope.person = data;
         });
       }
 
       if (directory) {
-        $http.get('/api/tags/' + id + '/directories/' + directory).success(function(data) {
+        $http.get('/api/' + $scope.type + '/' + id + '/directories/' + directory).success(function(data) {
           $scope.directory = data;
         }); 
       }
 
       if (tag) {
-        $http.get('/api/tags/' + id + '/tags/' + tag).success(function(data) {
+        $http.get('/api/' + $scope.type + '/' + id + '/tags/' + tag).success(function(data) {
           $scope.tag = data;
         }); 
       }

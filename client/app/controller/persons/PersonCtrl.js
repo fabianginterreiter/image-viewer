@@ -25,12 +25,13 @@ return {
 }}});
 
 
-app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'Dialogs', '$location', 'usSpinnerService', 'PersonService', function($scope, $http, $routeParams, $window, DownloadService, Dialogs, $location, usSpinnerService, PersonService) {
-  $http.get('/api/persons/' + $routeParams.id).success(function(data) {
-  	$scope.person = data;
+app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'Dialogs', '$location', 'usSpinnerService', 'PersonService', 'FilterService', function($scope, $http, $routeParams, $window, DownloadService, Dialogs, $location, usSpinnerService, PersonService, FilterService) {
+  FilterService.filter($http, $routeParams, 'persons', function(err, person) {
+    $scope.person = person;
   });
 
   $scope.edit = function() {
+    console.log("wuf");
     PersonService.edit($scope.person);
   };
 
