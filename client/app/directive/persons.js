@@ -69,7 +69,9 @@ app.directive('persons', function() {
       };
 
       $scope.$watch('show', function(value) {
-        loadPersons();
+        if (value) {
+          loadPersons();  
+        }
       });
 
       $scope.$watch('image', function() {
@@ -77,7 +79,6 @@ app.directive('persons', function() {
           loadPersons();
         }
       });
-
 
     	$scope.deletePerson = function(person) {
         $http.delete('/api/images/' + $scope.image.id + '/persons/' + person.id).success(function(data) {
