@@ -1,0 +1,34 @@
+Bilder ohne GPS = {{imagesWithoutGps}} {{type}}
+
+<div class="col-md-4">
+<h2>Persons</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="person in persons">
+    <a class="badge" href="#/{{type}}/{{object.id}}/persons/{{person.id}}">{{person.count}}</a>
+    <a href="#/persons/{{person.id}}">{{person.name}}</a>
+  </li>
+</ul>
+<div class="alert alert-info" ng-if="persons.length === 0">There are no persons.</div>
+</div>
+
+<div class="col-md-4">
+<h2>Directories</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="directory in directories">
+    <a class="badge" href="#/{{type}}/{{object.id}}/directories/{{directory.id}}">{{directory.count}}</a>
+    <a href="#/browse/{{directory.id}}">{{directory.name}}</a>
+  </li>
+</ul>
+<div class="alert alert-info" ng-if="directories.length === 0">There are no directories.</div>
+</div>
+
+<div class="col-md-4">
+<h2>Tags</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="tag in tags">
+    <a class="badge" href="#/{{type}}/{{object.id}}/tags/{{tag.id}}">{{tag.count}}</a>
+    <a href="#/tags/{{tag.id}}">{{tag.text}}</a>
+  </li>
+</ul>
+<div class="alert alert-info" ng-if="tags.length === 0">There are no tags.</div>
+</div>

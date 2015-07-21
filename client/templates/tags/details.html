@@ -20,18 +20,6 @@
 </div>
 </div>
 
-
-<div class="row">
-<div class="col-md-4">
-<h2>Persons</h2>
-<ul class="list-group">
-  <li class="list-group-item" ng-repeat="person in persons">
-    <a class="badge" href="#/tags/{{tag.id}}/persons/{{person.id}}">{{person.count}}</a>
-    <a href="#/persons/{{person.id}}">{{person.name}}</a>
-  </li>
-</ul>
-<div class="alert alert-info" ng-if="persons.length === 0">There are no persons.</div>
-</div>
-</div>
+<statistics object="tag" type="'tags'"></statistics>
 
 </div>

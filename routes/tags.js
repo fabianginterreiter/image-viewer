@@ -87,6 +87,15 @@ router.get('/:id/directories', function(req, res) {
   });
 });
 
+router.get('/:id/directories/:directoryId', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT * FROM directories WHERE id = $1', [req.param('directoryId')], function(err, result) {
+      done();
+      res.send(result.rows[0]);
+    });
+  });
+});
+
 router.get('/:id/persons', function(req, res) {
   var id = req.param('id');
   database.connect(function(err, client, done) {
@@ -115,4 +124,13 @@ router.get('/:tagId/persons/:personId/images', function(req, res) {
   });
 });
   
+router.get('/:tagId/tags', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT tags.*, count(tags.id) AS count FROM tags JOIN image_tag it1 ON tags.id = it1.tag_id JOIN images ON it1.image_id = images.id JOIN image_tag it2 ON images.id = it2.image_id WHERE it2.tag_id = $1 AND it1.tag_id != $1 GROUP BY tags.id ORDER BY count DESC;', [req.param('tagId')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+
 module.exports = router;
