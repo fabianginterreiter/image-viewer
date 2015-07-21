@@ -47,7 +47,7 @@ app.factory('FilterService', function() {
           });
         } else if (routeParams.gps) {
           gpsValue = routeParams.gps === 'true';
-          $http.get('/api/' + type + '/' + id + '/images?gps=' + gps).success(function(images) {
+          http.get('/api/' + type + '/' + id + '/images?gps=' + gpsValue).success(function(images) {
             object.images = images;
             callback(null, object);
           });

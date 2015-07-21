@@ -57,6 +57,22 @@ router.get('/:id', function(req, res) {
   });
 });
 
+router.get('/:id/images', function(req, res) {
+  var id = req.param('id');
+  
+  var gpsCondition = '';
+  if (req.param('gps') && req.param('gps').length > 0) {
+    gpsCondition = ' AND gps = ' + req.param('gps');
+  }
+
+  database.connect(function(err, client, done) {
+    client.query('SELECT images.* FROM images JOIN image_tag ON images.id = image_tag.image_id WHERE image_tag.tag_id = $1 ' + gpsCondition + ' ORDER BY images.created_at', [id], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+
 router.put('/:id', function(req, res) {
   var tag = req.body;
   database.connect(function(err, client, done) {

@@ -24,6 +24,11 @@ app.directive('filterInformation', function() {
           $scope.tag = data;
         }); 
       }
+
+      if ($routeParams.gps) {
+        $scope.gps = true;
+        $scope.gpsValue = $routeParams.gps === 'true';
+      }
     },
 
     scope: {
