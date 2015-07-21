@@ -25,6 +25,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/tags/show.html',
         controller: 'TagCtrl'
       }).
+      when('/tags/:id/details', {
+        templateUrl: 'templates/tags/details.html',
+        controller: 'TagDetailsCtrl'
+      }).
       when('/galleries', {
         templateUrl: 'templates/galleries/galleries.html',
         controller: 'GalleriesCtrl'
