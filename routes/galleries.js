@@ -282,7 +282,9 @@ router.get('/:gallery_id/persons/:person_id/images', function(req, res) {
 });
 
 router.get('/:id/galleries', function(req, res) {
-  res.send([]);
+  database.query('SELECT galleries.*, count(galleries.id) AS count FROM galleries JOIN gallery_image gi1 ON galleries.id = gi1.gallery_id JOIN gallery_image gi2 ON gi1.image_id = gi2.image_id WHERE gi2.gallery_id = $1 AND galleries.id != $1 GROUP BY galleries.id ORDER BY count DESC;', [req.param('id')], function(err, result) {
+    res.send(result);
+  });
 });
 
 router.get('/:id/galleries/:galleryId', function(req, res) {
@@ -295,7 +297,9 @@ router.get('/:id/galleries/:galleryId', function(req, res) {
 });
 
 router.get('/:id/galleries/:galleryId/images', function(req, res) {
-  res.send([]);
+  database.query('SELECT images.* FROM images JOIN gallery_image gi1 ON images.id = gi1.image_id JOIN gallery_image gi2 ON images.id = gi2.image_id WHERE gi1.gallery_id = $1 AND gi2.gallery_id = $2 ORDER BY images.created_at;', [req.param('id'), req.param('galleryId')], function(err, result) {
+    res.send(result);
+  });
 });
 
 module.exports = router;
