@@ -11,6 +11,15 @@ class Database {
       callback(err, client, done);
     });
   }
+
+  query(s, arg, callback) {
+    this.connect(function(err, client, done) {
+      client.query(s, arg, function(err, result) {
+        done();
+        callback(err, result.rows);
+      });
+  	});
+  }
 }
 
 var database = new Database('localhost', 'postgres', '', 'images');
