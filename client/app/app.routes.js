@@ -53,6 +53,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/tags/show.html',
         controller: 'TagCtrl'
       }).
+      when('/tags/:id/galleries/:galleryId', {
+        templateUrl: 'templates/tags/show.html',
+        controller: 'TagCtrl'
+      }).
       when('/tags/:id/details', {
         templateUrl: 'templates/tags/details.html',
         controller: 'TagDetailsCtrl'
@@ -70,6 +74,10 @@ app.config(['$routeProvider',
         controller: 'GalleryCtrl'
       }).
       when('/galleries/:id/tags/:tagId', {
+        templateUrl: 'templates/galleries/gallery.html',
+        controller: 'GalleryCtrl'
+      }).
+      when('/galleries/:id/galleries/:galleryId', {
         templateUrl: 'templates/galleries/gallery.html',
         controller: 'GalleryCtrl'
       }).
@@ -106,6 +114,10 @@ app.config(['$routeProvider',
         controller: 'PersonCtrl'
       }).
       when('/persons/:id/directories/:directoryId', {
+        templateUrl: 'templates/persons/show.html',
+        controller: 'PersonCtrl'
+      }).
+      when('/persons/:id/galleries/:galleryId', {
         templateUrl: 'templates/persons/show.html',
         controller: 'PersonCtrl'
       }).
