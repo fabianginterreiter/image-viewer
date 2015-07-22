@@ -16,7 +16,7 @@
 <div class="alert alert-info" ng-if="persons.length === 0">There are no persons.</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-4" ng-if="dirs">
 <h2>Directories</h2>
 <ul class="list-group">
   <li class="list-group-item" ng-repeat="directory in directories">

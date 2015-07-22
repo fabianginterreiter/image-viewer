@@ -21,10 +21,12 @@ app.directive('statistics', function() {
           $scope.persons = data;
         });
 
-        if ($scope.type !== 'directories')
-        $http.get('/api/' + $scope.type + '/' + object.id + '/directories').success(function(data) {
-          $scope.directories = data;
-        });
+        if ($scope.type !== 'directories') {
+          $scope.dirs = true;
+          $http.get('/api/' + $scope.type + '/' + object.id + '/directories').success(function(data) {
+            $scope.directories = data;
+          });
+        }
 
         $http.get('/api/' + $scope.type + '/' + object.id + '/tags').success(function(data) {
           $scope.tags = data;
