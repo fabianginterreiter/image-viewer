@@ -8,7 +8,7 @@ app.factory('FilterService', function() {
         filter = true;
       }
 
-      var id = routeParams.id;
+      var id = routeParams.id ? routeParams.id : 0;
 
       http.get('/api/' + type + '/' + id + '?images=' + (filter ? 'false' : 'true')).success(function(object) {
         if (routeParams.personId) {

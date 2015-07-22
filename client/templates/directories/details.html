@@ -1,0 +1,12 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>{{directory.name}}</h1>
+    <p ng-if="images">This directory contains {{directory.directories.length}} directories and {{directory.images.length}} images.</p>
+    <div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <statistics object="directory" type="'directories'"></statistics>
+</div>

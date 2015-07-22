@@ -9,6 +9,18 @@ app.config(['$routeProvider',
         templateUrl: 'templates/directories/index.html',
         controller: 'BrowseCtrl'
       }).
+      when('/directories/:id/details', {
+        templateUrl: 'templates/directories/details.html',
+        controller: 'DirectoryDetailsCtrl'
+      }).
+      when('/directories/:id/persons/:personId', {
+        templateUrl: 'templates/directories/index.html',
+        controller: 'BrowseCtrl'
+      }).
+      when('/directories/:id/tags/:tagId', {
+        templateUrl: 'templates/directories/index.html',
+        controller: 'BrowseCtrl'
+      }).
       when('/config', {
         templateUrl: 'templates/config.html',
         controller: 'ConfigCtrl'

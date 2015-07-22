@@ -21,6 +21,7 @@ app.directive('statistics', function() {
           $scope.persons = data;
         });
 
+        if ($scope.type !== 'directories')
         $http.get('/api/' + $scope.type + '/' + object.id + '/directories').success(function(data) {
           $scope.directories = data;
         });
