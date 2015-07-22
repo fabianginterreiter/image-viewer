@@ -187,7 +187,12 @@ router.get('/:id/galleries/:galleryId', function(req, res) {
 });
 
 router.get('/:id/galleries/:galleryId/images', function(req, res) {
-  res.send([]);
+  database.connect(function(err, client, done) {
+    client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id JOIN gallery_image ON gallery_image.image_id = images.id WHERE image_person.person_id = $1 AND gallery_image.gallery_id = $2 ORDER BY images.created_at;', [req.param('id'), req.param('galleryId')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
 });
 
 module.exports = router;
