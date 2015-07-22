@@ -168,4 +168,21 @@ router.delete('/:id', function(req, res) {
   });
 });
 
+router.get('/:id/galleries', function(req, res) {
+  res.send([]);
+});
+
+router.get('/:id/galleries/:galleryId', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT * FROM galleries WHERE id = $1;', [req.param('galleryId')], function(err, result) {
+      done();
+      res.send(result.rows[0]);
+    });
+  });
+});
+
+router.get('/:id/galleries/:galleryId/images', function(req, res) {
+  res.send([]);
+});
+
 module.exports = router;
