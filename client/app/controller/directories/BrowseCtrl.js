@@ -29,7 +29,7 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
   }
 
 	FilterService.filter($http, $routeParams, 'directories', function(err, data) {
-    $scope.id = data.id;
+    $scope.id = $routeParams.id;
     $scope.name = data.name;
     $scope.images = data.images;
     $scope.directories = data.directories;
