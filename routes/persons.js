@@ -38,6 +38,23 @@ router.get('/:id', function(req, res) {
   });
 });
 
+router.get('/:id/images', function(req, res) {
+  var id = req.param('id');
+
+  
+  var gpsCondition = '';
+  if (req.param('gps') && req.param('gps').length > 0) {
+    gpsCondition = ' AND gps = ' + req.param('gps');
+  }
+
+  database.connect(function(err, client, done) {
+    client.query('SELECT images.* FROM image_person JOIN images ON image_person.image_id = images.id WHERE image_person.person_id = $1' + gpsCondition + ' ORDER BY images.created_at', [id], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+
 router.put('/:id', function(req, res) {
   var id = req.param('id');
 
@@ -83,11 +100,57 @@ router.get('/:id/persons/:person_id/images', function(req, res) {
 });
 
 router.get('/:id/tags', function(req, res) {
-  res.send([]);
+  database.connect(function(err, client, done) {
+    client.query('SELECT tags.*, count(tags.id) AS count FROM tags JOIN image_tag ON tags.id = image_tag.tag_id JOIN image_person ON image_tag.image_id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY tags.id ORDER BY count DESC;', [req.param('id')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+
+router.get('/:id/tags/:tagId', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT * FROM tags WHERE id = $1', [req.param('tagId')], function(err, result) {
+      done();
+      res.send(result.rows[0]);
+    });
+  });
+});
+
+router.get('/:id/tags/:tagId/images', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id JOIN image_tag ON image_tag.image_id = images.id WHERE image_person.person_id = $1 AND image_tag.tag_id = $2 ORDER BY images.created_at;', [req.param('id'), req.param('tagId')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
 });
 
 router.get('/:id/directories', function(req, res) {
-  res.send([]);
+  database.connect(function(err, client, done) {
+    client.query('SELECT directories.id, directories.name, count(directories.id) FROM directories JOIN images ON directories.id = images.directory_id JOIN image_person ON images.id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY directories.id ORDER BY count DESC', [req.param('id')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+
+router.get('/:id/directories/:directoryId', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT * FROM directories WHERE id = $1', [req.param('directoryId')], function(err, result) {
+      done();
+      res.send(result.rows[0]);
+    });
+  });
+});
+
+router.get('/:id/directories/:directoryId/images', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id WHERE images.directory_id = $2 AND image_person.person_id = $1 ORDER BY images.created_at;;', [req.param('id'), req.param('directoryId')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
 });
 
 router.delete('/:id', function(req, res) {
