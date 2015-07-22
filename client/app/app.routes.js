@@ -1,7 +1,7 @@
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/browse/', {
+      when('/directories/', {
         templateUrl: 'templates/directories/index.html',
         controller: 'BrowseCtrl'
       }).
