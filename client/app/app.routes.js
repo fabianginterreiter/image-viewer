@@ -5,7 +5,7 @@ app.config(['$routeProvider',
         templateUrl: 'templates/directories/index.html',
         controller: 'BrowseCtrl'
       }).
-      when('/browse/:id', {
+      when('/directories/:id', {
         templateUrl: 'templates/directories/index.html',
         controller: 'BrowseCtrl'
       }).

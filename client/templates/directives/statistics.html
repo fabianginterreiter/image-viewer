@@ -21,7 +21,7 @@
 <ul class="list-group">
   <li class="list-group-item" ng-repeat="directory in directories">
     <a class="badge" href="#/{{type}}/{{object.id}}/directories/{{directory.id}}">{{directory.count}}</a>
-    <a href="#/browse/{{directory.id}}">{{directory.name}}</a>
+    <a href="#/directories/{{directory.id}}">{{directory.name}}</a>
   </li>
 </ul>
 <div class="alert alert-info" ng-if="directories.length === 0">There are no directories.</div>
