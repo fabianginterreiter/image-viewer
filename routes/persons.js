@@ -169,7 +169,12 @@ router.delete('/:id', function(req, res) {
 });
 
 router.get('/:id/galleries', function(req, res) {
-  res.send([]);
+  database.connect(function(err, client, done) {
+    client.query('SELECT galleries.*, count(galleries.id) AS count FROM galleries JOIN gallery_image ON galleries.id = gallery_image.gallery_id JOIN image_person ON gallery_image.image_id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY galleries.id ORDER BY count DESC;', [req.param('id')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  })
 });
 
 router.get('/:id/galleries/:galleryId', function(req, res) {
