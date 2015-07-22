@@ -423,4 +423,13 @@ function start(req, res, id) {
   }
 };
 
+router.get('/:id/tags', function(req, res) {
+  database.connect(function(err, client, done) {
+    client.query('SELECT tags.*, count(tags.id) AS count FROM tags JOIN image_tag ON tags.id = image_tag.tag_id JOIN images ON image_tag.image_id = images.id WHERE images.directory_id = $1 GROUP BY tags.id ORDER BY count DESC;', [req.param('id')], function(err, result) {
+      done();
+      res.send(result.rows);
+    });
+  });
+});
+
 module.exports = router;
