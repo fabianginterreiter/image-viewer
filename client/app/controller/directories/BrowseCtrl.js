@@ -1,6 +1,6 @@
 
 
-app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService) {
+app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService) {
   $scope.download = function(width) {
     DownloadService.images(getSelected(), width);
   };
@@ -24,9 +24,11 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     }
   }, 10);
   
+  if (!$routeParams.id) {
+    $routeParams.id = 0;
+  }
 
-  var id = $routeParams.id ? $routeParams.id : 0;
-	$http.get('/api/directories/' + id).success(function(data) {
+	FilterService.filter($http, $routeParams, 'directories', function(err, data) {
     $scope.name = data.name;
     $scope.images = data.images;
     $scope.directories = data.directories;
@@ -35,11 +37,7 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     usSpinnerService.stop('browse');
 
     $scope.loaded = true;
-	}).error(function(data, status, headers, config) {
-    usSpinnerService.stop('browse');
-
-    
-  });
+	});
 
   $scope.isImage = function(file) {
     return (file && file.filename && file.filename.endsWith('JPG'));

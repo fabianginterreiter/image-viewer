@@ -367,12 +367,21 @@ router.get('/', function(req, res) {
 
 router.get('/:id', function(req, res) {
 
-  var id = 0;
-  if (req.param('id')) {
-    id = parseInt(req.param('id'));
-  }
+  if (req.param('images') !== 'false') {
+    var id = 0;
+    if (req.param('id')) {
+      id = parseInt(req.param('id'));
+    }
 
-  start(req, res, id);
+    start(req, res, id);
+  } else {
+    database.connect(function(err, client, done) {
+      client.query('SELECT * FROM directories WHERE id = $1', [req.param('id')], function(err, result) {
+        done();
+        res.send(result.rows);
+      });
+    });
+  }
 });
 
 function start(req, res, id) {
