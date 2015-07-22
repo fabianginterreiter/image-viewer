@@ -6,6 +6,7 @@ app.directive('filterInformation', function() {
       var person = $routeParams.personId;
       var tag = $routeParams.tagId;
       var directory = $routeParams.directoryId;
+      var gallery = $routeParams.galleryId;
 
       if (person) {
         $http.get('/api/' + $scope.type + '/' + id + '/persons/' + person).success(function(data) {
@@ -22,6 +23,12 @@ app.directive('filterInformation', function() {
       if (tag) {
         $http.get('/api/' + $scope.type + '/' + id + '/tags/' + tag).success(function(data) {
           $scope.tag = data;
+        }); 
+      }
+
+      if (gallery) {
+        $http.get('/api/' + $scope.type + '/' + id + '/galleries/' + gallery).success(function(data) {
+          $scope.gallery = data;
         }); 
       }
 

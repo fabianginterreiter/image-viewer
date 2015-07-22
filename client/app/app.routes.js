@@ -21,6 +21,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/directories/index.html',
         controller: 'BrowseCtrl'
       }).
+      when('/directories/:id/galleries/:galleryId', {
+        templateUrl: 'templates/directories/index.html',
+        controller: 'BrowseCtrl'
+      }).
       when('/config', {
         templateUrl: 'templates/config.html',
         controller: 'ConfigCtrl'

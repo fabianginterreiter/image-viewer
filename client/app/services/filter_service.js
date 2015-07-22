@@ -26,6 +26,11 @@ app.factory('FilterService', function() {
             object.images = images;
             callback(null, object);
           });
+        } else if (routeParams.galleryId) {
+          http.get('/api/' + type + '/' + id + '/galleries/' + routeParams.galleryId + '/images').success(function(images) {
+            object.images = images;
+            callback(null, object);
+          });
         } else if (routeParams.gps) {
           gpsValue = routeParams.gps === 'true';
           http.get('/api/' + type + '/' + id + '/images?gps=' + gpsValue).success(function(images) {

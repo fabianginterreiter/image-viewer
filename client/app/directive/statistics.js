@@ -31,6 +31,10 @@ app.directive('statistics', function() {
         $http.get('/api/' + $scope.type + '/' + object.id + '/tags').success(function(data) {
           $scope.tags = data;
         });
+
+        $http.get('/api/' + $scope.type + '/' + object.id + '/galleries').success(function(data) {
+          $scope.galleries = data;
+        });
       });
     },
 

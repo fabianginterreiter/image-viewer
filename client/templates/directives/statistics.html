@@ -37,3 +37,14 @@
 </ul>
 <div class="alert alert-info" ng-if="tags.length === 0">There are no tags.</div>
 </div>
+
+<div class="col-md-4">
+<h2>Galleries</h2>
+<ul class="list-group">
+  <li class="list-group-item" ng-repeat="gallery in galleries">
+    <a class="badge" href="#/{{type}}/{{object.id}}/galleries/{{gallery.id}}">{{gallery.count}}</a>
+    <a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a>
+  </li>
+</ul>
+<div class="alert alert-info" ng-if="galleries.length === 0">There are no galleries.</div>
+</div>
