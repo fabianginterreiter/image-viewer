@@ -1,7 +1,7 @@
 app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location) {
-  var person_ids = $routeParams.persons;
-  var tagIds = $routeParams.tags;
-  var galleryIds = $routeParams.galleries;
+  var person_ids = $routeParams.persons ? $routeParams.persons : '';
+  var tagIds = $routeParams.tags ? $routeParams.tags : '';
+  var galleryIds = $routeParams.galleries ? $routeParams.galleries : '';
   var minDate = $routeParams.minDate;
   var maxDate = $routeParams.maxDate;
 

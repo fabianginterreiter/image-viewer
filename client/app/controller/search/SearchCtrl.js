@@ -70,12 +70,19 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
   };
 
   $scope.search = function() {
-    var options = {
-      persons: getIds($scope.persons),
-      
-      tags: getIds($scope.tags),
-      galleries: getIds($scope.galleries)
-    };
+    var options = {};
+
+    if ($scope.persons.length) {
+      options.persons = getIds($scope.persons);
+    }
+    
+    if ($scope.tags.length) {
+      options.tags = getIds($scope.tags);
+    }
+    
+    if ($scope.galleries.length) {
+      options.galleries = getIds($scope.galleries)
+    }
 
     if ($scope.personsOnly) {
       options.personsOnly = 'true';  
