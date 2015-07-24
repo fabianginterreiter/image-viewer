@@ -101,7 +101,7 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
   };
 
   $scope.unmarkAll = function() {
-    _.forEach($scope.iamges, function(image) {
+    _.forEach($scope.images, function(image) {
       image.marked = false;
     });
   }
