@@ -84,7 +84,27 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     return selected;
   };
 
+  $scope.showUsed = function() {
+    $http.get('/api/directories/' + $scope.id + '/used').success(function(ids) {
+      _.forEach($scope.images, function(image) {
+        image.marked = _.contains(ids, image.id);
+      });
+    });
+  };
 
+  $scope.showUnused = function() {
+    $http.get('/api/directories/' + $scope.id + '/unused').success(function(ids) {
+      _.forEach($scope.images, function(image) {
+        image.marked = _.contains(ids, image.id);
+      });
+    });
+  };
+
+  $scope.unmarkAll = function() {
+    _.forEach($scope.iamges, function(image) {
+      image.marked = false;
+    });
+  }
 
   $scope.createFolder = function() {
 

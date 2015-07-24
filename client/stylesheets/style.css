@@ -88,7 +88,11 @@ div.thumbnail2 div.mark {
 }
 
 div.selected > div.mark {
-	background: rgba(150,150,255,0.5);
+	background: rgba(150,150,255,0.5) !important;
+}
+
+div.marked > div.mark {
+	background: rgba(50,50,50,0.9);
 }
 
 body {
