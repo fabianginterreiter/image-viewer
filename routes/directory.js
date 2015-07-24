@@ -423,6 +423,26 @@ function start(req, res, id) {
   }
 };
 
+router.get('/:id/used', function(req, res) {
+  database.query('SELECT DISTINCT id FROM images WHERE directory_id = $1 AND (EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) OR EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) OR EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id));', [req.param('id')], function(err, result) {
+    var ids = [];
+    _.forEach(result, function(el) {
+      ids.push(el.id);
+    });
+    res.send(ids);
+  });
+});
+
+router.get('/:id/unused', function(req, res) {
+  database.query('SELECT DISTINCT id FROM images WHERE directory_id = $1 AND NOT EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id);', [req.param('id')], function(err, result) {
+    var ids = [];
+    _.forEach(result, function(el) {
+      ids.push(el.id);
+    });
+    res.send(ids);
+  });
+});
+
 router.get('/:id/tags', function(req, res) {
   database.connect(function(err, client, done) {
     client.query('SELECT tags.*, count(tags.id) AS count FROM tags JOIN image_tag ON tags.id = image_tag.tag_id JOIN images ON image_tag.image_id = images.id WHERE images.directory_id = $1 GROUP BY tags.id ORDER BY count DESC;', [req.param('id')], function(err, result) {
