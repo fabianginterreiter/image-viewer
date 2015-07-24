@@ -125,8 +125,24 @@ router.get('/:id/images', function(req, res) {
     gpsCondition = ' AND gps = ' + req.param('gps');
   }
 
+  var orderCondition;
+
+  if (req.param('order')) {
+    var order = req.param('order');
+    if (order === 'random') {
+      orderCondition = 'random()';
+    } else {
+      orderCondition = 'images.created_at';
+    }
+  }
+
+  var limit = '';
+  if (req.param('limit')) {
+    limit = ' LIMIT ' + req.param('limit');
+  }
+
   database.connect(function(err, client, done) {
-    client.query('SELECT images.* FROM gallery_image JOIN images ON gallery_image.image_id = images.id WHERE gallery_image.gallery_id = $1' + gpsCondition + ' ORDER BY images.created_at', [id], function(err, result) {
+    client.query('SELECT images.* FROM gallery_image JOIN images ON gallery_image.image_id = images.id WHERE gallery_image.gallery_id = $1' + gpsCondition + ' ORDER BY ' + orderCondition + limit, [id], function(err, result) {
       done();
       res.send(result.rows);
     });
