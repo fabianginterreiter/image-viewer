@@ -101,6 +101,10 @@ app.directive('show', function() {
         var width = parent.width();
         var height = parent.height();
 
+        if (!width && !height) {
+          return;
+        }
+
         if (parent.hasClass('fullscreen')) {
           $scope.src = ImageCache.get(id, width, height).src;
         } else {
