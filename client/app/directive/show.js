@@ -80,6 +80,7 @@ app.directive('show', function() {
   return {
     controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService) {
       var image = null;
+      var fullscreen = false;
 
       $scope.loaded = function($event) {
         usSpinnerService.stop('spinner-1');
@@ -105,8 +106,8 @@ app.directive('show', function() {
           return;
         }
 
-        if (parent.hasClass('fullscreen')) {
-          $scope.src = ImageCache.get(id, width, height).src;
+        if (fullscreen) {
+          $scope.src = ImageCache.get(id, screen.width, screen.height).src;
         } else {
           $scope.src = ImageCache.get(id, width).src;
         }
@@ -134,23 +135,13 @@ app.directive('show', function() {
       };
 
       $scope.setFullscreen = function() {
-        if (angular.element('#image').hasClass('fullscreen')) {
-          screenfull.exit();
-        } else {
-          if (screenfull.enabled) {
-            screenfull.request(document.getElementById("image"));
-            $timeout(function() {
-              update();
-            }, 10);
-          }  
+        if (screenfull.enabled) {
+          screenfull.request(document.getElementById("image"));
         }
       };
 
       document.addEventListener('webkitfullscreenchange', function(e) {
-        angular.element(e.srcElement).toggleClass('fullscreen');
-        $timeout(function() {
-          update();
-        }, 10);
+        fullscreen = !fullscreen;
       }, false);
 
       $scope.setCoordinates = function() {
@@ -167,7 +158,6 @@ app.directive('show', function() {
           $scope.$apply();
         }
       });
-
 
       $scope.$watch(function () {
             return angular.element('#image').width();

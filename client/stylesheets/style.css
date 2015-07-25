@@ -99,13 +99,6 @@ body {
 margin-top: 50px;
 }
 
-.fullscreen {
-background-color: black;
-width: 100%;
-height: 100%;
-text-align: center;
-}
-
 .f {
 	position: absolute; 
 	top: 0; 
