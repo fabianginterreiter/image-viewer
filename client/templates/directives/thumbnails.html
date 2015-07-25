@@ -97,14 +97,12 @@
         </tbody>
       </table>
     </div>
-  
-
 
     <div ng-switch-default>
       <div ng-repeat="file in images track by $index | orderBy:'created_at'" class="thumbnail2" ng-class="{ 'selected' : file.selected, 'hover' : file.hover, 'marked' : file.marked }" ng-mouseenter="file.hover = true" ng-mouseleave="file.hover = false">
         <div view-image="file" class="oppaa" selectable="{{toolbar}}"></div>
         <div class="mark"></div>
-        <img data-srcset="/api/images/{{file.id}}/thumb?height={{file.thumb_height}}" height="{{file.thumb_height}}" width="{{file.thumb_width}}" class="lazyload" ng-if="!file.hide">
+        <img data-srcset="/api/images/{{file.id}}/thumb?height={{file.thumb_height}}" height="{{file.thumb_height}}" width="{{file.thumb_width}}" class="lazyload" ng-if="!file.hide" id="image-{{image.id}}">
         <div class="h teee" ng-click="file.selected = !file.selected">{{file.name}}</div>
       </div>
       <div style="clear:both"></div>

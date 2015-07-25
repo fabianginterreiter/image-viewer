@@ -1,6 +1,6 @@
 
 
-app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService) {
+app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', '$timeout', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService, $timeout) {
   $scope.download = function(width) {
     DownloadService.images(getSelected(), width);
   };
@@ -18,7 +18,7 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     };
   }
 
-  setTimeout(function() {
+  $timeout(function() {
     if (!$scope.images) {
       usSpinnerService.spin('browse');
     }
@@ -38,6 +38,21 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     usSpinnerService.stop('browse');
 
     $scope.loaded = true;
+
+    if ($routeParams.image) {
+      var index = _.findIndex(data.images, function(image) {
+        return image.id === $routeParams.image;
+      });
+
+      data.images[index].selected = true;
+      
+      $timeout(function() {
+        var element = document.getElementById('image-' + $routeParams.image);
+        if (element) {
+          element.scrollIntoView( true );
+        }
+      }, 200);
+    }
 	});
 
   $scope.isImage = function(file) {
