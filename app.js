@@ -14,6 +14,7 @@ var download = require('./routes/download');
 var cache = require('./routes/cache');
 var tags = require('./routes/tags');
 var persons = require('./routes/persons')
+var stats = require('./routes/stats')
 var config = require('config');
 
 var app = express();
@@ -50,6 +51,7 @@ app.use('/api/download', download);
 app.use('/api/tags', tags);
 app.use('/api/cache', cache);
 app.use('/api/persons', persons);
+app.use('/api/stats', stats);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
