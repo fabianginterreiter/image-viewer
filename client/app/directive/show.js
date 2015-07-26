@@ -78,7 +78,7 @@ var preloaded = [];
 
 app.directive('show', function() {
   return {
-    controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService) {
+    controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService, Dialogs) {
       var image = null;
       var fullscreen = false;
 
@@ -128,6 +128,14 @@ app.directive('show', function() {
       $scope.$watch('preload', function(preload) {
         ImageCache.addImages(preload);
       }); 
+
+      $scope.delete = function() {
+        Dialogs.delete('Delete', 'Do you want to delete the current image?', function() {
+          $http.delete('/api/images/' + $scope.image.id).success(function() {
+            Dialogs.alert('Title', 'Image was moved to "Trash" directory.')
+          });
+        }, null, 3);
+      }
 
       $scope.open = function(image) {
         $location.path('/images/' + image.id);

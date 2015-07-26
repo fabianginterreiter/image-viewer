@@ -43,7 +43,7 @@ app.factory('Dialogs', function($modal) {
         }
       });
     },
-    delete : function(title, message, ok, cancel) {
+    delete : function(title, message, ok, cancel, time) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/dialogs/delete.html',
@@ -60,7 +60,12 @@ app.factory('Dialogs', function($modal) {
           $scope.message = message;
 
           $scope.waiting = true;
+
           $scope.seconds = 6;
+
+          if (time) {
+            $scope.seconds = time;
+          }
 
           var countDown = function() {
             $scope.seconds--;
