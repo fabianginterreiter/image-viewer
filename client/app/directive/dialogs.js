@@ -4,12 +4,16 @@ app.factory('Dialogs', function($modal) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/dialogs/alert.html',
-        controller: function($scope, $modalInstance) {
+        controller: function($scope, $modalInstance, $timeout) {
           $scope.close = function () {
             $modalInstance.close();
           };
           $scope.title = title;
           $scope.message = message;
+
+          $timeout(function() {
+            angular.element('#alertCloseButton').focus();
+          }, 100);
         }
       }).result.then(function() {
         if (callback) {
@@ -21,7 +25,7 @@ app.factory('Dialogs', function($modal) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/dialogs/confirm.html',
-        controller: function($scope, $modalInstance) {
+        controller: function($scope, $modalInstance, $timeout) {
           $scope.ok = function () {
             $modalInstance.close(true);
           };
@@ -30,6 +34,10 @@ app.factory('Dialogs', function($modal) {
           };
           $scope.title = title;
           $scope.message = message;
+
+          $timeout(function() {
+            angular.element('#confirmCancelButton').focus();
+          }, 100);
         }
       }).result.then(function(status) {
         if (status) {
@@ -63,6 +71,10 @@ app.factory('Dialogs', function($modal) {
 
           $scope.seconds = 6;
 
+          if (time === false) {
+            $scope.seconds = 0;
+          }
+
           if (time) {
             $scope.seconds = time;
           }
@@ -77,6 +89,10 @@ app.factory('Dialogs', function($modal) {
               $scope.waiting = false;
             }
           };
+
+          $timeout(function() {
+            angular.element('#deleteCancelButton').focus();
+          }, 100);
 
           countDown();
         }

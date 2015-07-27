@@ -7,9 +7,9 @@
 </div>
 
 <div class="modal-footer">
+  <button class="btn btn-primary" ng-click="cancel()" id="deleteCancelButton">Cancel</button>
   <button class="btn btn-danger" ng-disabled="waiting" ng-click="ok()">
   	<span ng-if="!waiting">Delete</span>
     <span ng-if="waiting">{{seconds}} Seconds</span>
   </button>
-  <button class="btn btn-primary" ng-click="cancel()">Cancel</button>
 </div>

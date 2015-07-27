@@ -134,7 +134,7 @@ app.directive('show', function() {
           $http.delete('/api/images/' + $scope.image.id).success(function() {
             Dialogs.alert('Title', 'Image was moved to "Trash" directory.')
           });
-        }, null, 3);
+        }, null, false);
       }
 
       $scope.open = function(image) {
@@ -157,7 +157,11 @@ app.directive('show', function() {
       };
 
       angular.element("body").keydown(function(event) {
-        if ($scope.selectable && event.keyCode === 77) {
+        if (event.keyCode === 46) {
+          $scope.delete();
+        }
+
+        else if ($scope.selectable && event.keyCode === 77) {
           $scope.image.selected = !$scope.image.selected;
           angular.element("#checkIcon").css('opacity', '1');
           setTimeout(function() {
