@@ -51,13 +51,25 @@ router.get('/', function(req, res) {
 
   switch (action) {
     case 'random':
-      database.connect(function(err, client, done) {
-        var limit = req.param('limit') ? req.param('limit') : '10';
-        client.query('SELECT * FROM images ORDER BY random() LIMIT $1;', [limit], function(err, result) {
-          done();
-          res.send(result.rows);
+      var limit = req.param('limit') ? req.param('limit') : '10';
+      if (req.param('used')) {
+        if (req.param('used') === 'true') {
+          database.query('SELECT * FROM images WHERE (EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) OR EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) OR EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id)) ORDER BY random() LIMIT $1;', [limit], function(err, result) {
+            res.send(result);
+          });
+        } else {
+          database.query('SELECT * FROM images WHERE NOT EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id) ORDER BY random() LIMIT $1;', [limit], function(err, result) {
+            res.send(result);
+          });
+        }
+      } else {
+        database.connect(function(err, client, done) {
+          client.query('SELECT * FROM images ORDER BY random() LIMIT $1;', [limit], function(err, result) {
+            done();
+            res.send(result.rows);
+          });
         });
-      });
+      }
       break;
     case 'marked':
       database.connect(function(err, client, done) {

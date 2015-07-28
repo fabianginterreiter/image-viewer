@@ -131,9 +131,7 @@ app.directive('show', function() {
 
       $scope.delete = function() {
         Dialogs.delete('Delete', 'Do you want to delete the current image?', function() {
-          $http.delete('/api/images/' + $scope.image.id).success(function() {
-            Dialogs.alert('Title', 'Image was moved to "Trash" directory.')
-          });
+          $http.delete('/api/images/' + $scope.image.id);
         }, null, false);
       }
 
