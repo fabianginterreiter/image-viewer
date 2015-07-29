@@ -73,7 +73,7 @@ router.get('/', function(req, res) {
       break;
     case 'marked':
       database.connect(function(err, client, done) {
-        client.query('SELECT images.*, count(images.id) as count FROM images JOIN image_person ON images.id = image_person.image_id GROUP BY images.id ORDER BY count DESC;', [], function(err, result) {
+        client.query('SELECT images.*, count(images.id) as count FROM images JOIN image_person ON images.id = image_person.image_id GROUP BY images.id ORDER BY count DESC LIMIT 30;', [], function(err, result) {
           done();
           res.send(result.rows);
         });
