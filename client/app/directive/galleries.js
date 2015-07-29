@@ -204,6 +204,51 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
           };
         }
       });
+    },
+
+    setAsGalleryImage : function(image, callback) {
+      var s = function(scope, galleries, path) {
+        if (!scope.galleries) {
+          scope.galleries = [];
+        }
+        galleries.forEach(function(gallery) {
+          gallery.path = path;
+
+          var p = gallery.name;
+          if (path && path.length > 0) {
+            p = path + ' > ' + p;
+          }
+
+          s(scope, gallery.galleries, p);
+
+          scope.galleries.push(gallery);
+        });
+      };
+
+      $modal.open({
+        animation: true,
+        templateUrl: 'templates/directives/galleries/setAsGalleryImage.html',
+        controller: function ($scope, $modalInstance, $http, $location) {
+          $http.get('/api/galleries').success(function(data) {
+            s($scope, data);
+          });
+
+          $scope.add = function(gallery) {
+            gallery.image_id = image.id;
+            $http.put('/api/galleries/' + gallery.id, gallery).success(function(result) {
+              if (callback) {
+                callback();
+              }
+            });
+
+            $modalInstance.close();
+          };
+
+           $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+          };
+        }
+      });
     }
   };
 });

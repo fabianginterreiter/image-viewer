@@ -189,6 +189,9 @@ app.directive('show', function() {
         $scope.addToGallery = function() {
     GalleryService.addImages($scope.image);
   };
+    $scope.setAsGalleryImage = function() {
+      GalleryService.setAsGalleryImage($scope.image);
+    };
 
       $scope.setView = function(type) {
         if (type === 'details') {
