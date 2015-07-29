@@ -1,11 +1,11 @@
-
-<div class="list-group" ng-if="galleries.length > 0">
-    <a href="#/galleries/{{g.id}}" class="list-group-item" ng-repeat="g in galleries | orderBy:'name'" style="min-height: 80px">
-      <img ng-src="/api/images/{{g.image_id}}/thumb?height=60" class="img-rounded pull-left" ng-if="g.image_id != 0">
-      <div class="pull-left" style="padding-left: 10px;">
-        <h4 class="list-group-item-heading">{{g.name}}</h4>
-        <p class="list-group-item-text">{{g.description}}</p>
+<div class="row">
+  <div class="col-md-12">
+    <a ng-repeat="g in galleries | orderBy:'name'" href="#/galleries/{{g.id}}">
+      <div class="panel panel-default" style="width: 360px; float: left; margin-right: 10px;" ng-style="{'background': g.image_id != '0' ? 'url(/api/images/' + g.image_id + '/resize?width=380) no-repeat top center' : '#CCC'}">
+        <div class="panel-body" style="height: 200px">
+        </div>
+        <div class="panel-footer" style="opacity: 0.8;"><strong>{{g.name}}</strong></div>
       </div>
-      <div class="clear: both"></div>
     </a>
+  </div>
 </div>
