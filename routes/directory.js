@@ -176,8 +176,8 @@ class DirectoryLoader {
  
         setTimeout(function() {
           console.info("jetzt");
-          //that.deleteDirectories();
-          //that.deleteImages();
+          that.deleteDirectories();
+          that.deleteImages();
 
           var notLoaded = [];
           _.forEach(that.result.images, function(image) {
