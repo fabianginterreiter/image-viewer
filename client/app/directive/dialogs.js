@@ -1,6 +1,17 @@
 app.factory('Dialogs', function($modal) {
+  var open = false;
+
   return {
     alert : function(title, message, callback) {
+      if (open) {
+        if (callback) {
+          callback(false);
+        }
+        return;
+      }
+
+      open = true;
+
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/dialogs/alert.html',
@@ -16,12 +27,22 @@ app.factory('Dialogs', function($modal) {
           }, 100);
         }
       }).result.then(function() {
+        open = false;
         if (callback) {
-          callback();
+          callback(true);
         }
       });
     },
     confirm : function(title, message, ok, cancel) {
+      if (open) {
+        if (cancel) {
+          cancel(false);
+        }
+        return;
+      }
+
+      open = true;
+
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/dialogs/confirm.html',
@@ -40,6 +61,7 @@ app.factory('Dialogs', function($modal) {
           }, 100);
         }
       }).result.then(function(status) {
+        open = false;
         if (status) {
           if (ok) {
             ok(status);
@@ -52,6 +74,15 @@ app.factory('Dialogs', function($modal) {
       });
     },
     delete : function(title, message, ok, cancel, time) {
+      if (open) {
+        if (cancel) {
+          cancel(false);
+        }
+        return;
+      }
+
+      open = true;
+
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/dialogs/delete.html',
@@ -97,6 +128,7 @@ app.factory('Dialogs', function($modal) {
           countDown();
         }
       }).result.then(function(status) {
+        open = false;
         if (status) {
           if (ok) {
             ok(status);
