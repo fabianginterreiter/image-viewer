@@ -359,8 +359,8 @@ router.delete('/:ids', function(req, res) {
 });
 
 router.get('/:id/resize', function(req, res) {
-  var maxWidth = getIntFromRequest(req, 'width', 0);
-  var maxHeight = getIntFromRequest(req, 'height', 0);
+  var width = getIntFromRequest(req, 'width', 0);
+  var height = getIntFromRequest(req, 'height', 0);
   var id = req.param('id');
 
   database.connect(function(err, client, done) {
@@ -369,8 +369,16 @@ router.get('/:id/resize', function(req, res) {
 
       var transformer = sharp().withMetadata().rotate();
 
-      if (maxWidth > 0 || maxHeight > 0) {
-        transformer.resize(maxWidth, maxHeight).max();
+      if (width > 0 || height > 0) {
+        transformer.resize(width, height);
+      }
+
+      if (req.param('min') === 'true') {
+        transformer.min();
+        console.log("min");
+      } else {
+        transformer.max();
+        console.log("max");
       }
 
       fs.createReadStream(req.config.get('root') + result.rows[0].path).pipe(transformer).pipe(res);

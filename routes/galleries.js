@@ -3,6 +3,7 @@ var router = express.Router();
 var mapper = require('../utils/mapper');
 var _ = require('lodash');
 var database = require('../utils/Database');
+var sharp = require('sharp');
 
 var console = process.console;
 
@@ -97,6 +98,47 @@ router.get('/:id', function(req, res) {
           });
         });
       });
+    });
+  });
+});
+
+function getIntFromRequest(req, name, fallback) {
+  if (req.param(name)) {
+    return parseInt(req.param(name));
+  } else {
+    return fallback;
+  }
+}
+
+router.get('/:id/image', function(req, res) {
+  var width = getIntFromRequest(req, 'width', 0);
+  var height = getIntFromRequest(req, 'height', 0);
+
+  database.query('SELECT image_id FROM galleries WHERE id = $1', [req.param('id')], function(err, result) {
+    if (err) {
+      res.send('');
+    }
+
+    if (result.length === 0) {
+      res.send('');
+    }
+
+    var imageId = result[0].image_id;
+
+    var fullpath = req.config.get('cache') + '/' + imageId + '_huge.jpg';
+    new sharp(fullpath).resize(width, height).min().toBuffer(function(err, buffer) {
+      if (err) {
+        return database.query('SELECT directories.path || images.name AS path FROM images JOIN directories ON images.directory_id = directories.id WHERE images.id = $1', [imageId], function(err, result) {
+          var absolute = req.config.get('root') + result[0].path;
+          new sharp(absolute).resize(1000, 1000).max().rotate().toFile(fullpath, function(err) {
+            new sharp(fullpath).resize(width, height).min().toBuffer(function(err, buffer) {
+              res.send(buffer);
+            });
+          });
+        });
+      }
+
+      res.send(buffer);
     });
   });
 });
