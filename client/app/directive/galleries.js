@@ -97,11 +97,18 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
           setGalleries($scope, gallery);
 
           $scope.ok = function () {
+            var data = {};
+            data.id = gallery.id;
+            data.name = $scope.name;
+            data.description = $scope.description;
+            data.parent_id = $scope.parent.id;
+            data.image_id = gallery.image_id;
+
             gallery.name = $scope.name;
             gallery.description = $scope.description;
-            gallery.parent_id = $scope.parent.id;
+            gallery.parent_id = data.parent_id;
 
-            $http.put('/api/galleries/' + gallery.id, gallery).success(function(result) {
+            $http.put('/api/galleries/' + data.id, data).success(function(result) {
               $modalInstance.close();  
               Dialogs.alert('Update', 'The Gallery ' + gallery.name + ' was updated successfully.');
             });
