@@ -1,54 +1,45 @@
-
-<div class="jumbotron">
-  <div class="container">
-    <h1>Galleries</h1>
-    <p></p>
-    <div>
-      <button class="btn btn-primary" ng-click="create()">Create</button>
+<div ng-init="overview = false">
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Galleries</h1>
+      <p></p>
+      <div>
+        <button class="btn btn-primary" ng-click="create()">Create</button>
+        <button class="btn btn-info" ng-click="overview = !overview">Overview</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="container">
-<div class="row">
-<div class="col-md-12">
-<ol class="breadcrumb">
-  <li><a href="#/galleries">Galleries</a></li>
-</ol>
-</div>
-</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li><a href="#/galleries">Galleries</a></li>
+        </ol>
+      </div>
+    </div>
 
-<tabset>
-    <tab heading="Galleries">
-    <br>
-      <div class="row" ng-if="galleries.length > 0">
-  <div class="col-md-12">
-  <galleries galleries="galleries"></galleries>
-  </div>
-</div>
-
-    </tab>
-
-    <tab heading="Overview">
+    <div ng-if="overview">
       <script type="text/ng-template" id="field_renderer.html">
-    <a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a>
-    <ul>
-        <li ng-repeat="gallery in gallery.galleries | orderBy:'name'" ng-include="'field_renderer.html'"></li>
-    </ul>
-</script>
-<br>
-<div class="row">
-<div class="col-md-12">
-  <ul>
-    <li ng-repeat="gallery in galleries | orderBy:'name'" ng-include="'field_renderer.html'"></li>
-  </ul>  
-</div>
-</div>
-    </tab>
-</tabset>
+        <a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a>
+        <ul>
+          <li ng-repeat="gallery in gallery.galleries | orderBy:'name'" ng-include="'field_renderer.html'"></li>
+        </ul>
+      </script>
+      <div class="row">
+        <div class="col-md-12">
+          <ul>
+            <li ng-repeat="gallery in galleries | orderBy:'name'" ng-include="'field_renderer.html'"></li>
+          </ul>  
+        </div>
+      </div>
+    </div>
 
-
-
-
-
+    <div ng-if="!overview">
+      <div class="row" ng-if="galleries.length > 0">
+        <div class="col-md-12">
+          <galleries galleries="galleries"></galleries>
+       </div>
+    </div>
+  </div>
 </div>
