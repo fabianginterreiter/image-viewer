@@ -40,10 +40,12 @@ router.post('/', function(req, res) {
   });
 });
 
+import { TagController } from '../controllers/tag';
+
 router.get('/:id', function(req, res) {
   var id = req.param('id');
 
-  require('../controllers/tag').get(id, function(err, tag) {
+  new TagController(database).get(id, function(err, tag) {
 
     if (err) {
       return res.status(500).send(err);

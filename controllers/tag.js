@@ -1,11 +1,14 @@
-var database = require('../utils/Database');
 var console = process.console;
 
-class TagController {
+export class TagController {
+  constructor(database) {
+    this.database = database;    
+  }
+
   get(id, callback) {
     var that = this;
 
-    database.connect(function(err, client, done) {
+    this.database.connect(function(err, client, done) {
       if (err) {
         return callback(err);
       }
@@ -47,5 +50,3 @@ class TagController {
     });
   }
 }
-
-export default new TagController();
