@@ -116,6 +116,8 @@ app.directive('show', function() {
       $scope.$watch('image', function(data) {
         $scope.view = 'image';
         image = data;
+        console.log("Loaded: " + image.id);
+        $scope.image = data;
         
         if (!image) {
           return;
@@ -154,7 +156,7 @@ app.directive('show', function() {
         MapsService.setCoordinates($scope.image);
       };
 
-      angular.element("body").keydown(function(event) {
+      var handler = function(event) {
         if (event.keyCode === 46) {
           $scope.delete();
         }
@@ -167,6 +169,13 @@ app.directive('show', function() {
           }, 300);
           $scope.$apply();
         }
+      };
+
+      var $doc = angular.element(document);
+
+      $doc.on('keydown', handler);
+      $scope.$on('$destroy',function(){
+        $doc.off('keydown', handler);
       });
 
       $scope.$watch(function () {
