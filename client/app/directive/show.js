@@ -156,7 +156,7 @@ app.directive('show', function() {
         MapsService.setCoordinates($scope.image);
       };
 
-      var handler = function(event) {
+      addEventToDocument($scope, 'keydown', function(event) {
         if (event.keyCode === 46) {
           $scope.delete();
         }
@@ -169,13 +169,6 @@ app.directive('show', function() {
           }, 300);
           $scope.$apply();
         }
-      };
-
-      var $doc = angular.element(document);
-
-      $doc.on('keydown', handler);
-      $scope.$on('$destroy',function(){
-        $doc.off('keydown', handler);
       });
 
       $scope.$watch(function () {
