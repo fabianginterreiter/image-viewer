@@ -294,7 +294,11 @@ router.delete('/:ids', function(req, res) {
 
   console.time().tag('images').info('Deleting ' + ids.length + ' images (' + ids.join(',') + ')');
 
-  database.connect(function(err, client, done) {
+  database.query('UPDATE images SET deleted = true WHERE images.id IN (' + ids.join(',') + ')', [], function(err, result) {
+    res.send('OK');
+  });
+
+  /*database.connect(function(err, client, done) {
     client.query('SELECT * FROM directories WHERE path LIKE $1', [req.config.get('trash') + '/'], function(err, result) {
       var trash = result.rows[0];
 
@@ -355,7 +359,7 @@ router.delete('/:ids', function(req, res) {
         });
       });
     });
-  });
+  });*/
 });
 
 router.get('/:id/resize', function(req, res) {
