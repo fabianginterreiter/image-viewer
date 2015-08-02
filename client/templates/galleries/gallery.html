@@ -3,7 +3,7 @@
 <div class="jumbotron">
   <div class="container">
     <h1>{{gallery.name}}</h1>
-    <p>{{gallery.description}} {{gallery.images.length}} images.</p>
+    <p>{{gallery.description}}<span ng-if="gallery.images.length > 0">{{gallery.images.length}} images.</span></p>
     <div>
       <button class="btn btn-primary" ng-click="edit()">Edit</button>
 
@@ -60,11 +60,6 @@
 <filter-information type="'galleries'"></filter-information>
 
 </div>
-
-
-
-
-
 
 <div class="container">
   <div class="row">
