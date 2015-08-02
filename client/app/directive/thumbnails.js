@@ -123,7 +123,8 @@ app.directive('thumbnails', function() {
     restrict: 'E',
     scope: {
       images: '=images',
-      toolbar: '=toolbar'
+      toolbar: '=toolbar',
+      showDeleted: '=showDeleted'
     },
     templateUrl: 'templates/directives/thumbnails.html'
   };

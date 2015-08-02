@@ -62,7 +62,8 @@
         <li class="divider"></li>
         <li><a ng-click="setAsGalleryImage(image)">Set as gallery image</a>
         <li class="divider"></li>
-        <li><a ng-click="delete()">Delete</a></li>
+        <li ng-if="!image.deleted"><a ng-click="delete()">Delete</a></li>
+        <li ng-if="image.deleted"><a ng-click="restore()">Restore</a></li>
       </ul>
     </span>
   </div>
