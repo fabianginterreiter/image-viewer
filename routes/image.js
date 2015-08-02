@@ -297,69 +297,6 @@ router.delete('/:ids', function(req, res) {
   database.query('UPDATE images SET deleted = true WHERE images.id IN (' + ids.join(',') + ')', [], function(err, result) {
     res.send('OK');
   });
-
-  /*database.connect(function(err, client, done) {
-    client.query('SELECT * FROM directories WHERE path LIKE $1', [req.config.get('trash') + '/'], function(err, result) {
-      var trash = result.rows[0];
-
-      console.time().tag('images').info('Trash ID: ' + trash.id + ' ' + trash.path);
-
-      client.query('SELECT images.id AS id, directories.path || images.name AS path, images.name AS name FROM images JOIN directories ON images.directory_id = directories.id WHERE images.id IN (' + ids.join(',') + ')', [], function(err, result) {
-
-        var images = result.rows;
-
-        client.query('UPDATE images SET directory_id = $1 WHERE id IN (' + ids.join(',') + ')', [trash.id], function(err, result) {
-
-          var loaded = _.after(images.length, function() {
-            res.send("OK");
-            done();
-          });
-
-          fs.readdir(req.config.get('root') + trash.path, function(err, files) {
-
-            var getUniqueName = function(image) {
-              if (files.indexOf(image.name) < 0) {
-                return image.name;
-              } else {
-                var li = image.name.lastIndexOf('.');
-                var a = image.name.substring(0, li);
-                var e = image.name.substring(li);
-
-                var n = 1;
-
-                var naa = '';
-
-                do {
-                  naa = a + '_' + n + e;
-                  n++;          
-                } while (files.indexOf(naa) >= 0);
-                return naa;
-              }
-            };
-
-          
-            _.forEach(images, function(image) {
-              var fullpath = req.config.get('root') + image.path;
-              
-              var name = getUniqueName(image);
-
-              if (name !== image.name) {
-                client.query('UPDATE images SET name = $1 WHERE id = $2', [name, image.id]);
-              }
-
-              var newpath = req.config.get('root') + trash.path + name;
-
-              console.time().tag('images').info('Rename ' + fullpath + ' to ' + newpath);
-
-              fs.rename(fullpath, newpath, function(err) {
-                loaded();
-              });
-            });
-          });
-        });
-      });
-    });
-  });*/
 });
 
 router.get('/:id/resize', function(req, res) {
