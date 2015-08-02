@@ -133,9 +133,17 @@ app.directive('show', function() {
 
       $scope.delete = function() {
         Dialogs.delete('Delete', 'Do you want to delete the current image?', function() {
-          $http.delete('/api/images/' + $scope.image.id);
+          $http.delete('/api/images/' + $scope.image.id).success(function() {
+            $scope.image.deleted = true;
+          });
         }, null, false);
       }
+
+      $scope.restore = function() {
+        $http.put('/api/trash/restore/' + $scope.image.id).success(function() {
+          $scope.image.deleted = false;
+        });
+      };
 
       $scope.open = function(image) {
         $location.path('/images/' + image.id);

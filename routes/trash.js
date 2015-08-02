@@ -41,7 +41,7 @@ router.get('/delete', function(req, res) {
   });
 });
 
-router.get('/restore/:ids', function(req, res) {
+router.put('/restore/:ids', function(req, res) {
   var ids = req.param('ids').split('+');
   database.query('UPDATE images SET deleted = false WHERE deleted = true AND id IN(' + ids.join(',') + ')', [], function(err, result) {
     res.send('OK');
