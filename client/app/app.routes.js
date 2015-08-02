@@ -141,6 +141,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/random/index.html',
         controller: 'RandomCtrl'
       }).
+      when('/trash', {
+        templateUrl: 'templates/trash/index.html',
+        controller: 'TrashCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });
