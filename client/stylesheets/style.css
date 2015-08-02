@@ -95,6 +95,21 @@ div.marked > div.mark {
 	background: rgba(50,50,50,0.9);
 }
 
+div.deleted {
+	z-index: 505;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-top: 30%;
+	background: rgba(0,0,0,0.8);
+	font-size: 60px;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+}
+
 body {
 margin-top: 50px;
 }
