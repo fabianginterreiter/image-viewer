@@ -15,8 +15,8 @@ app.controller('TrashCtrl', ['$scope', '$http', 'Dialogs', function($scope, $htt
 
   $scope.delete = function() {
     Dialogs.delete('Delete', 'Do you really want to delete all the files?', function() {
-      $http.get('/api/trash/delete').success(function(data) {
-
+      $http.delete('/api/trash/clear').success(function(data) {
+        $scope.images = [];
       });
     });
   };

@@ -16,7 +16,7 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/delete', function(req, res) {
+router.delete('/clear', function(req, res) {
   database.connect(function(err, client, done) {
     client.query('SELECT directories.path || images.name AS path FROM images JOIN directories ON images.directory_id = directories.id WHERE deleted = true', [], function(err, result) {
 
