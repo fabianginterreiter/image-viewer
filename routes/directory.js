@@ -423,6 +423,23 @@ function start(req, res, id) {
   }
 };
 
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+
+router.post('/:id/images', upload.single('file'), function(req, res) {
+  database.query('SELECT * FROM directories WHERE id = $1', [req.param('id')], function(err, result) {
+    var writeStream = fs.createWriteStream(req.config.get('root') + result[0].path + req.file.originalname);
+
+    var readStream = fs.createReadStream(req.file.path);
+
+    readStream.on('end', function() {
+      res.send('OK' + req.config.get('root') + result[0].path);
+    });
+
+    readStream.pipe(writeStream);
+  });
+});
+
 router.get('/:id/used', function(req, res) {
   database.query('SELECT DISTINCT id FROM images WHERE directory_id = $1 AND (EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) OR EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) OR EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id));', [req.param('id')], function(err, result) {
     var ids = [];

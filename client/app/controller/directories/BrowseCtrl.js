@@ -1,6 +1,6 @@
 
 
-app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', '$timeout', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService, $timeout) {
+app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', '$timeout', 'UploadService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService, $timeout, UploadService) {
   $scope.download = function(width) {
     DownloadService.images(getSelected(), width);
   };
@@ -34,6 +34,7 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     $scope.images = data.images;
     $scope.directories = data.directories;
     $scope.navigation = data.navigation;
+    $scope.directory = data;
     
     usSpinnerService.stop('browse');
 
@@ -119,7 +120,13 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     _.forEach($scope.images, function(image) {
       image.marked = false;
     });
-  }
+  };
+
+  $scope.upload = function() {
+    UploadService.upload($scope.directory, function(images) {
+
+    });
+  };
 
   $scope.createFolder = function() {
 
