@@ -3,9 +3,18 @@
     <h1>{{tag.text}}</h1>
     <p></p>
     <div>
-      <button class="btn btn-primary" ng-click="edit()">Edit</button>
-      <button class="btn btn-danger" ng-click="delete()">Delete</button>
       <a class="btn btn-info" href="#/tags/{{tag.id}}/details">Details</a>
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          Options <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a ng-click="edit()">Edit</a></li>
+          <li class="divider"></li>
+          <li><a ng-click="delete()">Delete</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
