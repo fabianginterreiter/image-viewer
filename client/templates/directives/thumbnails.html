@@ -13,7 +13,7 @@
             <span class="dropdown" dropdown on-toggle="toggled(open)">
               <span class="dropdown-toggle" dropdown-toggle>
                 <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
-                <span class="hidden-xs"> Images</span>
+                <span class="hidden-xs"> Download</span>
               </span>
               <ul class="dropdown-menu">
                 <li><a ng-click="download()">Fullsize</a></li>
@@ -21,33 +21,6 @@
                 <li><a ng-click="download(1920)">1920</a></li>
                 <li><a ng-click="download(1280)">1280</a></li>
                 <li><a ng-click="download(800)">800</a></li>
-              </ul>
-            </span>
-          </div>
-
-          <div class="left" ng-click="create()">
-            <span class="glyphicon glyphicon-th" style="margin-bottom: -1px"></span>
-            <span class="hidden-xs"> Create Gallery</span>
-          </div>
-
-          <div class="left" ng-click="addToGallery()">
-            <span class="glyphicon glyphicon-plus" style="margin-bottom: -1px"></span>
-            <span class="hidden-xs"> Add</span>
-          </div>
-
-          <div class="left" ng-click="addTags()">
-            <span class="glyphicon glyphicon-plus" style="margin-bottom: -1px"></span>
-            <span class="hidden-xs"> Add Tags</span>
-          </div>
-
-          <div class="left">
-            <span class="dropdown" dropdown on-toggle="toggled(open)">
-              <span class="dropdown-toggle" dropdown-toggle>
-                <span class="glyphicon glyphicon-menu-hamburger" style="margin-bottom: -1px"></span>
-                <span class="hidden-xs"> Other</span>
-              </span>
-              <ul class="dropdown-menu">
-                <li><a>Set Gallery Image</a></li>
               </ul>
             </span>
           </div>
@@ -62,6 +35,21 @@
                 <li><a ng-click="setView('preview')"><span class="glyphicon glyphicon-th"></span> Preview</a></li>
                 <li class="divider"></li>
                 <li><a ng-click="setView('details')"><span class="glyphicon glyphicon-list-alt"></span> Details</a></li>
+              </ul>
+            </span>
+          </div>
+
+          <div class="left">
+            <span class="dropdown" dropdown on-toggle="toggled(open)">
+              <span class="dropdown-toggle" dropdown-toggle>
+                <span class="glyphicon glyphicon-menu-hamburger" style="margin-bottom: -1px"></span>
+                <span class="hidden-xs"> Options</span>
+              </span>
+              <ul class="dropdown-menu">
+                <li><a ng-click="create()">Create Gallery</a></li>
+                <li><a ng-click="addToGallery()">Add to Gallery</a></li>
+                <li class="divider"></li>
+                <li><a ng-click="addTags()">Add Tags</a></li>
               </ul>
             </span>
           </div>
