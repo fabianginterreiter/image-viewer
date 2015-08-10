@@ -220,8 +220,10 @@ router.get('/:id', function(req, res) {
 
         image.galleries = result.rows;
 
-        client.query('SELECT id, name FROM directories WHERE id = $1', [image.directory_id], function(err, result) {
+        client.query('SELECT id, name, path FROM directories WHERE id = $1', [image.directory_id], function(err, result) {
           image.directory = result.rows[0];
+
+          image.fullpath = req.config.get('root') + image.directory.path + image.name;
 
           client.query('SELECT tags.* FROM tags JOIN image_tag ON image_tag.tag_id = tags.id WHERE image_tag.image_id = $1', [id], function(err, result) {
             image.tags = result.rows;
