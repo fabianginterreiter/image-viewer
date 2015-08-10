@@ -5,8 +5,6 @@
     <h1>{{gallery.name}}</h1>
     <p>{{gallery.description}}<span ng-if="gallery.images.length > 0">{{gallery.images.length}} images.</span></p>
     <div>
-      <button class="btn btn-primary" ng-click="edit()">Edit</button>
-
       <div class="btn-group">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
           Download <span class="caret"></span>
@@ -20,7 +18,7 @@
         </ul>
       </div>
 
-      <a class="btn btn-danger" ng-click="delete()">Delete</a>
+      
       <a class="btn btn-success" href="#/galleries/{{gallery.id}}/details">Details</a>
 
       <div class="btn-group">
@@ -28,6 +26,9 @@
           Options <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
+          <li><a ng-click="edit()">Edit</a></li>
+          <li class="divider"></li>
+          <li><a ng-click="delete()">Remove selected Images</a></li>
           <li><a ng-click="changeGalleryImage()">Set Gallery Image</a></li>
           <li class="divider"></li>
           <li><a ng-click="deleteGallery();">Delete</a></li>
