@@ -78,9 +78,13 @@ var preloaded = [];
 
 app.directive('show', function() {
   return {
-    controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService, Dialogs) {
+    controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService, Dialogs, ImageService) {
       var image = null;
       var fullscreen = false;
+
+      $scope.edit = function() {
+        ImageService.edit(image);
+      };
 
       $scope.loaded = function($event) {
         usSpinnerService.stop('spinner-1');

@@ -1,3 +1,4 @@
+<div ng-if="image">
 <div class="options" ng-style="{'visibility': {{toolbar ? 'visible' : 'hidden'}}}">
   <div class="left" ng-click="image.selected = !image.selected" ng-if="selectable">
     <span class="glyphicon glyphicon-check" ng-if="image.selected"></span>
@@ -56,11 +57,13 @@
         <span class="hidden-xs"> Options</span>
       </span>
       <ul class="dropdown-menu">
+        <li><a ng-click="edit()">Edit</a></li>
+        <li class="divider"></li>
         <li><a ng-click="create()">Create Gallery</a></li>
         <li><a ng-click="addToGallery()">Add to Gallery</a></li>
         <li><a ng-click="setCoordinates()">Set Coordinates</a></li>
         <li class="divider"></li>
-        <li><a ng-click="setAsGalleryImage(image)">Set as gallery image</a>
+        <li><a ng-click="setAsGalleryImage(image)">Set as gallery image</a></li>
         <li class="divider"></li>
         <li ng-if="!image.deleted"><a ng-click="delete()">Delete</a></li>
         <li ng-if="image.deleted"><a ng-click="restore()">Restore</a></li>
@@ -140,4 +143,5 @@ Created at: {{image.created_at}}
     <span us-spinner="{color: '#000'}" spinner-key="spinner-1"></span>
   </div>
 
+</div>
 </div>

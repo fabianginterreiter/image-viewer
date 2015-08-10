@@ -1,9 +1,9 @@
 app.filter("getImageName", function() {
   return function(image) {
-    if (image.name === image.title) {
-      return image.name;
+    if (image.title) {
+      return image.title;
     } else {
-      return image.title + ' <small>(' + image.name + ')<small>';
+   	  return image.name;   
     }
   };
 });

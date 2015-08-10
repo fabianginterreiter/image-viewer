@@ -36,8 +36,8 @@ function updateImage(client, id, callback) {
 router.put('/:id', function(req, res) {
   var image = req.body;
   database.connect(function(err, client, done) {
-    client.query('UPDATE images SET gps = $1, latitude = $2, longitude = $3 WHERE id = $4', 
-      [image.gps, image.latitude, image.longitude, image.id], function(err, result) {
+    client.query('UPDATE images SET gps = $1, latitude = $2, longitude = $3, title = $4 WHERE id = $5', 
+      [image.gps, image.latitude, image.longitude, image.title, image.id], function(err, result) {
         updateImage(client, image.id, function(err) {
           done();
           res.send("OK")
