@@ -149,11 +149,6 @@ app.directive('show', function() {
         });
       };
 
-      $scope.open = function(image) {
-        $location.path('/images/' + image.id);
-        $modalStack.dismissAll();
-      };
-
       $scope.setFullscreen = function() {
         if (screenfull.enabled) {
           screenfull.request(document.getElementById("image"));

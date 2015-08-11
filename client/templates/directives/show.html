@@ -6,10 +6,10 @@
     <span class="hidden-xs"> Select</span>
   </div>
 
-  <div class="left" ng-click="open(image)" ng-if="link">
+  <a class="left" href="#/images/{{image.id}}" ng-if="link">
     <span class="glyphicon glyphicon-link"></span>
     <span class="hidden-xs"> Link</span>
-  </div>
+  </a>
 
   <div class="left" ng-click="showPersons = !showPersons;" >
     <span class="glyphicon glyphicon-check" ng-if="showPersons"></span>

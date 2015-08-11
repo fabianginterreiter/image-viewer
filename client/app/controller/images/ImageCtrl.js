@@ -1,4 +1,8 @@
-app.controller('ImageCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+
+
+app.controller('ImageCtrl', ['$scope', '$http', '$routeParams', 'ImageViewerService', function($scope, $http, $routeParams, ImageViewerService) {
+  ImageViewerService.open();
+
   $scope.id = $routeParams.id;
 
   $scope.width = angular.element('#image').width();
