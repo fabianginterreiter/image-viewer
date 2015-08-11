@@ -202,11 +202,12 @@ app.directive('show', function() {
       GalleryService.setAsGalleryImage($scope.image);
     };
 
+    $scope.view = 'image';
+
       $scope.setView = function(type) {
         if (type === 'details') {
           if (!image.directory) {
             $http.get('/api/images/' + image.id).success(function(data) {
-
               for(var k in data) {
                 image[k]=data[k];
               }
@@ -214,6 +215,8 @@ app.directive('show', function() {
               $scope.view = type;
             });
           } else {
+              console.log("set" + type);
+
             $scope.view = type;
           }
         } else if (type === 'exif') {
