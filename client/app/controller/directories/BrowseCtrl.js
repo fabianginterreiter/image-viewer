@@ -1,6 +1,8 @@
 
 
-app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', '$timeout', 'UploadService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService, $timeout, UploadService) {
+app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', '$timeout', 'UploadService', 'ImageViewerService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService, $timeout, UploadService, ImageViewerService) {
+  ImageViewerService.open();
+
   $scope.download = function(width) {
     DownloadService.images(getSelected(), width);
   };
