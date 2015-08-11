@@ -25,7 +25,9 @@ return {
 }}});
 
 
-app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'Dialogs', '$location', 'usSpinnerService', 'PersonService', 'FilterService', function($scope, $http, $routeParams, $window, DownloadService, Dialogs, $location, usSpinnerService, PersonService, FilterService) {
+app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'Dialogs', '$location', 'usSpinnerService', 'PersonService', 'FilterService', 'ImageViewerService', function($scope, $http, $routeParams, $window, DownloadService, Dialogs, $location, usSpinnerService, PersonService, FilterService, ImageViewerService) {
+  ImageViewerService.open();
+
   FilterService.filter($http, $routeParams, 'persons', function(err, person) {
     $scope.person = person;
   });

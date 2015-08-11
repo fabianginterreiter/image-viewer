@@ -27,7 +27,8 @@ app.factory('TagService', function($modal, $http, Dialogs) {
 
 
 
-app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dialogs', '$location', 'FilterService', function($scope, $http, $routeParams, TagService, Dialogs, $location, FilterService) {
+app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dialogs', '$location', 'FilterService', 'ImageViewerService', function($scope, $http, $routeParams, TagService, Dialogs, $location, FilterService, ImageViewerService) {
+  ImageViewerService.open();
   var id = $routeParams.id;
 
   FilterService.filter($http, $routeParams, 'tags', function(err, tag) {
