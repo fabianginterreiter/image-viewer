@@ -28,6 +28,8 @@
 	padding: 15px 10px 15px 10px;
 	margin-right: 5px;
 	cursor: pointer;
+	text-decoration: none;
+	color: black;
 }
 
 .options > .right {
@@ -35,6 +37,8 @@
 	padding: 15px 10px 15px 10px;
 	margin-right: 5px;
 	cursor: pointer;
+	text-decoration: none;
+	color: black;
 }
 
 tr.selected td {
