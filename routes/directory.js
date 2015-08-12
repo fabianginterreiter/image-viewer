@@ -220,7 +220,7 @@ class DirectoryLoader {
           var preload = 20;
 
           _.forEach(newImages, function(image) {
-            client.query('INSERT INTO images (name, directory_id, size, orientation, width, height, created_at) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id', 
+            client.query('INSERT INTO images (name, directory_id, size, orientation, width, height, created_at) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id', 
                 [image.name, image.directory_id, image.size, image.orientation, image.width, image.height, image.created_at], function(err, result) {
               if (err) {
                 console.tag('directories').time().info(err);
