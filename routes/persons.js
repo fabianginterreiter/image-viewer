@@ -11,6 +11,7 @@ var personsAction = new PersonsAction(database);
 
 var handleCallback = function(res, err, result) {
   if (err) {
+    console.time().tag('PersonRoutes').info(err);
     return res.status(500).send("fehler");
   }
 
@@ -76,11 +77,9 @@ router.get('/:id/persons/:personId', function(req, res) {
 router.get('/:id/persons/:person_id/images', function(req, res) {
   var id = req.param('id');
   var personId = req.param('person_id');
-  database.connect(function(err, client, done) {
-    client.query('SELECT i.* FROM images i JOIN image_person ipa ON ipa.image_id = i.id JOIN image_person ipp ON ipp.image_id = ipa.image_id WHERE ipp.person_id = $1 AND ipa.person_id = $2 ORDER BY i.created_at', [id, personId], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  
+  personsAction.getPersonImages(id, personId, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 

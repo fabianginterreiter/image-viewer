@@ -84,4 +84,13 @@ export class PersonsAction {
       });
     });
   }
+
+  getPersonImages(id, personId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT i.* FROM images i JOIN image_person ipa ON ipa.image_id = i.id JOIN image_person ipp ON ipp.image_id = ipa.image_id WHERE ipp.person_id = $1 AND ipa.person_id = $2 ORDER BY i.created_at', [id, personId], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
 }
