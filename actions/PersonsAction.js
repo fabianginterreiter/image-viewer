@@ -21,7 +21,7 @@ export class PersonsAction {
           callback(null, result.rows);
         }); 
     	} else {
-    	  client.query('SELECT persons.id, persons.name, count(persons) AS count FROM persons JOIN image_person ON image_person.person_id = persons.id GROUP BY persons.id ORDER BY count DESC;', [], function(err, result) {
+    	  client.query('SELECT persons.id, persons.name, person.image_id, count(persons) AS count FROM persons JOIN image_person ON image_person.person_id = persons.id GROUP BY persons.id ORDER BY count DESC;', [], function(err, result) {
           done();
           callback(null, result.rows);
         });	
