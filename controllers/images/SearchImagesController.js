@@ -65,7 +65,7 @@ export class SearchImagesController {
   }
 
   extendConditionsForQuery(conditions, options) {
-    if (options.query) {
+    if (options.query && options.query.length > 0) {
       var q = options.query;
 
       var queryConditions = [];
@@ -74,7 +74,7 @@ export class SearchImagesController {
 
       queryConditions.push('EXISTS (SELECT 1 FROM image_tag JOIN tags ON image_tag.tag_id = tags.id WHERE text LIKE \'%' + q +'%\' AND images.id = image_tag.image_id)');
 
-      conditions.push(queryConditions.join(' OR '));
+      conditions.push('(' + queryConditions.join(' OR ') + ')');
     }
   }
 
