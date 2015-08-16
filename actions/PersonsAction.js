@@ -70,10 +70,18 @@ export class PersonsAction {
     var that = this;
     this.database.connect(function(err, client, done) {
       client.query('SELECT directories.path || images.name AS path FROM images JOIN directories ON images.directory_id = directories.id WHERE images.id = $1', [imageId], function(err, result) {
-        sharp(that.root + result.rows[0].path)
+        sharp(that.root + result.rows[0].path).rotate()
           .extract(top, left, width, height)
           .resize(300, 300).max()
           .toFile('persons/' + id + '.png', function(err) {
+            if (err) {
+              console.time().tag('image').info(err);
+              return client.query('UPDATE persons SET image_id = null WHERE id = $2', [imageId, id], function(err2, result) {
+                done();              
+                callback(err);
+              });
+            }
+
             client.query('UPDATE persons SET image_id = $1 WHERE id = $2', [imageId, id], function(err, result) {
               done();
               callback(null, 'OK');
