@@ -11,7 +11,7 @@ var personsAction = new PersonsAction(database);
 
 var handleCallback = function(res, err, result) {
   if (err) {
-
+    return res.status(500).send("fehler");
   }
 
   res.send(result);
@@ -47,6 +47,14 @@ router.put('/:id', function(req, res) {
   personsAction.update(id, person, function(err, result) {
     handleCallback(res, err, result);
   });
+});
+
+router.delete('/:id', function(req, res) {
+  var id = req.param('id');
+  
+  personsAction.delete(id, function(err, result) {
+    handleCallback(res, err, result);
+  })
 });
 
 router.get('/:id/persons', function(req, res) {
@@ -134,20 +142,7 @@ router.get('/:id/directories/:directoryId/images', function(req, res) {
   });
 });
 
-router.delete('/:id', function(req, res) {
-  var id = req.param('id');
-  database.connect(function(err, client, done) {
-    client.query('DELETE FROM persons WHERE id = $1', [id], function(err, result) {
-      done();
-      
-      if (err) {
-        return res.status(500).send("fehler");
-      }
 
-      res.send("OK");
-    });
-  });
-});
 
 router.get('/:id/galleries', function(req, res) {
   database.connect(function(err, client, done) {

@@ -57,4 +57,13 @@ export class PersonsAction {
       });
     });
   }
+
+  delete(id, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('DELETE FROM persons WHERE id = $1', [id], function(err, result) {
+        done();
+        callback(null, 'OK');
+      });
+    });
+  }
 }
