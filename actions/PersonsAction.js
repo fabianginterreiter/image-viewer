@@ -34,4 +34,18 @@ export class PersonsAction {
       });
     });
   }
+
+  getImages(id, gps, callback) {
+    var gpsCondition = '';
+    if (gps && gps.length > 0) {
+      gpsCondition = ' AND gps = ' + gps;
+    }
+
+    database.connect(function(err, client, done) {
+      client.query('SELECT images.* FROM image_person JOIN images ON image_person.image_id = images.id WHERE image_person.person_id = $1' + gpsCondition + ' ORDER BY images.created_at', [id], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
 }

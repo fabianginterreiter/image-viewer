@@ -27,24 +27,16 @@ router.get('/:id', function(req, res) {
   var id = req.param('id');
 
   personsAction.get(id, function(err, result) {
-    res.send(result);
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id/images', function(req, res) {
   var id = req.param('id');
-
+  var gps = req.param('gps');
   
-  var gpsCondition = '';
-  if (req.param('gps') && req.param('gps').length > 0) {
-    gpsCondition = ' AND gps = ' + req.param('gps');
-  }
-
-  database.connect(function(err, client, done) {
-    client.query('SELECT images.* FROM image_person JOIN images ON image_person.image_id = images.id WHERE image_person.person_id = $1' + gpsCondition + ' ORDER BY images.created_at', [id], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  personsAction.get(id, gps, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
