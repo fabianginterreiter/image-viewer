@@ -113,6 +113,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/persons/show.html',
         controller: 'PersonCtrl'
       }).
+      when('/persons/:id/image/:imageId', {
+        templateUrl: 'templates/persons/image.html',
+        controller: 'SetPersonImageCtrl'
+      }).
       when('/persons/:id/directories/:directoryId', {
         templateUrl: 'templates/persons/show.html',
         controller: 'PersonCtrl'
