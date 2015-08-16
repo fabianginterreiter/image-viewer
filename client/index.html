@@ -35,6 +35,12 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right" ng-controller="NavCtrl">
+          <li ng-class="{'active' : isActive('search')}"><a href="#/search">Search</a></li>
+          <li ng-controller="QuickSearchCtrl">
+            <form class="navbar-form navbar-right" ng-submit="search()">
+              <input type="text" class="form-control" placeholder="Search" ng-model="query">
+            </form>
+          </li>
           <li ng-class="{'active' : isActive('config')}"><a href="#/config">Config</a></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Fabian <span class="caret"></span></a>
@@ -44,7 +50,7 @@
               <li><a href="#">Change User</a></li>
             </ul>
           </li>
-          <li ng-class="{'active' : isActive('search')}"><a href="#/search">Search</a></li>
+          
         </ul>
       </div>
 
