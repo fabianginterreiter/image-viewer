@@ -5,36 +5,29 @@ var database = require('../utils/Database');
 
 var console = process.console;
 
-router.get('/', function(req, res) {
-  var query = req.param('query');
+import { PersonsAction } from '../actions/PersonsAction';
 
-  database.connect(function(err, client, done) {
-  	if (query) {
-      client.query('SELECT persons.* FROM persons JOIN image_person ON persons.id = image_person.person_id WHERE LOWER(persons.name) LIKE LOWER($1) GROUP BY persons.id ORDER BY count(persons.id) DESC', ['%' + query + '%'], function(err, result) {
-        done();
-        res.send(result.rows);
-      }); 
-  	} else {
-  	  client.query('SELECT persons.id, persons.name, count(persons) AS count FROM persons JOIN image_person ON image_person.person_id = persons.id GROUP BY persons.id ORDER BY count DESC;', [], function(err, result) {
-        done();
-        res.send(result.rows);
-      });	
-  	}
+var personsAction = new PersonsAction(database);
+
+var handleCallback = function(res, err, result) {
+  if (err) {
+
+  }
+
+  res.send(result);
+};
+
+router.get('/', function(req, res) {
+  personsAction.getAll(req.param('query'), function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id', function(req, res) {
   var id = req.param('id');
 
-  database.connect(function(err, client, done) {
-    client.query('SELECT * FROM persons WHERE id = $1', [id], function(err, result) {
-      var person = result.rows[0];
-      client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id WHERE image_person.person_id = $1 ORDER BY images.created_at, images.name', [id], function(err, result) {
-        done();
-        person.images = result.rows;
-        res.send(person);
-      });
-    });
+  personsAction.get(id, function(err, result) {
+    res.send(result);
   });
 });
 
