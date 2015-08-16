@@ -33,6 +33,23 @@ function updateImage(client, id, callback) {
   client.query('UPDATE images SET updated_at = now() WHERE id = $1', [id], callback);
 }
 
+var handleCallback = function(res, err, result) {
+  if (err) {
+    console.time().tag('PersonRoutes').info(err);
+    return res.status(500).send("fehler");
+  }
+
+  if (!result) {
+    res.status(404).send('Not found');
+  }
+
+  res.send(result);
+};
+
+import { ImagesAction } from '../actions/ImagesAction';
+
+var imagesAction = new ImagesAction(database);
+
 router.put('/:id', function(req, res) {
   var image = req.body;
   database.connect(function(err, client, done) {
@@ -200,43 +217,10 @@ router.get('/:id/reload', function(req, res) {
 router.get('/:id', function(req, res) {
   var id = req.param('id');
 
-  database.connect(function(err, client, done) {
-    client.query('SELECT * FROM images WHERE id = $1', [id], function(err, result) {
-      
-      if (err) {
-        done();
-        res.status(500).send(err);
-        return;
-      }
-      if (result.rows.length === 0) {
-        done();
-        res.status(404).send('No Image with ID: ' + id);
-        return;
-      }
+  imagesAction.setRoot(req.config.get('root'));
 
-      var image = result.rows[0];
-
-      client.query('SELECT galleries.id, galleries.name FROM galleries JOIN gallery_image ON galleries.id = gallery_image.gallery_id WHERE gallery_image.image_id = $1', [id], function(err, result) {
-
-        image.galleries = result.rows;
-
-        client.query('SELECT id, name, path FROM directories WHERE id = $1', [image.directory_id], function(err, result) {
-          image.directory = result.rows[0];
-
-          image.fullpath = req.config.get('root') + image.directory.path + image.name;
-
-          client.query('SELECT tags.* FROM tags JOIN image_tag ON image_tag.tag_id = tags.id WHERE image_tag.image_id = $1', [id], function(err, result) {
-            image.tags = result.rows;
-
-            client.query('SELECT persons.id, persons.name, image_person.x, image_person.y FROM persons JOIN image_person ON persons.id = image_person.person_id WHERE image_person.image_id = $1;', [id], function(err, result) {
-              image.persons = result.rows;
-              done();
-              res.send(image);   
-            });
-          });
-        });
-      });
-    });
+  imagesAction.get(id, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
@@ -405,33 +389,11 @@ router.delete('/:image_id/tags/:tag_id', function(req, res) {
 });
 
 router.post('/:id/persons', function(req, res) {
-  var image_id = req.param('id');
+  var id = req.param('id');
   var person = req.body;
 
-  database.connect(function(err, client, done) {
-    updateImage(client, image_id, function(err) {
-      client.query('SELECT id FROM persons WHERE name LIKE $1', [person.name], function(err, result) {
-        if (result.rows.length === 1) {
-          person.id = result.rows[0].id;
-
-          client.query('INSERT INTO image_person(image_id, person_id, x, y) VALUES($1, $2, $3, $4)', 
-            [image_id, person.id, person.x, person.y],function(err, result) {
-              done();
-              res.send(person);
-          });
-        } else {
-          client.query('INSERT INTO persons(name) VALUES($1) RETURNING id', [person.name], function(err, result) {
-            person.id = result.rows[0].id;
-
-            client.query('INSERT INTO image_person(image_id, person_id, x, y) VALUES($1, $2, $3, $4)', 
-              [image_id, person.id, person.x, person.y],function(err, result) {
-                done();
-                res.send(person);
-            });
-          });
-        }
-      });
-    });
+  imagesAction.addPerson(id, person, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
