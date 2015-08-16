@@ -289,27 +289,12 @@ router.get('/:id/resize', function(req, res) {
   var width = getIntFromRequest(req, 'width', 0);
   var height = getIntFromRequest(req, 'height', 0);
   var id = req.param('id');
+  var min = req.param('min');
 
-  database.connect(function(err, client, done) {
-    client.query('SELECT directories.path || images.name AS path FROM images JOIN directories ON images.directory_id = directories.id WHERE images.id = $1', [id], function(err, result) {
-      done();
+  imagesAction.setRoot(req.config.get('root'));
 
-      var transformer = sharp().withMetadata().rotate();
-
-      if (width > 0 || height > 0) {
-        transformer.resize(width, height);
-      }
-
-      if (req.param('min') === 'true') {
-        transformer.min();
-        console.log("min");
-      } else {
-        transformer.max();
-        console.log("max");
-      }
-
-      fs.createReadStream(req.config.get('root') + result.rows[0].path).pipe(transformer).pipe(res);
-    });
+  imagesAction.resize(id, width, height, min, function(err, stream) {
+    stream.pipe(res);
   });
 });
 

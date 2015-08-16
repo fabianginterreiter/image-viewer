@@ -1,3 +1,6 @@
+var sharp = require('sharp');
+var fs = require('fs');
+
 var console = process.console;
 
 function updateImage(client, id, callback) {
@@ -79,6 +82,32 @@ export class ImagesAction {
             });
           }
         });
+      });
+    });
+  }
+
+  resize(id, width, height, min, callback) {
+    var that = this;
+    
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT directories.path || images.name AS path FROM images JOIN directories ON images.directory_id = directories.id WHERE images.id = $1', [id], function(err, result) {
+        done();
+
+        var transformer = sharp().withMetadata().rotate();
+
+        if (width > 0 || height > 0) {
+          transformer.resize(width, height);
+        }
+
+        if (min === 'true') {
+          transformer.min();
+          console.log("min");
+        } else {
+          transformer.max();
+          console.log("max");
+        }
+
+        callback(null, fs.createReadStream(that.root + result.rows[0].path).pipe(transformer));
       });
     });
   }
