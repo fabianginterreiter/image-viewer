@@ -41,7 +41,7 @@ export class PersonsAction {
       gpsCondition = ' AND gps = ' + gps;
     }
 
-    database.connect(function(err, client, done) {
+    this.database.connect(function(err, client, done) {
       client.query('SELECT images.* FROM image_person JOIN images ON image_person.image_id = images.id WHERE image_person.person_id = $1' + gpsCondition + ' ORDER BY images.created_at', [id], function(err, result) {
         done();
         callback(null, result.rows);
@@ -50,7 +50,7 @@ export class PersonsAction {
   }
 
   update(id, person, callback) {
-    database.connect(function(err, client, done) {
+    this.database.connect(function(err, client, done) {
       client.query('UPDATE persons SET name = $1 WHERE id = $2', [person.name, id], function(err, result) {
         done();
         callback(null, "OK");
