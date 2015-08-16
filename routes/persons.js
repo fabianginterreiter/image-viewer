@@ -84,29 +84,28 @@ router.get('/:id/persons/:person_id/images', function(req, res) {
 });
 
 router.get('/:id/tags', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT tags.*, count(tags.id) AS count FROM tags JOIN image_tag ON tags.id = image_tag.tag_id JOIN image_person ON image_tag.image_id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY tags.id ORDER BY count DESC;', [req.param('id')], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  var id = req.param('id');
+
+  personsAction.getTags(id, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id/tags/:tagId', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT * FROM tags WHERE id = $1', [req.param('tagId')], function(err, result) {
-      done();
-      res.send(result.rows[0]);
-    });
+  var id = req.param('id');
+  var tagId = req.param('tagId');
+
+  personsAction.getTagDetails(id, tagId, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id/tags/:tagId/images', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id JOIN image_tag ON image_tag.image_id = images.id WHERE image_person.person_id = $1 AND image_tag.tag_id = $2 ORDER BY images.created_at;', [req.param('id'), req.param('tagId')], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  var id = req.param('id');
+  var tagId = req.param('tagId');
+
+  personsAction.getTagImages(id, tagId, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 

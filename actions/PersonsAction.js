@@ -93,4 +93,31 @@ export class PersonsAction {
       });
     });
   }
+
+  getTags(id, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT tags.*, count(tags.id) AS count FROM tags JOIN image_tag ON tags.id = image_tag.tag_id JOIN image_person ON image_tag.image_id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY tags.id ORDER BY count DESC;', [id], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
+
+  getTagDetails(id, tagId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT * FROM tags WHERE id = $1', [tagId], function(err, result) {
+        done();
+        callback(null, result.rows[0]);
+      });
+    });
+  }
+
+  getTagImages(id, tagId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id JOIN image_tag ON image_tag.image_id = images.id WHERE image_person.person_id = $1 AND image_tag.tag_id = $2 ORDER BY images.created_at;', [id, tagId], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
 }
