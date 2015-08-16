@@ -134,32 +134,29 @@ router.get('/:id/directories/:directoryId/images', function(req, res) {
   });
 });
 
-
-
 router.get('/:id/galleries', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT galleries.*, count(galleries.id) AS count FROM galleries JOIN gallery_image ON galleries.id = gallery_image.gallery_id JOIN image_person ON gallery_image.image_id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY galleries.id ORDER BY count DESC;', [req.param('id')], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
-  })
+  var id = req.param('id');
+
+  personsAction.getGalleries(id, function(err, result) {
+    handleCallback(res, err, result);
+  });
 });
 
 router.get('/:id/galleries/:galleryId', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT * FROM galleries WHERE id = $1;', [req.param('galleryId')], function(err, result) {
-      done();
-      res.send(result.rows[0]);
-    });
+  var id = req.param('id');
+  var galleryId = req.param('galleryId');
+
+  personsAction.getGalleryDetails(id, galleryId, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id/galleries/:galleryId/images', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id JOIN gallery_image ON gallery_image.image_id = images.id WHERE image_person.person_id = $1 AND gallery_image.gallery_id = $2 ORDER BY images.created_at;', [req.param('id'), req.param('galleryId')], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  var id = req.param('id');
+  var galleryId = req.param('galleryId');
+
+  personsAction.getGalleryImages(id, galleryId, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 

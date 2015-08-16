@@ -147,4 +147,31 @@ export class PersonsAction {
       });
     });
   }
+
+  getGalleries(id, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT galleries.*, count(galleries.id) AS count FROM galleries JOIN gallery_image ON galleries.id = gallery_image.gallery_id JOIN image_person ON gallery_image.image_id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY galleries.id ORDER BY count DESC;', [id], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
+
+  getGalleryDetails(id, galleryId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT * FROM galleries WHERE id = $1;', [galleryId], function(err, result) {
+        done();
+        callback(null, result.rows[0]);
+      });
+    });
+  }
+
+  getGalleryImages(id, galleryId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id JOIN gallery_image ON gallery_image.image_id = images.id WHERE image_person.person_id = $1 AND gallery_image.gallery_id = $2 ORDER BY images.created_at;', [id, galleryId], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
 }
