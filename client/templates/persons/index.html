@@ -20,7 +20,17 @@
 
 <div class="row">
 <div class="col-md-6">
-<input type="text" class="form-control" ng-change="updateFilteredList()" ng-model="query" placeholder="Search">
+
+<div class="list-group">
+<a href="#/persons/{{person.id}}" class="list-group-item" ng-repeat="person in persons | orderBy:'count':'desc'" style="vertical-align: middle;">
+  <img ng-if="person.image_id" ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="30" height="30">
+  <span class="badge">{{person.count}}</span>
+  {{person.name}}
+</a>
+</div>
+
+
+<!--<input type="text" class="form-control" ng-change="updateFilteredList()" ng-model="query" placeholder="Search">
 <table class="table" at-table at-paginated at-list="filteredList" at-config="config">
 <thead>
 </thead>
@@ -32,7 +42,7 @@
 </tbody>
 </table>
 
-<at-pagination at-list="filteredList" at-config="config"></at-pagination>
+<at-pagination at-list="filteredList" at-config="config"></at-pagination>-->
 
 </div>
 
