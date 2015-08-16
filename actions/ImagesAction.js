@@ -1,5 +1,6 @@
 var sharp = require('sharp');
 var fs = require('fs');
+var _ = require('lodash');
 
 var console = process.console;
 
@@ -19,7 +20,113 @@ export class ImagesAction {
     this.root = root;
   }
 
+  getImages(action, options, callback) {
+    switch (action) {
+      case 'random':
+        var limit = options.limit ? options.limit : '10';
+        if (options.used) {
+          if (options.used === 'true') {
+            this.database.query('SELECT * FROM images WHERE (EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) OR EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) OR EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id)) ORDER BY random() LIMIT $1;', [limit], function(err, result) {
+              callback(null, result);
+            });
+          } else {
+            this.database.query('SELECT * FROM images WHERE NOT EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id) ORDER BY random() LIMIT $1;', [limit], function(err, result) {
+              callback(null, result);
+            });
+          }
+        } else {
+          this.database.query('SELECT * FROM images ORDER BY random() LIMIT $1;', [limit], function(err, result) {
+            callback(null, result);
+          });
+        }
+        break;
+      case 'marked':
+        this.database.query('SELECT images.*, count(images.id) as count FROM images JOIN image_person ON images.id = image_person.image_id GROUP BY images.id ORDER BY count DESC LIMIT 30;', [], function(err, result) {
+          callback(null, result);
+        });
+        break;
+      case 'newest':
+        this.database.query('SELECT * FROM images ORDER BY added_at DESC LIMIT 10', [], function(err, result) {
+          callback(null, result);
+        });
+        break;
+      case 'updated':
+        this.database.query('SELECT * FROM images ORDER BY updated_at DESC LIMIT 10', [], function(err, result) {
+          callback(null, result);
+        });
+        break;
+      case 'search':
+        var conditions = [];
+        conditions.push('1 = 1');
 
+        if (options.persons) {
+          var personIds = options.persons.split(',');
+          _.forEach(personIds, function(id) {
+            conditions.push('EXISTS (SELECT 1 FROM image_person WHERE images.id = image_person.image_id AND image_person.person_id = ' + id + ')');
+          });
+
+          if (options.personsOnly === 'true') {
+            conditions.push('EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id GROUP BY image_person.image_id HAVING count(image_person.image_id) = ' + personIds.length + ')');
+          }
+        } else if (options.personsOnly === 'true') {
+          conditions.push('NOT EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id)');
+        }
+
+        console.tag('Search').time().info('Search!!!');
+
+        if (options.tags) {
+          var tagIds = options.tags.split(',');
+          _.forEach(tagIds, function(id) {
+            conditions.push('EXISTS (SELECT 1 FROM image_tag WHERE images.id = image_tag.image_id AND image_tag.tag_id = ' + id + ')');
+          });
+
+          if (options.tagsOnly === 'true') {
+            conditions.push('EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id GROUP BY image_tag.image_id HAVING count(image_tag.image_id) = ' + tagIds.length + ')');
+          }
+        } else if (options.tagsOnly === 'true') {
+          conditions.push('NOT EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id)');
+        }
+
+        if (options.galleries) {
+          var galleryIds = options.galleries.split(',');
+          _.forEach(galleryIds, function(id) {
+            conditions.push('EXISTS (SELECT 1 FROM gallery_image WHERE images.id = gallery_image.image_id AND gallery_image.gallery_id = ' + id + ')');
+          });
+
+          if (options.galleriesOnly === 'true') {
+            conditions.push('EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id GROUP BY gallery_image.image_id HAVING count(gallery_image.image_id) = ' + galleryIds.length + ')');
+          }
+        } else if (options.galleriesOnly === 'true') {
+          conditions.push('NOT EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id)');
+        }
+
+        if (options.minDate) {
+          conditions.push('\''+options.minDate+'\' <= images.created_at');
+        }
+
+        if (options.maxDate) {
+          conditions.push('\''+options.maxDate+'\' >= images.created_at');
+        }
+
+        var query = 'SELECT images.* FROM images WHERE ' + conditions.join(' AND ') + ' ORDER BY images.created_at LIMIT 200';
+
+        console.time().tag('Search').info(query);
+
+        this.database.connect(function(err, client, done) {
+          client.query(query, [], function(err, result) {
+            if (err) {
+              done();
+              callback(err);
+            }
+            done();
+            callback(null, result.rows);
+          });
+        });
+        break;
+      default:
+        callback(null, []);
+    }
+  }
 
   get(id, callback) {
     this.database.connect(function(err, client, done) {

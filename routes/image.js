@@ -66,124 +66,20 @@ router.put('/:id', function(req, res) {
 router.get('/', function(req, res) {
   var action = req.param('action');
 
-  switch (action) {
-    case 'random':
-      var limit = req.param('limit') ? req.param('limit') : '10';
-      if (req.param('used')) {
-        if (req.param('used') === 'true') {
-          database.query('SELECT * FROM images WHERE (EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) OR EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) OR EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id)) ORDER BY random() LIMIT $1;', [limit], function(err, result) {
-            res.send(result);
-          });
-        } else {
-          database.query('SELECT * FROM images WHERE NOT EXISTS(SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM image_person WHERE image_person.image_id = images.id) AND NOT EXISTS(SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id) ORDER BY random() LIMIT $1;', [limit], function(err, result) {
-            res.send(result);
-          });
-        }
-      } else {
-        database.connect(function(err, client, done) {
-          client.query('SELECT * FROM images ORDER BY random() LIMIT $1;', [limit], function(err, result) {
-            done();
-            res.send(result.rows);
-          });
-        });
-      }
-      break;
-    case 'marked':
-      database.connect(function(err, client, done) {
-        client.query('SELECT images.*, count(images.id) as count FROM images JOIN image_person ON images.id = image_person.image_id GROUP BY images.id ORDER BY count DESC LIMIT 30;', [], function(err, result) {
-          done();
-          res.send(result.rows);
-        });
-      });
-      break;
-    case 'newest':
-      database.connect(function(err, client, done) {
-        client.query('SELECT * FROM images ORDER BY added_at DESC LIMIT 10', [], function(err, result) {
-          done();
-          res.send(result.rows);
-        });
-      });
-      break;
-    case 'updated':
-      database.connect(function(err, client, done) {
-        client.query('SELECT * FROM images ORDER BY updated_at DESC LIMIT 10', [], function(err, result) {
-          done();
-          res.send(result.rows);
-        });
-      });
-      break;
-    case 'search':
-      var conditions = [];
-      conditions.push('1 = 1');
-
-      if (req.param('persons')) {
-        var personIds = req.param('persons').split(',');
-        _.forEach(personIds, function(id) {
-          conditions.push('EXISTS (SELECT 1 FROM image_person WHERE images.id = image_person.image_id AND image_person.person_id = ' + id + ')');
-        });
-
-        if (req.param('personsOnly') === 'true') {
-          conditions.push('EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id GROUP BY image_person.image_id HAVING count(image_person.image_id) = ' + personIds.length + ')');
-        }
-      } else if (req.param('personsOnly') === 'true') {
-        conditions.push('NOT EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id)');
-      }
-
-
-
-      if (req.param('tags')) {
-        var tagIds = req.param('tags').split(',');
-        _.forEach(tagIds, function(id) {
-          conditions.push('EXISTS (SELECT 1 FROM image_tag WHERE images.id = image_tag.image_id AND image_tag.tag_id = ' + id + ')');
-        });
-
-        if (req.param('tagsOnly') === 'true') {
-          conditions.push('EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id GROUP BY image_tag.image_id HAVING count(image_tag.image_id) = ' + tagIds.length + ')');
-        }
-      } else if (req.param('tagsOnly') === 'true') {
-        conditions.push('NOT EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id)');
-      }
-
-      if (req.param('galleries')) {
-        var galleryIds = req.param('galleries').split(',');
-        _.forEach(galleryIds, function(id) {
-          conditions.push('EXISTS (SELECT 1 FROM gallery_image WHERE images.id = gallery_image.image_id AND gallery_image.gallery_id = ' + id + ')');
-        });
-
-        if (req.param('galleriesOnly') === 'true') {
-          conditions.push('EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id GROUP BY gallery_image.image_id HAVING count(gallery_image.image_id) = ' + galleryIds.length + ')');
-        }
-      } else if (req.param('galleriesOnly') === 'true') {
-        conditions.push('NOT EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id)');
-      }
-
-      if (req.param('minDate')) {
-        conditions.push('\''+req.param('minDate')+'\' <= images.created_at');
-      }
-
-      if (req.param('maxDate')) {
-        conditions.push('\''+req.param('maxDate')+'\' >= images.created_at');
-      }
-
-      var query = 'SELECT images.* FROM images WHERE ' + conditions.join(' AND ') + ' ORDER BY images.created_at LIMIT 200';
-
-      console.time().tag('Search').info(query);
-
-      database.connect(function(err, client, done) {
-        client.query(query, [], function(err, result) {
-          if (err) {
-            res.status(500).send(err);
-          }
-          done();
-          res.send(result.rows);
-        });
-      });
-      break;
-    default:
-      res.send([]);
-  }
-
-  
+  imagesAction.getImages(action, {
+    limit : req.param('limit'),
+    used : req.param('used'),
+    persons : req.param('persons'),
+    personsOnly : req.param('personsOnly'),
+    tags : req.param('tags'),
+    tagsOnly : req.param('tagsOnly'),
+    galleries : req.param('galleries'),
+    galleriesOnly : req.param('galleriesOnly'),
+    minDate : req.param('minDate'),
+    maxDate : req.param('maxDate')
+  }, function(err, result) {
+    handleCallback(res, err, result);
+  });  
 });
 
 router.get('/:id/exif', function(req, res) {
