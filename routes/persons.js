@@ -42,14 +42,10 @@ router.get('/:id/images', function(req, res) {
 
 router.put('/:id', function(req, res) {
   var id = req.param('id');
-
   var person = req.body;
 
-  database.connect(function(err, client, done) {
-    client.query('UPDATE persons SET name = $1 WHERE id = $2', [person.name, id], function(err, result) {
-      done();
-      res.send("OK");
-    });
+  personsAction.update(id, person, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 

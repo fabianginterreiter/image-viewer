@@ -48,4 +48,13 @@ export class PersonsAction {
       });
     });
   }
+
+  update(id, person, callback) {
+    database.connect(function(err, client, done) {
+      client.query('UPDATE persons SET name = $1 WHERE id = $2', [person.name, id], function(err, result) {
+        done();
+        callback(null, "OK");
+      });
+    });
+  }
 }
