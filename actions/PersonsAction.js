@@ -66,4 +66,22 @@ export class PersonsAction {
       });
     });
   }
+
+  getPersons(id, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT pa.*, count(pa) as count FROM persons pa JOIN image_person ipa ON pa.id = ipa.person_id JOIN image_person ipp ON ipa.image_id = ipp.image_id WHERE ipp.person_id = $1 AND ipa.person_id != $1 GROUP BY pa.id ORDER BY count DESC', [id], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
+
+  getPersonDetails(id, personId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT * FROM persons WHERE id = $1', [personId], function(err, result) {
+        done();
+        callback(null, result.rows[0]);
+      });
+    });
+  }
 }

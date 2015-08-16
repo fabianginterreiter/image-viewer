@@ -60,21 +60,17 @@ router.delete('/:id', function(req, res) {
 router.get('/:id/persons', function(req, res) {
   var id = req.param('id');
 
-  database.connect(function(err, client, done) {
-    client.query('SELECT pa.*, count(pa) as count FROM persons pa JOIN image_person ipa ON pa.id = ipa.person_id JOIN image_person ipp ON ipa.image_id = ipp.image_id WHERE ipp.person_id = $1 AND ipa.person_id != $1 GROUP BY pa.id ORDER BY count DESC', [id], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  personsAction.getPersons(id, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id/persons/:personId', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT * FROM persons WHERE id = $1', [req.param('personId')], function(err, result) {
-      done();
-      res.send(result.rows[0]);
-    });
-  });
+  var personId = req.param('personId');
+
+  personsAction.getPersonDetails(0, personId, function(err, result) {
+    handleCallback(res, err, result);
+  })
 });
 
 router.get('/:id/persons/:person_id/images', function(req, res) {
