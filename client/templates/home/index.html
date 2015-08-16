@@ -1,7 +1,26 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>Image Viewer</h1>
+    <p></p>
+    <div ng-controller="QuickSearchCtrl">
+      <form class="" ng-submit="search()">
+        <input type="text" class="form-control" placeholder="Search" ng-model="query">
+      </form>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col-md-8">
       <jqcloud words="tags" height="350" steps="7" autoResize="true"></jqcloud>
+    </div>
+
+    <div class="col-md-4">
+      <h3><a href="#/random">Random</a></h3>
+      <div class="homePreview">
+        <thumbnails images="random" view="view" toolbar="false"></thumbnails>
+      </div>
     </div>
   </div>
 
@@ -12,12 +31,7 @@
         <thumbnails images="newest" view="view" toolbar="false"></thumbnails>
       </div>
     </div>
-    <div class="col-md-4">
-      <h3><a href="#/random">Random</a></h3>
-      <div class="homePreview">
-        <thumbnails images="random" view="view" toolbar="false"></thumbnails>
-      </div>
-    </div>
+    
     <div class="col-md-4">
       <h3>Updated</h3>
       <div class="homePreview">
