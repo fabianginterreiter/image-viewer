@@ -7,10 +7,7 @@ export class SearchImagesController {
     this.client = connection; 
   }
 
-  search(options, callback) {
-  	var conditions = [];
-    conditions.push('1 = 1');
-
+  extendConditionForPersons(conditions, options) {
     if (options.persons) {
       var personIds = options.persons.split(',');
       _.forEach(personIds, function(id) {
@@ -23,9 +20,9 @@ export class SearchImagesController {
     } else if (options.personsOnly === 'true') {
       conditions.push('NOT EXISTS (SELECT 1 FROM image_person WHERE image_person.image_id = images.id)');
     }
+  }
 
-    console.tag('Search').time().info('Search!!!');
-
+  extendConditionForTags(conditions, options) {
     if (options.tags) {
       var tagIds = options.tags.split(',');
       _.forEach(tagIds, function(id) {
@@ -38,7 +35,9 @@ export class SearchImagesController {
     } else if (options.tagsOnly === 'true') {
       conditions.push('NOT EXISTS (SELECT 1 FROM image_tag WHERE image_tag.image_id = images.id)');
     }
+  }
 
+  extendConditionForGalleries(conditions, options) {
     if (options.galleries) {
       var galleryIds = options.galleries.split(',');
       _.forEach(galleryIds, function(id) {
@@ -51,14 +50,30 @@ export class SearchImagesController {
     } else if (options.galleriesOnly === 'true') {
       conditions.push('NOT EXISTS (SELECT 1 FROM gallery_image WHERE gallery_image.image_id = images.id)');
     }
+  }
 
+  extendConditionForMinDate(conditions, options) {
     if (options.minDate) {
       conditions.push('\''+options.minDate+'\' <= images.created_at');
     }
+  }
 
+  extendConditionForMaxDate(conditions, options) {
     if (options.maxDate) {
       conditions.push('\''+options.maxDate+'\' >= images.created_at');
     }
+  }
+
+  search(options, callback) {
+  	var conditions = [];
+    conditions.push('1 = 1');
+
+    this.extendConditionForPersons(conditions, options);
+    this.extendConditionForTags(conditions, options);
+    this.extendConditionForGalleries(conditions, options);
+    
+    this.extendConditionForMinDate(conditions, options);
+    this.extendConditionForMaxDate(conditions, options);
 
     var query = 'SELECT images.* FROM images WHERE ' + conditions.join(' AND ') + ' ORDER BY images.created_at LIMIT 200';
 
