@@ -66,15 +66,21 @@ export class SearchImagesController {
 
   extendConditionsForQuery(conditions, options) {
     if (options.query && options.query.length > 0) {
-      var q = options.query;
+      var words = options.query.split(' ');
 
-      var queryConditions = [];
+      _.forEach(words, function(q) {
+        var queryConditions = [];
 
-      queryConditions.push('name LIKE \'%' + q + '%\'');
+        queryConditions.push('LOWER(name) LIKE LOWER(\'%' + q + '%\')');
 
-      queryConditions.push('EXISTS (SELECT 1 FROM image_tag JOIN tags ON image_tag.tag_id = tags.id WHERE text LIKE \'%' + q +'%\' AND images.id = image_tag.image_id)');
+        queryConditions.push('LOWER(title) LIKE LOWER(\'%' + q + '%\')');
 
-      conditions.push('(' + queryConditions.join(' OR ') + ')');
+        queryConditions.push('EXISTS (SELECT 1 FROM image_tag JOIN tags ON image_tag.tag_id = tags.id WHERE LOWER(text) LIKE LOWER(\'%' + q +'%\') AND images.id = image_tag.image_id)');
+
+        queryConditions.push('EXISTS (SELECT 1 FROM image_person JOIN persons ON image_person.person_id = persons.id WHERE LOWER(name) LIKE LOWER(\'%' + q +'%\') AND images.id = image_person.image_id)');
+
+        conditions.push('(' + queryConditions.join(' OR ') + ')');
+      });
     }
   }
 
