@@ -18,6 +18,13 @@
   <div class="row">
     <div class="col-md-12">
       <h3>Persons</h3>
+      <input type="text" ng-model="query" class="form-control" placeholder="Enter Keywords">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Persons</h3>
       <tags-input ng-model="persons" style="height: 40px;" display-property="name" add-from-autocomplete-only="true" placeholder="Add a Person">
         <auto-complete source="loadPersons($query)"></auto-complete>
       </tags-input>
