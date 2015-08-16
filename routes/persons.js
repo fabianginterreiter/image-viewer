@@ -110,29 +110,27 @@ router.get('/:id/tags/:tagId/images', function(req, res) {
 });
 
 router.get('/:id/directories', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT directories.id, directories.name, count(directories.id) FROM directories JOIN images ON directories.id = images.directory_id JOIN image_person ON images.id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY directories.id ORDER BY count DESC', [req.param('id')], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  var id = req.param('id');
+
+  personsAction.getDirectories(id, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id/directories/:directoryId', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT * FROM directories WHERE id = $1', [req.param('directoryId')], function(err, result) {
-      done();
-      res.send(result.rows[0]);
-    });
+  var directoryId = req.param('directoryId');
+
+  personsAction.getDirectoryDetails(0, directoryId, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 
 router.get('/:id/directories/:directoryId/images', function(req, res) {
-  database.connect(function(err, client, done) {
-    client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id WHERE images.directory_id = $2 AND image_person.person_id = $1 ORDER BY images.created_at;;', [req.param('id'), req.param('directoryId')], function(err, result) {
-      done();
-      res.send(result.rows);
-    });
+  var id = req.param('id');
+  var directoryId = req.param('directoryId');
+
+  personsAction.getDirectoryImages(id, directoryId, function(err, result) {
+    handleCallback(res, err, result);
   });
 });
 

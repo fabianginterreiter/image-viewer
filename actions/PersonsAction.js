@@ -120,4 +120,31 @@ export class PersonsAction {
       });
     });
   }
+
+  getDirectories(id, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT directories.id, directories.name, count(directories.id) FROM directories JOIN images ON directories.id = images.directory_id JOIN image_person ON images.id = image_person.image_id WHERE image_person.person_id = $1 GROUP BY directories.id ORDER BY count DESC', [id], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
+
+  getDirectoryDetails(id, directoryId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT * FROM directories WHERE id = $1', [directoryId], function(err, result) {
+        done();
+        callback(null, result.rows[0]);
+      });
+    });
+  }
+
+  getDirectoryImages(id, directoryId, callback) {
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id WHERE images.directory_id = $2 AND image_person.person_id = $1 ORDER BY images.created_at;;', [id, directoryId], function(err, result) {
+        done();
+        callback(null, result.rows);
+      });
+    });
+  }
 }
