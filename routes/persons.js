@@ -50,6 +50,21 @@ router.put('/:id', function(req, res) {
   });
 });
 
+router.put('/:id/image/:imageId', function(req, res) {
+  var id = req.param('id');
+  var imageId = req.param('imageId');
+  var x = parseInt(req.param('x'));
+  var y = parseInt(req.param('y'));
+  var w = parseInt(req.param('w'));
+  var h = parseInt(req.param('h'));
+
+  personsAction.setRoot(req.config.get('root'));
+
+  personsAction.setImage(id, imageId, x, y, w, h, function(err, result) {
+    handleCallback(res, err, result);
+  });
+});
+
 router.delete('/:id', function(req, res) {
   var id = req.param('id');
   

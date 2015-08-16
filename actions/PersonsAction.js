@@ -1,8 +1,16 @@
+var sharp = require('sharp');
+var fs = require('fs');
+var _ = require('lodash');
+
 var console = process.console;
 
 export class PersonsAction {
   constructor(database) {
     this.database = database; 
+  }
+
+  setRoot(root) {
+    this.root = root;
   }
 
   getAll(query, callback) {
@@ -54,6 +62,24 @@ export class PersonsAction {
       client.query('UPDATE persons SET name = $1 WHERE id = $2', [person.name, id], function(err, result) {
         done();
         callback(null, "OK");
+      });
+    });
+  }
+
+  setImage(id, imageId, top, left, width, height, callback) {
+    var that = this;
+    this.database.connect(function(err, client, done) {
+      client.query('SELECT directories.path || images.name AS path FROM images JOIN directories ON images.directory_id = directories.id WHERE images.id = $1', [imageId], function(err, result) {
+        done();
+        sharp(that.root + result.rows[0].path)
+          .extract(top, left, width, height)
+          .resize(300, 300).max()
+          .toFile('persons/' + id + '.png', function(err) {
+            client.query('UPDATE persons SET image_id = $1 WHERE id = $2', [imageId, id], function(err, result) {
+              done();
+              callback(null, 'OK');
+            });
+          });    
       });
     });
   }
