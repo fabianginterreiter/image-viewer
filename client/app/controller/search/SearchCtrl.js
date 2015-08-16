@@ -43,6 +43,8 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
   $scope.tagsOnly = $routeParams.tagsOnly === 'true';
   $scope.galleriesOnly = $routeParams.galleriesOnly === 'true';
 
+  $scope.query = $routeParams.query;
+
   $scope.loadPersons = function(query) {
   	return $http.get('/api/persons?query='+query);
   };
@@ -102,6 +104,10 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
 
     if ($scope.useMaxDate) {
       options.maxDate = getFormattedDate($scope.maxDate);
+    }
+
+    if ($scope.query && $scope.query.length > 0) {
+      options.query = $scope.query;
     }
 
   	$location.path('/search/result').search(options);

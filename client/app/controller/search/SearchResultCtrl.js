@@ -5,6 +5,8 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
   var minDate = $routeParams.minDate;
   var maxDate = $routeParams.maxDate;
 
+  $scope.query = $routeParams.query;
+
   $scope.personsOnly = $routeParams.personsOnly === 'true';
   $scope.tagsOnly = $routeParams.tagsOnly === 'true';
   $scope.galleriesOnly = $routeParams.galleriesOnly === 'true';
@@ -12,6 +14,8 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
   $scope.persons = [];
   $scope.tags = [];
   $scope.galleries = [];
+
+
 
   if (person_ids.length > 0) {
     _.forEach(person_ids.split(','), function(personId) {
@@ -74,6 +78,10 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
 
   if ($scope.galleriesOnly) {
     options.push('galleriesOnly=true');
+  }
+
+  if ($scope.query) {
+    options.push('query=' + $scope.query);
   }
 
   $http.get('/api/images?action=search&' + options.join('&')).success(function(data) {
