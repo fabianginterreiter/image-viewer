@@ -64,6 +64,20 @@ export class SearchImagesController {
     }
   }
 
+  extendConditionsForQuery(conditions, options) {
+    if (options.query) {
+      var q = options.query;
+
+      var queryConditions = [];
+
+      queryConditions.push('name LIKE \'%' + q + '%\'');
+
+      queryConditions.push('EXISTS (SELECT 1 FROM image_tag JOIN tags ON image_tag.tag_id = tags.id WHERE text LIKE \'%' + q +'%\' AND images.id = image_tag.image_id)');
+
+      conditions.push(queryConditions.join(' OR '));
+    }
+  }
+
   search(options, callback) {
   	var conditions = [];
     conditions.push('1 = 1');
@@ -74,6 +88,8 @@ export class SearchImagesController {
     
     this.extendConditionForMinDate(conditions, options);
     this.extendConditionForMaxDate(conditions, options);
+
+    this.extendConditionsForQuery(conditions, options);
 
     var query = 'SELECT images.* FROM images WHERE ' + conditions.join(' AND ') + ' ORDER BY images.created_at LIMIT 200';
 

@@ -76,7 +76,8 @@ router.get('/', function(req, res) {
     galleries : req.param('galleries'),
     galleriesOnly : req.param('galleriesOnly'),
     minDate : req.param('minDate'),
-    maxDate : req.param('maxDate')
+    maxDate : req.param('maxDate'),
+    query : req.param('query')
   }, function(err, result) {
     handleCallback(res, err, result);
   });  
