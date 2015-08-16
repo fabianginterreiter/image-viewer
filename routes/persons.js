@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
+var fs = require('fs');
 var database = require('../utils/Database');
 
 var console = process.console;
@@ -30,6 +31,12 @@ router.get('/:id', function(req, res) {
   personsAction.get(id, function(err, result) {
     handleCallback(res, err, result);
   });
+});
+
+router.get('/:id/image', function(req, res) {
+  var id = req.param('id');
+
+  fs.createReadStream('persons/' + id + '.png').pipe(res);
 });
 
 router.get('/:id/images', function(req, res) {

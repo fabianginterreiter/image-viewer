@@ -32,6 +32,15 @@ app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'Dow
     $scope.person = person;
   });
 
+  $scope.setImage = function() {
+    var selection = _.filter($scope.person.images, function(image) {
+      return image.selected;
+    });
+    if (selection.length > 0) {
+      $location.path('/persons/' + $routeParams.id + '/image/' + selection[0].id);
+    }
+  };
+
   $scope.edit = function() {
     console.log("wuf");
     PersonService.edit($scope.person);

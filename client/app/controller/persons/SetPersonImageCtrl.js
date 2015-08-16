@@ -25,20 +25,16 @@ app.controller('SetPersonImageCtrl', ['$scope', '$http', '$routeParams', '$windo
   $scope.save = function() {
     console.log($scope.obj);
 
-    var ratio = 1; // $scope.image.width / 800;
+    var x = $scope.obj.coords[0];
+    var y = $scope.obj.coords[1];
 
-    console.log("Ratio: " + ratio);
-
-    var x = Math.round($scope.obj.coords[0] * ratio);
-    var y = Math.round($scope.obj.coords[1] * ratio);
-
-    var w = Math.round($scope.obj.coords[2] * ratio) - x;
-    var h = Math.round($scope.obj.coords[3] * ratio) - y;
+    var w = $scope.obj.coords[4];
+    var h = $scope.obj.coords[5];
 
     console.log(x + '#' + y + '#' + w + '#' + h);
 
     $http.put('/api/persons/' + $routeParams.id + '/image/' + $routeParams.imageId + '?x=' + x + '&y=' + y + '&w=' + w+ '&h=' + h).success(function(data) {
-      
+      $location.path('/persons/' + $routeParams.id);
     });
   };
 }]);

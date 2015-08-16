@@ -21,7 +21,7 @@ export class PersonsAction {
           callback(null, result.rows);
         }); 
     	} else {
-    	  client.query('SELECT persons.id, persons.name, person.image_id, count(persons) AS count FROM persons JOIN image_person ON image_person.person_id = persons.id GROUP BY persons.id ORDER BY count DESC;', [], function(err, result) {
+    	  client.query('SELECT persons.id, persons.name, persons.image_id, count(persons) AS count FROM persons JOIN image_person ON image_person.person_id = persons.id GROUP BY persons.id ORDER BY count DESC;', [], function(err, result) {
           done();
           callback(null, result.rows);
         });	
@@ -66,11 +66,10 @@ export class PersonsAction {
     });
   }
 
-  setImage(id, imageId, top, left, width, height, callback) {
+  setImage(id, imageId, left, top, width, height, callback) {
     var that = this;
     this.database.connect(function(err, client, done) {
       client.query('SELECT directories.path || images.name AS path FROM images JOIN directories ON images.directory_id = directories.id WHERE images.id = $1', [imageId], function(err, result) {
-        done();
         sharp(that.root + result.rows[0].path)
           .extract(top, left, width, height)
           .resize(300, 300).max()
