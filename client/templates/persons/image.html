@@ -10,17 +10,11 @@
     <div class="col-md-8">
       <div ng-jcrop="obj.src" selection="obj.coords" thumbnail="obj.thumbnail"></div>
     </div>
-    <div class="col-md-8">
-    <table><tr>
-    	<td><strong>x</strong>: <span ng-bind="obj.coords[0]"></span></td>
-                            <td><strong>y</strong>: <span ng-bind="obj.coords[1]"></span></td>
-                            <td><strong>x2</strong>: <span ng-bind="obj.coords[2]"></span></td>
-                            <td><strong>y2</strong>: <span ng-bind="obj.coords[3]"></span></td>
-                            <td><strong>w</strong>: <span ng-bind="obj.coords[4]"></span></td>
-                            <td><strong>h</strong>: <span ng-bind="obj.coords[5]"></span></td>
-                            </tr></table>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <button class="btn btn-info" ng-click="save()">Save</button>
     </div>
   </div>
 </div>
 
-<button class="btn btn-info" ng-click="save()">Save</button>
