@@ -310,7 +310,7 @@ router.get('/:gallery_id/tags/:tag_id/images', function(req, res) {
 router.get('/:gallery_id/persons', function(req, res) {
   var gallery_id = req.param('gallery_id');
   database.connect(function(err, client, done) {
-    client.query('SELECT persons.id, persons.name, count(persons.id) as count FROM persons JOIN image_person ON persons.id = image_person.person_id JOIN gallery_image ON image_person.image_id = gallery_image.image_id WHERE gallery_image.gallery_id = $1 GROUP BY persons.id ORDER BY count DESC;', [gallery_id], function(err, result) {
+    client.query('SELECT persons.*, count(persons.id) as count FROM persons JOIN image_person ON persons.id = image_person.person_id JOIN gallery_image ON image_person.image_id = gallery_image.image_id WHERE gallery_image.gallery_id = $1 GROUP BY persons.id ORDER BY count DESC;', [gallery_id], function(err, result) {
       done();
       res.send(result.rows);
     });
