@@ -9,6 +9,7 @@
 <h2>Persons</h2>
 <ul class="list-group">
   <li class="list-group-item" ng-repeat="person in persons">
+    <img ng-if="person.image_id" ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="30" height="30">
     <a class="badge" href="#/{{type}}/{{object.id}}/persons/{{person.id}}">{{person.count}}</a>
     <a href="#/persons/{{person.id}}">{{person.name}}</a>
   </li>
