@@ -78,7 +78,7 @@ var preloaded = [];
 
 app.directive('show', function() {
   return {
-    controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService, Dialogs, ImageService) {
+    controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService, Dialogs, ImageService, PersonsService) {
       var image = null;
       var fullscreen = false;
 
@@ -200,6 +200,12 @@ app.directive('show', function() {
   };
     $scope.setAsGalleryImage = function() {
       GalleryService.setAsGalleryImage($scope.image);
+    };
+
+    $scope.setAsPersonImage = function(image) {
+      PersonsService.select(function(person) {
+        $location.path('/persons/' + person.id + '/image/' + $scope.image.id);
+      });
     };
 
     $scope.view = 'image';

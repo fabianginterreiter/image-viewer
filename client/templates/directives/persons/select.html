@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h3 class="modal-title">Select Person</h3>
+</div>
+
+<div class="modal-body">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search" ng-model="search">
+  </div>
+
+  <div class="list-group">
+    <a ng-click="select(person)" class="list-group-item" ng-repeat="person in persons | filter:search | limitTo:10 | orderBy:['name']">
+      <img ng-if="person.image_id" ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="30" height="30">
+      {{person.name}}
+    </a>
+  </div>
+
+  
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
