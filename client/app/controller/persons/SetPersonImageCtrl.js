@@ -20,7 +20,7 @@ app.controller('SetPersonImageCtrl', ['$scope', '$http', '$routeParams', '$windo
   $scope.obj.coords = [0, 0, 100, 100, 100, 100];
 
   // You can add a thumbnail if you want
-  $scope.obj.thumbnail = true;
+  $scope.obj.thumbnail = false;
 
   $scope.save = function() {
     console.log($scope.obj);
