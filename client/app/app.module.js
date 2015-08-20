@@ -24,3 +24,80 @@ app.config(function(ngJcropConfigProvider){
     });
 
 });
+
+app.factory('SessionService', function($http, $modal) {
+  var currentUser = null;
+
+  var listeners = [];
+
+  var tell = function(user) {
+    _.forEach(listeners, function(listener) {
+      listener(user);
+    });
+  };
+
+  var showDialog = function() {
+    $http.get('/api/users').success(function(users) {
+      $modal.open({
+        animation: true,
+        templateUrl: 'templates/users/index.html',
+        backdrop: 'static',
+        keyboard: false,
+        controller: function ($scope, $modalInstance, $http, $location) {
+          $scope.users = users;
+
+          $scope.select = function (user) {
+            $http.post('/api/session', user).success(function(res) {
+              currentUser = user;
+              tell(user);
+              $modalInstance.close();
+            });
+          };
+
+          $scope.create = function(name) {
+            $http.post('/api/users', { name : name }).success(function(user) {
+              $scope.users.push(user);
+              $scope.view = 'select';
+            });
+          }
+        }
+      }).result.then(function() {
+
+      });
+    });  
+  };
+
+  return {
+    watch : function(callback) {
+      listeners.push(callback);
+    },
+
+    getCurrentUser : function() {
+      return currentUser;
+    },
+
+    delete : function() {
+      tell(null);
+      currentUser = null;
+
+      $http.delete('/api/session').success(function() {
+        showDialog();
+      });
+    },
+
+    init : function() {
+      $http.get('/api/session').success(function(user) {
+        if (user.id) {
+          currentUser = user;
+          tell(user);
+        } else {
+          showDialog();
+        }
+      })
+    }
+  };
+});
+
+app.run(function(SessionService) {
+  SessionService.init();
+});

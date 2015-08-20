@@ -23,4 +23,11 @@ router.get('/', function(req, res) {
   });
 });
 
+router.post('/', function(req, res) {
+  var body = req.body;
+  usersAction.create(body, function(err, result) {
+  	handleCallback(res, err, result);
+  });
+});
+
 module.exports = router;
