@@ -17,19 +17,20 @@ var handleCallback = function(res, err, result) {
 
 router.post('/', function(req, res) {
   var user = req.body;
-  sessionAction.set(user, function(err, result) {
+
+  sessionAction.set(req.session, user, function(err, result) {
   	handleCallback(res, err, result);
   });
 });
 
 router.get('/', function(req, res) {
-  sessionAction.get(function(err, result) {
+  sessionAction.get(req.session, function(err, result) {
   	handleCallback(res, err, result);
   });
 });
 
 router.delete('/', function(req, res) {
-  sessionAction.delete(function(err, result) {
+  sessionAction.delete(req.session, function(err, result) {
     handleCallback(res, err, result);
   });
 });

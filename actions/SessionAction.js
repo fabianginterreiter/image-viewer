@@ -1,21 +1,25 @@
 var console = process.console;
 
 export class SessionAction {
-  set(user, callback) {
-    this.user = user;
-    callback(null, {});
+  constructor(database) {
+    this.database = database; 
   }
 
-  get(callback) {
-    if (this.user) {
-      callback(null, this.user);
+  set(session, user, callback) {
+    session.user = user;
+    callback(null, user);
+  }
+
+  get(session, callback) {
+    if (session.user) {
+      callback(null, session.user);
     } else {
       callback(null, {});
     }
   }
 
-  delete(callback) {
-    this.user = null;
+  delete(session, callback) {
+    session.user = null;
     callback(null, {});
   }
 }

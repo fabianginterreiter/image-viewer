@@ -25,7 +25,7 @@ app.config(function(ngJcropConfigProvider){
 
 });
 
-app.factory('SessionService', function($http, $modal) {
+app.factory('SessionService', function($http, $modal, $log) {
   var currentUser = null;
 
   var listeners = [];
@@ -88,9 +88,11 @@ app.factory('SessionService', function($http, $modal) {
     init : function() {
       $http.get('/api/session').success(function(user) {
         if (user.id) {
+          $log.info('User is logged in. ID: ' + user.id + ' Name: ' + user.name);
           currentUser = user;
           tell(user);
         } else {
+          $log.info('No User is logged in.');
           showDialog();
         }
       })
