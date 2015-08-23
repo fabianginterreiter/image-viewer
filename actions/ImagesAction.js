@@ -69,9 +69,9 @@ export class ImagesAction {
     }
   }
 
-  get(id, callback) {
+  get(user, id, callback) {
     this.database.connect(function(err, client, done) {
-      new GetImageController(client).get(id, function(err, result) {
+      new GetImageController(client).get(user, id, function(err, result) {
         done();
         callback(null, result);
       });

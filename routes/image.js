@@ -116,7 +116,7 @@ router.get('/:id', function(req, res) {
 
   imagesAction.setRoot(req.config.get('root'));
 
-  imagesAction.get(id, function(err, result) {
+  imagesAction.get(req.session.user, id, function(err, result) {
     handleCallback(res, err, result);
   });
 });

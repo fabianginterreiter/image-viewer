@@ -1,12 +1,12 @@
 export class GetImageController {
-  constructor(connection) {
+  constructor(connection, user) {
     this.client = connection; 
   }
 
-  get(id, callback) {
+  get(user, id, callback) {
     var that = this;
 
-    this.client.query('SELECT * FROM images WHERE id = $1', [id], function(err, result) {
+    this.client.query('SELECT images.*, CASE WHEN user_image.user_id IS NULL THEN false ELSE true END AS favorite FROM images LEFT JOIN user_image ON images.id = user_image.image_id AND user_image.user_id = $1 WHERE id = $2', [user.id, id], function(err, result) {
       if (err) {
         return callback(err);
       }
