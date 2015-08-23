@@ -13,7 +13,7 @@ export class UsersAction {
 
   getAll(query, callback) {
     this.database.connect(function(err, client, done) {
-      client.query('SELECT * FROM users ORDER BY name', [], function(err, result) {
+      client.query('SELECT users.*, persons.image_id AS image_id FROM users LEFT JOIN persons ON users.person_id = persons.id ORDER BY name', [], function(err, result) {
         done();
         callback(null, result.rows);    
       });
