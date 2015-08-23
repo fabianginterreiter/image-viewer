@@ -1,4 +1,5 @@
-app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'GalleryService', 'Dialogs', '$location', 'usSpinnerService', 'FilterService', function($scope, $http, $routeParams, $window, DownloadService, GalleryService, Dialogs, $location, usSpinnerService, FilterService) {
+app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'DownloadService', 'GalleryService', 'Dialogs', '$location', 'usSpinnerService', 'FilterService', 'ImageViewerService', function($scope, $http, $routeParams, $window, DownloadService, GalleryService, Dialogs, $location, usSpinnerService, FilterService, ImageViewerService) {
+  ImageViewerService.open();
 
   FilterService.filter($http, $routeParams, 'galleries', function(err, gallery) {
       $scope.gallery = gallery;
