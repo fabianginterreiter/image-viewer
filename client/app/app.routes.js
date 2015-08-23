@@ -149,6 +149,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/trash/index.html',
         controller: 'TrashCtrl'
       }).
+      when('/favorites', {
+        templateUrl: 'templates/favorites/index.html',
+        controller: 'FavoritesCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });
