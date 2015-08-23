@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res) {
   var id = req.param('id');
 
-  personsAction.get(id, function(err, result) {
+  personsAction.get(req.session.user, id, function(err, result) {
     handleCallback(res, err, result);
   });
 });

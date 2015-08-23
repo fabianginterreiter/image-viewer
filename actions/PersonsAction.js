@@ -29,12 +29,12 @@ export class PersonsAction {
     });
   }
 
-  get(id, callback) {
+  get(user, id, callback) {
     console.time().tag('PersonsAction').info('Get Person' + id);
     this.database.connect(function(err, client, done) {
       client.query('SELECT * FROM persons WHERE id = $1', [id], function(err, result) {
         var person = result.rows[0];
-        client.query('SELECT images.* FROM images JOIN image_person ON images.id = image_person.image_id WHERE image_person.person_id = $1 ORDER BY images.created_at, images.name', [id], function(err, result) {
+        client.query('SELECT images.*, CASE WHEN user_image.user_id IS NULL THEN false ELSE true END AS favorite  FROM images LEFT JOIN user_image ON images.id = user_image.image_id AND user_image.user_id = $1 JOIN image_person ON images.id = image_person.image_id WHERE image_person.person_id = $2 ORDER BY images.created_at, images.name', [user.id, id], function(err, result) {
           done();
           person.images = result.rows;
           callback(null, person);
