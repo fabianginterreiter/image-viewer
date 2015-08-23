@@ -82,10 +82,12 @@ var getParents = function(client, gallery, parents, callback) {
 router.get('/:id', function(req, res) {
 	var id = req.param('id');
 
+  var user = req.session.user;
+
   database.connect(function(err, client, done) {
     client.query('SELECT * FROM galleries WHERE id = $1', [id], function(err, result) {
       var gallery = result.rows[0];
-      client.query('SELECT images.* FROM gallery_image JOIN images ON gallery_image.image_id = images.id WHERE gallery_image.gallery_id = $1 ORDER BY images.created_at', [id], function(err, result) {
+      client.query('SELECT images.*, CASE WHEN user_image.user_id IS NULL THEN false ELSE true END AS favorite FROM gallery_image JOIN images ON gallery_image.image_id = images.id LEFT JOIN user_image ON images.id = user_image.image_id AND user_image.user_id = $1 WHERE gallery_image.gallery_id = $2 ORDER BY images.created_at', [user.id, id], function(err, result) {
         gallery.images = result.rows;
 
         client.query('SELECT * FROM galleries WHERE parent_id = $1', [id], function(err, result) {
