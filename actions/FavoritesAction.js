@@ -9,7 +9,8 @@ export class FavoritesAction {
 
   get(user, callback) {
     this.database.connect(function(err, client, done) {
-      client.query('SELECT * FROM images JOIN user_image ON images.id = user_image.image_id WHERE user_image.user_id = $1 ORDER BY images.created_at;', [user.id], function(err, result) {
+      // Set favorite as true because this query contains only favorites
+      client.query('SELECT images.*, true AS favorite FROM images JOIN user_image ON images.id = user_image.image_id WHERE user_image.user_id = $1 ORDER BY images.created_at;', [user.id], function(err, result) {
         done();
         callback(null, result.rows);    
       });
