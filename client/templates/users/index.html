@@ -6,6 +6,7 @@
 <div class="modal-body" ng-if="view === 'select'">
   <div class="list-group" ng-if="users.length > 0">
     <a ng-click="select(user)" class="list-group-item" ng-repeat="user in users | orderBy:['name']">
+     <img ng-if="user.image_id" ng-src="/api/persons/{{user.person_id}}/image" class="img-circle" width="60" height="60">
       {{user.name}}
     </a>
   </div>

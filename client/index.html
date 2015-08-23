@@ -32,7 +32,6 @@
           <li ng-class="{'active' : isActive('tags')}"><a href="#/tags">Tags</a></li>
           <li ng-class="{'active' : isActive('persons')}"><a href="#/persons">Persons</a></li>
           <li ng-class="{'active' : isActive('directories')}"><a href="#/directories">Directories</a></li>
-          
         </ul>
 
         <ul class="nav navbar-nav navbar-right" ng-controller="NavCtrl">
@@ -44,7 +43,13 @@
           </li>
           <li ng-class="{'active' : isActive('config')}"><a href="#/config">Config</a></li>
           <li class="dropdown" ng-controller="SessionCtrl">
-            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{name}} <span class="caret"></span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+
+            <span style="position: relative;">
+            <img ng-if="user.image_id" ng-src="/api/persons/{{user.person_id}}/image" class="img-circle" width="30" height="30" style="position: absolute; top: -5px;">
+            </span>
+
+            <span style="padding-left: 35px;">{{name}}</span> <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="#">Settings</a></li>
               <li class="divider"></li>
