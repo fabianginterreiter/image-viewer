@@ -66,6 +66,10 @@ app.use(function(req, res, next) {
         return next();
     }
 
+    if (req.path.startsWith('/api/persons/') && req.path.endsWith('/image')) {
+        return next();
+    }
+
     return res.status(401).send("No Profile selected.");
 });
 
