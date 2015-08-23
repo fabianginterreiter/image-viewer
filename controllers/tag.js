@@ -41,7 +41,7 @@ export class TagController {
   }
 
   getImages(id, client, callback) {
-    client.query('SELECT images.* FROM images JOIN image_tag ON images.id = image_tag.image_id WHERE image_tag.tag_id = $1 ORDER BY images.created_at', [id], function(err, result) {
+    client.query('SELECT images.*, CASE WHEN user_image.user_id IS NULL THEN false ELSE true END AS favorite FROM images LEFT JOIN user_image ON images.id = user_image.image_id AND user_image.user_id = 1 JOIN image_tag ON images.id = image_tag.image_id WHERE image_tag.tag_id = $1 ORDER BY images.created_at', [id], function(err, result) {
       if (err) {
         return callback(err);
       }
