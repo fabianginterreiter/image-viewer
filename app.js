@@ -17,6 +17,7 @@ var stats = require('./routes/stats')
 var trash = require('./routes/trash')
 var users = require('./routes/users')
 var sessionRoutes = require('./routes/session')
+var favorites = require('./routes/favorites')
 var config = require('config');
 
 var session = require('express-session');
@@ -65,6 +66,7 @@ app.use('/api/stats', stats);
 app.use('/api/trash', trash);
 app.use('/api/users', users);
 app.use('/api/session', sessionRoutes);
+app.use('/api/favorites', favorites);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
