@@ -23,7 +23,7 @@ router.get('/', function(req, res) {
 });
 
 router.put('/:imageId', function(req, res) {
-	favoritesAction.add(req.session.user, req.param('iamgeId'), function(err,result) {
+	favoritesAction.add(req.session.user, req.param('imageId'), function(err,result) {
     handleCallback(res, err, result);
 	});
 });

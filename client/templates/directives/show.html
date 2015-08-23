@@ -1,5 +1,7 @@
 <div ng-if="image">
 <div class="options" ng-style="{'visibility': {{toolbar ? 'visible' : 'hidden'}}}">
+  <favorite image="image" class="left"></favorite>
+
   <div class="left" ng-click="image.selected = !image.selected" ng-if="selectable">
     <span class="glyphicon glyphicon-check" ng-if="image.selected"></span>
     <span ng-if="!image.selected" class="glyphicon glyphicon-unchecked"></span>

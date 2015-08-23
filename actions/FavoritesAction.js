@@ -17,8 +17,14 @@ export class FavoritesAction {
   }
 
   add(user, imageId, callback) {
-    this.database.query('INSERT INTO user_image (user_id, image_id) VALUES($1, $2)', [user.id, imageId], function(err, result) {
-      callback(null, result);
+    this.database.connect(function(err, client, done) {
+      client.query('INSERT INTO user_image (user_id, image_id) VALUES($1, $2) RETURNING image_id', [user.id, imageId], function(err, result) {
+        if (err) {
+          return callback(err);
+        }
+        done();
+        callback(null, 'OK');
+      });
     });
   }
 
