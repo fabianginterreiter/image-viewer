@@ -17,6 +17,15 @@ app.directive('favorite', function() {
     scope: {
       image: '=image'
     },
-    templateUrl: 'templates/directives/favorite.html'
+    templateUrl: 'templates/directives/favorite.html',
+    link: function(scope, element, attrs) {
+      element.bind('click', function() {
+        if (scope.image.favorite) {
+          scope.remove();  
+        } else {
+          scope.add();
+        }
+      });
+    }
   };
 });
