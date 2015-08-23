@@ -62,7 +62,7 @@ app.factory('SessionService', function($http, $modal, $log) {
         templateUrl: 'templates/users/index.html',
         backdrop: 'static',
         keyboard: false,
-        controller: function ($scope, $modalInstance, $http, $location) {
+        controller: function ($scope, $modalInstance, $http, $location, $route) {
           $scope.users = users;
 
           $scope.select = function (user) {
@@ -70,6 +70,7 @@ app.factory('SessionService', function($http, $modal, $log) {
               currentUser = user;
               tell(user);
               $modalInstance.close();
+              $route.reload();
             });
           };
 
