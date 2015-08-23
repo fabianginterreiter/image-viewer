@@ -92,7 +92,10 @@
         <div class="mark"></div>
         <div class="deleted glyphicon glyphicon-trash" ng-if="file.deleted && !showDeleted"></div>
         <img data-srcset="/api/images/{{file.id}}/thumb?height={{file.thumb_height}}" height="{{file.thumb_height}}" width="{{file.thumb_width}}" class="lazyload" ng-if="!file.hide" id="image-{{image.id}}">
-        <div class="h teee" ng-click="file.selected = !file.selected">{{file.name}}</div>
+        <div class="h teee" ng-click="file.selected = !file.selected">
+          <span ng-if="file.favorite" class="glyphicon glyphicon-heart"></span>
+          {{file.name}}
+         </div>
       </div>
       <div style="clear:both"></div>
     </div>
