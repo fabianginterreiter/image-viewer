@@ -53,6 +53,22 @@ app.use(function(req,res,next) {
     next();
 });
 
+app.use(function(req, res, next) {
+    if (req.session.user) {
+        return next();
+    }
+
+    if (req.path === '/api/session') {
+        return next();
+    }
+
+    if (req.path === '/api/users') {
+        return next();
+    }
+
+    return res.status(401).send("No Profile selected.");
+});
+
 app.use('/logs', scribe.webPanel());
 
 app.use('/api/directories', directory);

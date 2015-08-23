@@ -25,6 +25,25 @@ app.config(function(ngJcropConfigProvider){
 
 });
 
+var httpInterceptor = function ($provide, $httpProvider) {
+  $provide.factory('httpInterceptor', function ($q) {
+    return {
+      response: function (response) {
+        return response || $q.when(response);
+      },
+      responseError: function (rejection) {
+        if(rejection.status === 401) {
+          SessionService.init();
+          console.log("YOU ARE NOT AUTHORITED!");
+        }
+        return $q.reject(rejection);
+      }
+    };
+  });
+  $httpProvider.interceptors.push('httpInterceptor');
+};
+app.config(httpInterceptor);
+
 app.factory('SessionService', function($http, $modal, $log) {
   var currentUser = null;
 
