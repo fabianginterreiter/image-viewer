@@ -2,18 +2,26 @@ var _ = require('lodash');
 
 var console = process.console;
 
+var knex = require('knex')({
+  client: 'postgres',
+  connection: {
+    host     : 'localhost',
+    user     : 'postgres',
+    password : '',
+    database : 'images'
+  }
+});
+
 export class FavoritesAction {
   constructor(database) {
     this.database = database; 
   }
 
   get(user, callback) {
-    this.database.connect(function(err, client, done) {
-      // Set favorite as true because this query contains only favorites
-      client.query('SELECT images.*, true AS favorite FROM images JOIN user_image ON images.id = user_image.image_id WHERE user_image.user_id = $1 ORDER BY images.created_at;', [user.id], function(err, result) {
-        done();
-        callback(null, result.rows);    
-      });
+    knex.select('images.*').from('images').join('user_image', 'images.id', 'user_image.image_id').where({
+      'user_image.user_id' : user.id
+    }).then(function(rows) {
+      callback(null, rows);
     });
   }
 
