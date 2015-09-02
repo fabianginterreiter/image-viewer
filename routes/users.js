@@ -4,9 +4,19 @@ var database = require('../utils/Database');
 
 var console = process.console;
 
+var knex = require('knex')({
+  client: 'postgres',
+  connection: {
+    host     : 'localhost',
+    user     : 'postgres',
+    password : '',
+    database : 'images'
+  }
+});
+
 import { UsersAction } from '../actions/UsersAction';
 
-var usersAction = new UsersAction(database);
+var usersAction = new UsersAction(database, knex);
 
 var handleCallback = function(res, err, result) {
   if (err) {

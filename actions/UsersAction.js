@@ -3,8 +3,9 @@ var _ = require('lodash');
 var console = process.console;
 
 export class UsersAction {
-  constructor(database) {
+  constructor(database, knex) {
     this.database = database; 
+    this.knex = knex;
   }
 
   setRoot(root) {
@@ -12,11 +13,17 @@ export class UsersAction {
   }
 
   getAll(query, callback) {
-    this.database.connect(function(err, client, done) {
-      client.query('SELECT users.*, persons.image_id AS image_id FROM users LEFT JOIN persons ON users.person_id = persons.id ORDER BY name', [], function(err, result) {
-        done();
-        callback(null, result.rows);    
-      });
+    this.knex('users').select(
+      'users.*',
+      'persons.image_id AS image_id'
+    ).leftJoin(
+      'persons', 
+      'users.person_id', 
+      'persons.id'
+    ).orderBy('name').then(function(rows) {
+      callback(null, rows);
+    }).catch(function(error) {
+      callback(error);
     });
   }
 
