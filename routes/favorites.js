@@ -4,9 +4,19 @@ var database = require('../utils/Database');
 
 var console = process.console;
 
+var knex = require('knex')({
+  client: 'postgres',
+  connection: {
+    host     : 'localhost',
+    user     : 'postgres',
+    password : '',
+    database : 'images'
+  }
+});
+
 import { FavoritesAction } from '../actions/FavoritesAction';
 
-var favoritesAction = new FavoritesAction(database);
+var favoritesAction = new FavoritesAction(knex);
 
 var handleCallback = function(res, err, result) {
   if (err) {

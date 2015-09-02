@@ -2,23 +2,15 @@ var _ = require('lodash');
 
 var console = process.console;
 
-var knex = require('knex')({
-  client: 'postgres',
-  connection: {
-    host     : 'localhost',
-    user     : 'postgres',
-    password : '',
-    database : 'images'
-  }
-});
+
 
 export class FavoritesAction {
-  constructor(database) {
-    this.database = database; 
+  constructor(knex) {
+    this.knex = knex; 
   }
 
   get(user, callback) {
-    knex('images').select('images.*').join('user_image', 'images.id', 'user_image.image_id').where({
+    this.knex('images').select('images.*').join('user_image', 'images.id', 'user_image.image_id').where({
       'user_image.user_id' : user.id
     }).then(function(rows) {
       callback(null, rows);
@@ -28,7 +20,7 @@ export class FavoritesAction {
   }
 
   add(user, imageId, callback) {
-    knex('user_image').insert({
+    this.knex('user_image').insert({
       'user_id' : user.id,
       'image_id' : imageId
     }).then(function(rows) {
@@ -39,7 +31,7 @@ export class FavoritesAction {
   }
 
   delete(user, imageId, callback) {
-    knex('user_image').where({
+    this.knex('user_image').where({
       'user_id' : user.id,
       'image_id' : imageId
     }).del().then(function() {
