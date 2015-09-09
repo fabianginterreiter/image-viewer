@@ -77,7 +77,11 @@ router.get('/', function(req, res) {
     galleriesOnly : req.param('galleriesOnly'),
     minDate : req.param('minDate'),
     maxDate : req.param('maxDate'),
-    query : req.param('query')
+    query : req.param('query'),
+    lat1 : req.param('lat1'),
+    lon1 : req.param('lon1'),
+    lat2 : req.param('lat2'),
+    lon2 : req.param('lon2')
   }, function(err, result) {
     handleCallback(res, err, result);
   });  

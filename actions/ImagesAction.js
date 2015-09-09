@@ -23,6 +23,13 @@ export class ImagesAction {
 
   getImages(action, options, callback) {
     switch (action) {
+      case 'coordinates':
+        this.database.query('SELECT * FROM images WHERE (longitude BETWEEN $1 AND $3) AND (latitude BETWEEN $2 AND $4)', [
+          options.lon1, options.lat1, options.lon2, options.lat2
+          ], function(err, result) {
+          callback(null, result);
+        });
+        break;
       case 'random':
         var limit = options.limit ? options.limit : '10';
         if (options.used) {

@@ -2,22 +2,18 @@
 <div class="container">
 
 
-<div class="row">
-<form ng-submit="search(value)">
-<input type="text" ng-model="value">
-</form>
 
-</div>
+
 <div class="row">
 
 <!--openlayers ol-center="center" ol-defaults="defaults" height="400px" width="100%">
   <ol-marker lat="lat" lon="lon"></ol-marker>
 </openlayers>-->
-
-<div style="height: 200px;">
-<div id="map"></div>
+<div class="col-md-12">
+<map move="move(lon1, lat1, lon2, lat2)" points="points"></map>
 </div>
 
 </div>
 </div>
 
+</div>
