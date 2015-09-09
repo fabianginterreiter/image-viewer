@@ -5,8 +5,9 @@ var _ = require('lodash');
 var console = process.console;
 
 export class PersonsAction {
-  constructor(database) {
+  constructor(database, knex) {
     this.database = database; 
+    this.knex = knex;
   }
 
   setRoot(root) {
@@ -14,32 +15,48 @@ export class PersonsAction {
   }
 
   getAll(query, callback) {
-    this.database.connect(function(err, client, done) {
-    	if (query) {
+    if (query) {
+      this.database.connect(function(err, client, done) {
         client.query('SELECT persons.* FROM persons JOIN image_person ON persons.id = image_person.person_id WHERE LOWER(persons.name) LIKE LOWER($1) GROUP BY persons.id ORDER BY count(persons.id) DESC', ['%' + query + '%'], function(err, result) {
           done();
           callback(null, result.rows);
         }); 
-    	} else {
-    	  client.query('SELECT persons.id, persons.name, persons.image_id, count(persons) AS count FROM persons JOIN image_person ON image_person.person_id = persons.id GROUP BY persons.id ORDER BY count DESC;', [], function(err, result) {
-          done();
-          callback(null, result.rows);
-        });	
-    	}
-    });
+      });
+    } else {
+      this.knex('persons').select('persons.id', 'persons.name', 'persons.image_id')
+        .count('persons as count')
+        .join('image_person', 'image_person.person_id', 'persons.id')
+        .groupBy('persons.id')
+        .orderBy('count', 'desc').then(function(rows) {
+          callback(null, rows);
+        }).catch(function(error) {
+          callback(error);
+        });
+    }
   }
 
   get(user, id, callback) {
-    console.time().tag('PersonsAction').info('Get Person' + id);
-    this.database.connect(function(err, client, done) {
-      client.query('SELECT * FROM persons WHERE id = $1', [id], function(err, result) {
-        var person = result.rows[0];
-        client.query('SELECT images.*, CASE WHEN user_image.user_id IS NULL THEN false ELSE true END AS favorite  FROM images LEFT JOIN user_image ON images.id = user_image.image_id AND user_image.user_id = $1 JOIN image_person ON images.id = image_person.image_id WHERE image_person.person_id = $2 ORDER BY images.created_at, images.name', [user.id, id], function(err, result) {
-          done();
-          person.images = result.rows;
-          callback(null, person);
-        });
-      });
+    var person = null;
+    var knex = this.knex;
+    this.knex('persons').where({
+      'id' : id
+    }).then(function(rows) {
+      person = rows[0];
+      return knex('images').select('images.*')
+        /*.select(knex.raw('CASE WHEN "user_image"."user_id" IS NULL THEN false ELSE true END AS favorite'))
+        .leftJoin('user_image', function() {
+          this.on('user_image.image_id', 'images.id')
+            .on('user_image.user_id', user.id);
+        })*/
+        .join('image_person', 'images.id', 'image_person.image_id')
+        .where({
+          'image_person.person_id' : id
+        }).orderBy('images.created_at');
+    }).then(function(rows) {
+      person.images = rows;
+      callback(null, person);
+    }).catch(function(error) {
+      callback(error);
     });
   }
 

@@ -6,9 +6,20 @@ var database = require('../utils/Database');
 
 var console = process.console;
 
+var knex = require('knex')({
+  client: 'postgres',
+  connection: {
+    host     : 'localhost',
+    user     : 'postgres',
+    password : '',
+    database : 'images'
+  },
+  debug : true
+});
+
 import { PersonsAction } from '../actions/PersonsAction';
 
-var personsAction = new PersonsAction(database);
+var personsAction = new PersonsAction(database, knex);
 
 var handleCallback = function(res, err, result) {
   if (err) {
