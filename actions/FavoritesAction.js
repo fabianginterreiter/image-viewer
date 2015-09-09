@@ -13,6 +13,9 @@ export class FavoritesAction {
     this.knex('images').select('images.*').join('user_image', 'images.id', 'user_image.image_id').where({
       'user_image.user_id' : user.id
     }).then(function(rows) {
+      _.forEach(rows, function(image) {
+        image.favorite = true;
+      });
       callback(null, rows);
     }).catch(function(error) {
       callback(error);
