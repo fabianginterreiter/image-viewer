@@ -84,6 +84,16 @@ export class SearchImagesController {
     }
   }
 
+  extendConditionForOrientation(conditions, options) {
+    if (options.orientation) {
+      if (options.orientation === 'v') {
+        conditions.push('orientation IN (6, 8)')
+      } else if (options.orientation === 'h') {
+        conditions.push('orientation IN (1)');
+      }
+    }
+  }
+
   search(options, callback) {
   	var conditions = [];
     conditions.push('1 = 1');
@@ -96,6 +106,8 @@ export class SearchImagesController {
     this.extendConditionForMaxDate(conditions, options);
 
     this.extendConditionsForQuery(conditions, options);
+
+    this.extendConditionForOrientation(conditions, options);
 
     var query = 'SELECT images.* FROM images WHERE ' + conditions.join(' AND ') + ' ORDER BY images.created_at LIMIT 200';
 

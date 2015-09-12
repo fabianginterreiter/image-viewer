@@ -78,6 +78,7 @@ router.get('/', function(req, res) {
     minDate : req.param('minDate'),
     maxDate : req.param('maxDate'),
     query : req.param('query'),
+    orientation : req.param('orientation'),
     lat1 : req.param('lat1'),
     lon1 : req.param('lon1'),
     lat2 : req.param('lat2'),

@@ -84,6 +84,11 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
     options.push('query=' + $scope.query);
   }
 
+  if ($routeParams.orientation) {
+    $scope.orientation = $routeParams.orientation;
+    options.push('orientation=' + $scope.orientation);
+  }
+
   $http.get('/api/images?action=search&' + options.join('&')).success(function(data) {
   	$scope.images = data;
   });

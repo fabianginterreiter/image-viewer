@@ -17,10 +17,12 @@
     <p ng-if="galleries.length > 0">
     Galleries: <span ng-repeat="gallery in galleries | orderBy:'name'"><a  href="#/galleries/{{gallery.id}}">{{gallery.name}}</a> </span>
     <span ng-if="galleriesOnly">(only)</span>
+
     </p>
 
     <p ng-if="minDate">Min Date: {{minDate | formatDate}}</p>
     <p ng-if="maxDate">Max Date: {{maxDate | formatDate}}</p>
+    <p ng-if="orientation">Orientation: <span ng-if="orientation === 'v'">Vertical</span> <span ng-if="orientation === 'h'">Horizontal</span></p>
 
     <div>
       <a class="btn btn-primary" ng-click="edit()">Edit</a>

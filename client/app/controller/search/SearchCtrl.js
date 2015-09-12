@@ -39,6 +39,10 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
     $scope.maxDate = new Date(values[0], values[1] - 1, values[2]);
   }
 
+  if ($routeParams.orientation) {
+    $scope.orientation = $routeParams.orientation;
+  }
+
   $scope.personsOnly = $routeParams.personsOnly === 'true';
   $scope.tagsOnly = $routeParams.tagsOnly === 'true';
   $scope.galleriesOnly = $routeParams.galleriesOnly === 'true';
@@ -108,6 +112,10 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
 
     if ($scope.query && $scope.query.length > 0) {
       options.query = $scope.query;
+    }
+
+    if ($scope.orientation && $scope.orientation !== '') {
+      options.orientation = $scope.orientation;
     }
 
   	$location.path('/search/result').search(options);
