@@ -139,9 +139,13 @@ export class ImagesAction {
     });
   }
 
-  getRelated(id, callback) {
+  getRelated(id, options, callback) {
+    if (!options.limit) {
+      options.limit = 20;
+    }
+
     this.database.connect(function(err, client, done) {
-      client.query('SELECT images.* FROM images WHERE id in (SELECT ids.id FROM ((SELECT rt.image_id AS id FROM image_tag it JOIN image_tag rt ON it.tag_id = rt.tag_id WHERE it.image_id = $1 AND rt.image_id != $1) UNION ALL (SELECT rt.image_id AS id FROM image_person it JOIN image_person rt ON it.person_id = rt.person_id WHERE it.image_id = $1 AND rt.image_id != $1)) ids GROUP BY ids.id ORDER BY COUNT(ids.id) DESC LIMIT 20)', [ id ], function(err , result) {
+      client.query('SELECT images.* FROM images WHERE id in (SELECT ids.id FROM ((SELECT rt.image_id AS id FROM image_tag it JOIN image_tag rt ON it.tag_id = rt.tag_id WHERE it.image_id = $1 AND rt.image_id != $1) UNION ALL (SELECT rt.image_id AS id FROM image_person it JOIN image_person rt ON it.person_id = rt.person_id WHERE it.image_id = $1 AND rt.image_id != $1)) ids GROUP BY ids.id ORDER BY COUNT(ids.id) DESC LIMIT $2)', [ id, options.limit ], function(err , result) {
         if (err) {
           return callback(err);
         }

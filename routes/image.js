@@ -66,7 +66,11 @@ router.put('/:id', function(req, res) {
 router.get('/:id/related', function(req, res) {
   var id = req.param('id');
 
-  imagesAction.getRelated(id, function(err, result) {
+  var options = {
+    limit : req.param('limit')
+  };
+
+  imagesAction.getRelated(id, options, function(err, result) {
     handleCallback(res, err, result);
   });
 });
