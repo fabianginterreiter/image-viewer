@@ -33,7 +33,7 @@ app.directive('thumbnails', function() {
 
         _.forEach(images, function(image) {
           if (maxRows > 0 && rows >= maxRows) {
-            image.hide;
+            image.hide =true;
             return;
           }
 
@@ -42,7 +42,7 @@ app.directive('thumbnails', function() {
             $scope.hidden = true;
             return;
           }
-          
+
           image.scale = image.orientation === 8 || image.orientation === 6 ? image.height / image.width : image.width / image.height;
 
           scaleSum+=image.scale;
