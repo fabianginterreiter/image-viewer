@@ -63,6 +63,14 @@ router.put('/:id', function(req, res) {
   });
 });
 
+router.get('/:id/related', function(req, res) {
+  var id = req.param('id');
+
+  imagesAction.getRelated(id, function(err, result) {
+    handleCallback(res, err, result);
+  });
+});
+
 router.get('/', function(req, res) {
   var action = req.param('action');
 

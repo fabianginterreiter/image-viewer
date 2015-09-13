@@ -15,5 +15,9 @@ app.controller('ImageCtrl', ['$scope', '$http', '$routeParams', 'ImageViewerServ
   $http.get('/api/images/' + $routeParams.id).success(function(data) {
   	$scope.image = data;
   });
+
+  $http.get('/api/images/' + $routeParams.id + '/related').success(function(data) {
+    $scope.related = data;
+  });
   
 }]);

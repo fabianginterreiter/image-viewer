@@ -17,16 +17,32 @@ app.directive('thumbnails', function() {
           }
         };
 
-        var number = (width > 800) ? 4 : (width > 400) ? 3 : 2;
+        var anz = 4;
+        if ($scope.numbers) {
+          anz = parseInt($scope.numbers);
+        }
+
+        console.log("Number: " + anz);
+
+        var number = (width > 800) ? anz : (width > 400) ? 3 : 2;
 
         var maxHeight = width / number;
 
+        var maxRows = $scope.rows ? parseInt($scope.rows) : 0;
+        var rows = 0;
+
         _.forEach(images, function(image) {
+          if (maxRows > 0 && rows >= maxRows) {
+            image.hide;
+            return;
+          }
+
           if (!image.width) {
             image.hide = true;
             $scope.hidden = true;
             return;
           }
+          
           image.scale = image.orientation === 8 || image.orientation === 6 ? image.height / image.width : image.width / image.height;
 
           scaleSum+=image.scale;
@@ -37,6 +53,7 @@ app.directive('thumbnails', function() {
             addAA(sl, k);
             scaleSum = 0; 
             sl = [];
+            rows++;
           }
         });
 
@@ -52,8 +69,6 @@ app.directive('thumbnails', function() {
         }
 
         url += 'y=' + window.scrollY;
-
-        console.log(url);
 
         $location.url(url);
       };
@@ -124,7 +139,9 @@ app.directive('thumbnails', function() {
     scope: {
       images: '=images',
       toolbar: '=toolbar',
-      showDeleted: '=showDeleted'
+      showDeleted: '=showDeleted',
+      numbers: '=numbers',
+      rows: '=rows'
     },
     templateUrl: 'templates/directives/thumbnails.html'
   };

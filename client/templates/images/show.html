@@ -1,4 +1,10 @@
 <div class="container" ng-if="image">
   <h1>{{image | getImageName}}</h1>
   <show image="image" toolbar="true" ng-if="image" selectable="false"></show>
+  <div class="row">
+  <div class="col-md-12">
+  <h2>Related</h2>
+  <thumbnails images="related" toolbar="false" numbers="8" rows="4"></thumbnails>
+  </div>
+  <h2></h2>
 </div>
