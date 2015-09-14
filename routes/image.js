@@ -10,6 +10,16 @@ var request = require('request');
 
 var console = process.console;
 
+var knex = require('knex')({
+  client: 'postgres',
+  connection: {
+    host     : 'localhost',
+    user     : 'postgres',
+    password : '',
+    database : 'images'
+  },
+  debug: true
+});
 
 function getCachePath(req, image) {
   return req.config.get('cache') + '/' + image.id + '.jpg';
@@ -48,7 +58,7 @@ var handleCallback = function(res, err, result) {
 
 import { ImagesAction } from '../actions/ImagesAction';
 
-var imagesAction = new ImagesAction(database);
+var imagesAction = new ImagesAction(database, knex);
 
 router.put('/:id', function(req, res) {
   var image = req.body;

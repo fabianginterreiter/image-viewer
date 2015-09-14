@@ -13,8 +13,9 @@ import { GetImageController } from '../controllers/images/GetImageController';
 import { SearchImagesController } from '../controllers/images/SearchImagesController';
 
 export class ImagesAction {
-  constructor(database) {
+  constructor(database, knex) {
     this.database = database; 
+    this.knex = knex;
   }
 
   setRoot(root) {
@@ -144,16 +145,28 @@ export class ImagesAction {
       options.limit = 20;
     }
 
-    this.database.connect(function(err, client, done) {
-      client.query('SELECT images.* FROM images WHERE id in (SELECT ids.id FROM ((SELECT rt.image_id AS id FROM image_tag it JOIN image_tag rt ON it.tag_id = rt.tag_id WHERE it.image_id = $1 AND rt.image_id != $1) UNION ALL (SELECT rt.image_id AS id FROM image_person it JOIN image_person rt ON it.person_id = rt.person_id WHERE it.image_id = $1 AND rt.image_id != $1)) ids GROUP BY ids.id ORDER BY COUNT(ids.id) DESC LIMIT $2)', [ id, options.limit ], function(err , result) {
-        if (err) {
-          return callback(err);
-        }
 
-        done();
-
-        callback(null, result.rows);
-      });
+    this.knex('images').select('images.*').whereIn(
+      'id',
+      this.knex.select('ids.id').from(
+        this.knex.select('rt.image_id AS id').from('image_tag AS it').join('image_tag AS rt', 'it.tag_id', 'rt.tag_id').where({
+        'it.image_id' : id
+      }).whereNot({
+        'rt.image_id' : id
+      }).as('ids').unionAll(
+        this.knex.select('rt.image_id AS id').from('image_person AS it').join('image_person AS rt', 'it.person_id', 'rt.person_id').where({
+          'it.image_id' : id
+        }).whereNot({
+          'rt.image_id' : id
+        })
+      ))
+      .groupBy('ids.id')
+      .orderByRaw('count("ids"."id") DESC')
+      .limit(options.limit)
+    ).then(function(rows) {
+      callback(null, rows);
+    }).catch(function(error) {
+      callback(error);
     });
   }
 }
