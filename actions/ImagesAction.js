@@ -145,21 +145,26 @@ export class ImagesAction {
       options.limit = 20;
     }
 
+    var relatedImagesByTag = this.knex.select('rt.image_id AS id').from('image_tag AS it').join('image_tag AS rt', 'it.tag_id', 'rt.tag_id').where({
+        'it.image_id' : id
+      }).whereNot({
+        'rt.image_id' : id
+      }).as('ids');
+
+      var relatedImagesByPerson = this.knex.select('rt.image_id AS id').from('image_person AS it').join('image_person AS rt', 'it.person_id', 'rt.person_id').where({
+          'it.image_id' : id
+        }).whereNot({
+          'rt.image_id' : id
+        });
+
 
     this.knex('images').select('images.*').whereIn(
       'id',
       this.knex.select('ids.id').from(
-        this.knex.select('rt.image_id AS id').from('image_tag AS it').join('image_tag AS rt', 'it.tag_id', 'rt.tag_id').where({
-        'it.image_id' : id
-      }).whereNot({
-        'rt.image_id' : id
-      }).as('ids').unionAll(
-        this.knex.select('rt.image_id AS id').from('image_person AS it').join('image_person AS rt', 'it.person_id', 'rt.person_id').where({
-          'it.image_id' : id
-        }).whereNot({
-          'rt.image_id' : id
-        })
-      ))
+        relatedImagesByTag.unionAll(
+          relatedImagesByPerson
+        )
+      )
       .groupBy('ids.id')
       .orderByRaw('count("ids"."id") DESC')
       .limit(options.limit)
