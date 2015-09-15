@@ -159,13 +159,26 @@ class ImagesAction {
           'rt.image_id' : id
         });
 
+    var relatedImagesByGallery = this.knex.select('rt.image_id AS id').from('gallery_image AS it').join('gallery_image AS rt', 'it.gallery_id', 'rt.gallery_id').where({
+       'it.image_id' : id
+        }).whereNot({
+          'rt.image_id' : id
+        });
+
+    var relatedImagesByDirectory = this.knex.select('rt.id AS id').from('images AS it').join('images AS rt', 'it.directory_id', 'rt.directory_id').where({
+       'it.id' : id
+        }).whereNot({
+          'rt.id' : id
+        });
+
 
     this.knex('images').select('images.*').whereIn(
       'id',
       this.knex.select('ids.id').from(
-        relatedImagesByTag.unionAll(
-          relatedImagesByPerson
-        )
+        relatedImagesByTag
+          .unionAll(relatedImagesByPerson)
+          .unionAll(relatedImagesByGallery)
+          .unionAll(relatedImagesByDirectory)
       )
       .groupBy('ids.id')
       .orderByRaw('count("ids"."id") DESC')
