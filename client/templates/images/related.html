@@ -1,0 +1,14 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>{{image | getImageName}}</h1>
+  </div>
+</div>
+
+<div class="container" ng-if="image">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Related</h2>
+      <thumbnails images="related" toolbar="true"></thumbnails>
+    </div>
+  </div>
+</div>

@@ -33,6 +33,10 @@ app.config(['$routeProvider',
         templateUrl: 'templates/images/show.html',
         controller: 'ImageCtrl'
       }).
+      when('/images/:id/related', {
+        templateUrl: 'templates/images/related.html',
+        controller: 'RelatedImagesCtrl'
+      }).
       when('/tags', {
         templateUrl: 'templates/tags/index.html',
         controller: 'TagsCtrl'
