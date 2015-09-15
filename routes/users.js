@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../utils/Database');
-
+var UsersAction = require('../actions/UsersAction');
 var console = process.console;
 
 var knex = require('knex')({
@@ -14,7 +14,7 @@ var knex = require('knex')({
   }
 });
 
-import { UsersAction } from '../actions/UsersAction';
+
 
 var usersAction = new UsersAction(database, knex);
 

@@ -1,8 +1,10 @@
+"use strict"
+
 var _ = require('lodash');
 
 var console = process.console;
 
-export class SearchImagesController {
+class SearchImagesController {
   constructor(connection) {
     this.client = connection; 
   }
@@ -121,3 +123,5 @@ export class SearchImagesController {
     });
   }
 }
+
+module.exports = SearchImagesController;

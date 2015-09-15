@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var database = require('../utils/Database');
+var FavoritesAction = require('../actions/FavoritesAction');
 
 var console = process.console;
 
@@ -13,8 +14,6 @@ var knex = require('knex')({
     database : 'images'
   }
 });
-
-import { FavoritesAction } from '../actions/FavoritesAction';
 
 var favoritesAction = new FavoritesAction(knex);
 

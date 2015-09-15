@@ -1,3 +1,5 @@
+"use strict"
+
 var express = require('express');
 var router = express.Router();
 var ExifImage = require('exif').ExifImage;
@@ -7,6 +9,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var database = require('../utils/Database');
 var request = require('request');
+var ImagesAction = require('../actions/ImagesAction');
 
 var console = process.console;
 
@@ -56,7 +59,7 @@ var handleCallback = function(res, err, result) {
   res.send(result);
 };
 
-import { ImagesAction } from '../actions/ImagesAction';
+
 
 var imagesAction = new ImagesAction(database, knex);
 

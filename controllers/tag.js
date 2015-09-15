@@ -1,6 +1,8 @@
+"use strict"
+
 var console = process.console;
 
-export class TagController {
+class TagController {
   constructor(database) {
     this.database = database;    
   }
@@ -50,3 +52,5 @@ export class TagController {
     });
   }
 }
+
+module.exports = TagController;

@@ -1,3 +1,5 @@
+"use strict"
+
 var _ = require('lodash');
 var pg = require('pg');
 
@@ -24,4 +26,4 @@ class Database {
 
 var database = new Database('localhost', 'postgres', '', 'images');
 
-export default database;
+module.exports = database;

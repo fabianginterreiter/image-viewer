@@ -3,6 +3,7 @@ var router = express.Router();
 var _ = require('lodash');
 var fs = require('fs');
 var database = require('../utils/Database');
+var PersonsAction = require('../actions/PersonsAction');
 
 var console = process.console;
 
@@ -17,7 +18,7 @@ var knex = require('knex')({
   debug : true
 });
 
-import { PersonsAction } from '../actions/PersonsAction';
+
 
 var personsAction = new PersonsAction(database, knex);
 

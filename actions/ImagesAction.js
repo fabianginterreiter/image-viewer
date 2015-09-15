@@ -1,6 +1,10 @@
+"use strict"
+
 var sharp = require('sharp');
 var fs = require('fs');
 var _ = require('lodash');
+var GetImageController = require('../controllers/images/GetImageController');
+var SearchImagesController = require('../controllers/images/SearchImagesController');
 
 var console = process.console;
 
@@ -9,10 +13,8 @@ function updateImage(client, id, callback) {
   client.query('UPDATE images SET updated_at = now() WHERE id = $1', [id], callback);
 }
 
-import { GetImageController } from '../controllers/images/GetImageController';
-import { SearchImagesController } from '../controllers/images/SearchImagesController';
 
-export class ImagesAction {
+class ImagesAction {
   constructor(database, knex) {
     this.database = database; 
     this.knex = knex;
@@ -175,3 +177,5 @@ export class ImagesAction {
     });
   }
 }
+
+module.exports = ImagesAction;

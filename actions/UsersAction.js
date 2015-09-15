@@ -1,8 +1,10 @@
+"use strict"
+
 var _ = require('lodash');
 
 var console = process.console;
 
-export class UsersAction {
+class UsersAction {
   constructor(database, knex) {
     this.database = database; 
     this.knex = knex;
@@ -38,3 +40,5 @@ export class UsersAction {
     });
   }
 }
+
+module.exports = UsersAction;

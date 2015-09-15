@@ -1,7 +1,10 @@
+"use strict"
+
 var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var database = require('../utils/Database');
+var TagController = require('../controllers/tag');
 
 var console = process.console;
 
@@ -40,7 +43,7 @@ router.post('/', function(req, res) {
   });
 });
 
-import { TagController } from '../controllers/tag';
+
 
 router.get('/:id', function(req, res) {
   var id = req.param('id');

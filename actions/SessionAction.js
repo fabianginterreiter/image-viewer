@@ -1,6 +1,8 @@
+"use strict"
+
 var console = process.console;
 
-export class SessionAction {
+class SessionAction {
   constructor(database) {
     this.database = database; 
   }
@@ -23,3 +25,5 @@ export class SessionAction {
     callback(null, {});
   }
 }
+
+module.exports = SessionAction;

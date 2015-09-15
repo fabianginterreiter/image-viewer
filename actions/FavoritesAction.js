@@ -1,10 +1,10 @@
+"use strict"
+
 var _ = require('lodash');
 
 var console = process.console;
 
-
-
-export class FavoritesAction {
+class FavoritesAction {
   constructor(knex) {
     this.knex = knex; 
   }
@@ -45,3 +45,5 @@ export class FavoritesAction {
   }
 
 }
+
+module.exports = FavoritesAction;

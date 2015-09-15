@@ -77,7 +77,15 @@ app.directive('map', function() {
 
 
           _.forEach(newPoints, function(point) {
-            console.log(point.radius);
+            /*var view = map.getView();
+        var projection = view.getProjection();
+        var resolutionAtEquator = view.getResolution();
+        var center = map.getView().getCenter();
+        var pointResolution = projection.getPointResolution(resolutionAtEquator, center);
+        var resolutionFactor = resolutionAtEquator/pointResolution;
+        var radius = (point.radius / ol.proj.METERS_PER_UNIT.m) * resolutionFactor;*/
+
+
             var n = point.images.length;
             var radius = map.getView().getResolution() * 10 * (n > 6 ? 6 : n);
 
@@ -163,13 +171,21 @@ var calcCenter = function(images) {
     }
   });
 
-  var radius = ((maxLon - minLon + maxLat - minLat) / 2);
-
   var result = {
     longitude : minLon + (maxLon - minLon) / 2,
     latitude : minLat + (maxLat - minLat) / 2,
-    radius : (radius > 1 ? radius : 1)
+    radius : 0
   };
+
+  console.log("Cacluation");
+
+  _.forEach(images, function(image) {
+    var radius = SphericalCosinus(image.latitude, image.longitude, result.latitude, result.longitude);
+    console.log("Radius: " + radius);
+    if (radius > result.radius) {
+      result.radius = radius;
+    }
+  });
 
   return result;
 }
@@ -208,6 +224,7 @@ app.controller('MapsCtrl', ['$scope', '$http', function($scope, $http) {
             var c = calcCenter(point.images);
             point.longitude = c.longitude;
             point.latitude = c.latitude;
+            point.radius = c.radius;
             return;
           }
         });

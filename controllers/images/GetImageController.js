@@ -1,4 +1,6 @@
-export class GetImageController {
+"use strict"
+
+class GetImageController {
   constructor(connection, user) {
     this.client = connection; 
   }
@@ -38,3 +40,5 @@ export class GetImageController {
     });
   }
 }
+
+module.exports = GetImageController;

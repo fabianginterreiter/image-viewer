@@ -1,10 +1,12 @@
+"use strict"
+
 var sharp = require('sharp');
 var fs = require('fs');
 var _ = require('lodash');
 
 var console = process.console;
 
-export class PersonsAction {
+class PersonsAction {
   constructor(database, knex) {
     this.database = database; 
     this.knex = knex;
@@ -225,3 +227,5 @@ export class PersonsAction {
     });
   }
 }
+
+module.exports = PersonsAction;
