@@ -14,6 +14,48 @@
               <div ng-transclude></div>
             </div>
 
+            <div style="float: right;" class="submenu" ng-if="image">
+              <div>
+                <div><favorite image="image"></favorite></div>
+
+                <div class="dropdown" dropdown on-toggle="toggled(open)">
+                  <span class="dropdown-toggle" dropdown-toggle>
+                    <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
+                    <span class="hidden-xs"> Download</span>
+                  </span>
+                  <ul class="dropdown-menu">
+                    <li><a href="/api/images/{{image.id}}/resize" download="{{image.name}}">Original Size</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">1920</a></li>
+                    <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">1280</a></li>
+                    <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">800</a></li>
+                  </ul>
+                </div>
+
+                <div class="dropdown" dropdown on-toggle="toggled(open)">
+                  <span class="dropdown-toggle" dropdown-toggle>
+                    <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
+                    <span class="hidden-xs"> Options</span>
+                  </span>
+                  <ul class="dropdown-menu">
+                    <li><a ng-click="edit()">Edit</a></li>
+                    <li class="divider"></li>
+                    <li><a ng-click="createGallery()">Create Gallery</a></li>
+                    <li><a ng-click="addToGallery()">Add to Gallery</a></li>
+                    <li><a ng-click="setCoordinates()">Set Coordinates</a></li>
+                    <li class="divider"></li>
+                    <li><a ng-click="setAsGalleryImage(image)">Set as gallery image</a></li>
+                    <li><a ng-click="setAsPersonImage(image)">Set as Person image</a></li>
+                    <li class="divider"></li>
+                    <li ng-if="!image.deleted"><a ng-click="delete()">Delete</a></li>
+                    <li ng-if="image.deleted"><a ng-click="restore()">Restore</a></li>
+                  </ul>
+                </div>
+
+
+              </div>
+            </div>
+
             <div style="float: right;" class="submenu" ng-if="images && images.length > 0">
               <div>
                 <div ng-click="selectAll()" ng-select-all="images">

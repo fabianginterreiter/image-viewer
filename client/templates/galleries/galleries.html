@@ -1,14 +1,8 @@
 <div ng-init="overview = false">
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Galleries</h1>
-      <p></p>
-      <div>
-        <button class="btn btn-primary" ng-click="create()">Create</button>
-        <button class="btn btn-info" ng-click="overview = !overview">Overview</button>
-      </div>
-    </div>
-  </div>
+  <menu title="'Galleries'">
+    <div ng-click="create()">Create</div>
+    <div ng-click="overview = !overview">Overview</div>
+  </menu>
 
   <div class="container">
     <div class="row">

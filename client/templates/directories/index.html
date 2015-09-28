@@ -1,32 +1,30 @@
 <div ng-if="loaded">
-<div class="jumbotron">
-  <div class="container">
-    <h1>{{name}}</h1>
-    <p ng-if="images">This directory contains {{directories.length}} directories and {{images.length}} images.</p>
-    <div>
-      <button class="btn btn-primary" ng-click="createFolder()">Create Folder</button>
-      <button class="btn btn-default" ng-click="delete()">Delete</button>
-      <button class="btn btn-warning" ng-click="upload()">Upload</button>
-      <a class="btn btn-info" href="#/directories/{{id}}/details">Details</a>
-      <div class="btn-group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          Filter <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a ng-click="unmarkAll()">Unmark all</a></li>
+
+<menu title="name" images="images">
+  <div ng-click="createFolder()">Create Folder</div>
+  <div ng-click="delete()">Delete</div>
+  <div ng-click="upload()">Upload</div>
+  <a href="#/directories/{{id}}/details">Details</a>
+
+     <div class="dropdown" dropdown on-toggle="toggled(open)">
+    <span class="dropdown-toggle" dropdown-toggle>
+      <span class="glyphicon glyphicon-cog"></span>
+      <span class="hidden-xs"> Filter</span>
+    </span>
+    <ul class="dropdown-menu">
+    <li><a ng-click="unmarkAll()">Unmark all</a></li>
           <li class="divider"></li>
           <li><a ng-click="showUsed()">Show unused images</a></li>
           <li><a ng-click="showUnused()">Show used images</a></li>
-        </ul>
-      </div>
-      <a class="btn btn-info" href="#/trash">Trash</a>
-    </div>
+    </ul>
   </div>
-</div>
+</menu>
 
 <div class="container">
 <div class="row">
 <div class="col-md-12">
+<p ng-if="images">This directory contains {{directories.length}} directories and {{images.length}} images.</p>
+
 <ol class="breadcrumb">
   <li ng-repeat="e in navigation | orderBy:'-position'"><a href="#/directories/{{e.id}}">{{e.name}}</a></li>
 </ol>
@@ -61,7 +59,7 @@
 
   <div class="row">
     <div class="col-md-12">
-    <thumbnails images="images" view="view" toolbar="true"></thumbnails>
+    <thumbnails images="images" view="view"></thumbnails>
     </div>
   </div>
 </div>

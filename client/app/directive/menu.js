@@ -3,7 +3,7 @@ app.directive('menu', function() {
     link: function(scope, element, attrs) {
     }, 
 
-    controller : function($scope, $http, $timeout, DownloadService, GalleryService) {
+    controller : function($scope, $http, $timeout, DownloadService, GalleryService, Dialogs, ImageService) {
       var open = false;
       var menu = angular.element('#menu');
 
@@ -66,7 +66,7 @@ $scope.allSelected = false;
       };
 
       $scope.addTags = function() {
-        GalleryService.addTags(getSelected());
+        GalleryService.addTags(getSelected()); 
       };
 
         $scope.addToGallery = function() {
@@ -76,12 +76,53 @@ $scope.allSelected = false;
   $scope.create = function () {
     GalleryService.create(getSelected());
   };
+
+  $scope.setCoordinates = function() {
+        MapsService.setCoordinates($scope.image);
+      };
+
+      $scope.edit = function() {
+        ImageService.edit($scope.image);
+      };
+
+$scope.delete = function() {
+        Dialogs.delete('Delete', 'Do you want to delete the current image?', function() {
+          $http.delete('/api/images/' + $scope.image.id).success(function() {
+            $scope.image.deleted = true;
+          });
+        }, null, false);
+      }
+
+      $scope.restore = function() {
+        $http.put('/api/trash/restore/' + $scope.image.id).success(function() {
+          $scope.image.deleted = false;
+        });
+      };
+
+
+       $scope.createGallery = function() {
+          GalleryService.create($scope.image);
+        };
+
+        $scope.addToGallery = function() {
+    GalleryService.addImages($scope.image);
+  };
+    $scope.setAsGalleryImage = function() {
+      GalleryService.setAsGalleryImage($scope.image);
+    };
+
+    $scope.setAsPersonImage = function(image) {
+      PersonsService.select(function(person) {
+        $location.path('/persons/' + person.id + '/image/' + $scope.image.id);
+      });
+    };
     },
     restrict: 'E',
     scope: {
       title: '=title',
       images: '=images',
-      person: '=person'
+      person: '=person',
+      image: '=image'
     },
 
     transclude: true,
