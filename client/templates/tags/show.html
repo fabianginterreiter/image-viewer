@@ -1,4 +1,23 @@
-<div class="jumbotron">
+<menu images="tag.images" title="tag.text">
+  <a href="#/tags/{{tag.id}}/details">
+    <span class="glyphicon glyphicon-dashboard"></span>
+    <span>Details</span>
+  </a>
+
+  <div class="dropdown" dropdown on-toggle="toggled(open)">
+    <span class="dropdown-toggle" dropdown-toggle>
+      <span class="glyphicon glyphicon-cog"></span>
+      <span class="hidden-xs"> Options</span>
+    </span>
+    <ul class="dropdown-menu">
+      <li><a ng-click="edit()">Edit</a></li>
+      <li class="divider"></li>
+      <li><a ng-click="delete()">Delete</a></li>
+    </ul>
+  </div>
+</menu>
+
+<!--<div class="jumbotron">
   <div class="container">
     <h1>{{tag.text}}</h1>
     <div>
@@ -16,11 +35,9 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->
 
 <div class="container">
-
-
 
 <div class="row">
 <div class="col-md-12">
@@ -36,7 +53,7 @@
 <div class="row">
 <div class="col-md-12">
 
-<thumbnails images="tag.images" toolbar="true"></thumbnails>
+<thumbnails images="tag.images" toolbar="false"></thumbnails>
 
 </div>
 </div>

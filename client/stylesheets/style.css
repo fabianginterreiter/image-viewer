@@ -1,3 +1,43 @@
+body {
+	background: #efefef;
+	font-family: "Myriad Set Pro","Helvetica Neue","Helvetica","Arial", sans-serif !important;
+	font-style: normal;
+	font-weight: 200; 
+	letter-spacing: -0.014em;
+}
+
+menu {
+	padding: 0;
+}
+
+#menu p, #menu div, #menu span {
+	position: relative; 
+	z-index: 1000;
+}
+
+.submenu > div > a, .submenu > div > div {
+	float: left; 
+	padding: 20px 5px; 
+	height: 32px; 
+	font-size: 14px; 
+	display: block; 
+	color: black;
+	cursor: pointer;
+}
+
+.submenu > div > a:hover, .submenu > div > div:hover {
+	text-decoration: none;
+	color: #555555;
+}
+
+.opened {
+  height: 120px !important;
+}
+
+.opened .hidden {
+	visibility: visible !important;
+}
+
 .homePreview {
 	height: 300px;
 	overflow: auto;
