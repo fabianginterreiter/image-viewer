@@ -80,7 +80,8 @@ $scope.allSelected = false;
     restrict: 'E',
     scope: {
       title: '=title',
-      images: '=images'
+      images: '=images',
+      person: '=person'
     },
 
     transclude: true,

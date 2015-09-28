@@ -1,28 +1,23 @@
-<div class="jumbotron">
-  <div class="container">
-    <h1>
-      <a ng-if="person.image_id" href="#/images/{{person.image_id}}"><img ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="60" height="60"></a>
-      {{person.name}}
-    </h1>
-    <p></p>
-    <div>
-      <a class="btn btn-info" href="#/persons/{{person.id}}/details">Details</a>
+<menu person="person" title="person.name" images="person.images">
+  <a href="#/persons/{{person.id}}/details">
+    <span class="glyphicon glyphicon-dashboard"></span>
+    <span>Details</span>
+  </a>
 
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          Options <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a ng-click="edit()">Edit</a></li>
-          <li class="divider"></li>
-          <li><a ng-click="setImage()">Set Image</a>
-          <li class="divider"></li>
-          <li><a ng-click="delete()">Delete</a></li>
-        </ul>
-      </div>
-    </div>
+  <div class="dropdown" dropdown on-toggle="toggled(open)">
+    <span class="dropdown-toggle" dropdown-toggle>
+      <span class="glyphicon glyphicon-cog"></span>
+      <span class="hidden-xs"> Options</span>
+    </span>
+    <ul class="dropdown-menu">
+      <li><a ng-click="edit()">Edit</a></li>
+      <li class="divider"></li> 
+      <li><a ng-click="setImage()">Set Image</a>
+      <li class="divider"></li>
+      <li><a ng-click="delete()">Delete</a></li>
+    </ul>
   </div>
-</div>
+</menu>
 
 <div class="container">
   <div class="row">
@@ -38,7 +33,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <thumbnails images="person.images" view="view" toolbar="true"></thumbnails>
+      <thumbnails images="person.images" view="view"></thumbnails>
     </div>
   </div>
 </div>

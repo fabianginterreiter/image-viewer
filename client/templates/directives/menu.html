@@ -4,7 +4,9 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h2 style="font-style: normal; font-weight: 200; letter-spacing: -0.014em; font-size: 32px; color: #333; text-decoration: none; padding: 12px 0; margin: 0; float: left;">{{title}}</h2>   
+            <h2 style="font-style: normal; font-weight: 200; letter-spacing: -0.014em; font-size: 32px; color: #333; text-decoration: none; padding: 12px 0; margin: 0; float: left;">
+<a ng-if="person && person.image_id" href="#/images/{{person.image_id}}"><img ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="50" height="50" style="margin-top: -8px;"></a>
+            {{title}}</h2>   
 
             <!--<div class="glyphicon glyphicon-th" style="float: right; padding: 19px; height: 32px; width: 32px; font-size: 16px;" ng-click="open()"></div>-->
 
