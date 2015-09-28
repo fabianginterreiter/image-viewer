@@ -14,7 +14,7 @@
               <div ng-transclude></div>
             </div>
 
-            <div style="float: right;" class="submenu" ng-if="images">
+            <div style="float: right;" class="submenu" ng-if="images && images.length > 0">
               <div>
                 <div ng-click="selectAll()" ng-select-all="images">
                   <span class="glyphicon glyphicon-check" ng-if="allSelected"></span>

@@ -1,43 +1,39 @@
-
-<div ng-if="gallery">
-<div class="jumbotron">
-  <div class="container">
-    <h1>{{gallery.name}}</h1>
-    <p>{{gallery.description}}<span ng-if="gallery.images.length > 0">{{gallery.images.length}} images.</span></p>
-    <div>
-      <div class="btn-group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          Download <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a ng-click="downloadGallery()">Fullsize</a></li>
+<menu title="gallery.name" images="gallery.images">
+      <div class="dropdown" dropdown on-toggle="toggled(open)">
+    <span class="dropdown-toggle" dropdown-toggle>
+      <span class="glyphicon glyphicon-cog"></span>
+      <span class="hidden-xs"> Download</span>
+    </span>
+    <ul class="dropdown-menu">
+<li><a ng-click="downloadGallery()">Fullsize</a></li>
           <li class="divider"></li>
           <li><a ng-click="downloadGallery(1920)">1920</a></li>
           <li><a ng-click="downloadGallery(1280)">1280</a></li>
           <li><a ng-click="downloadGallery(800)">800</a></li>
-        </ul>
-      </div>
+    </ul>
+  </div>
 
       
-      <a class="btn btn-success" href="#/galleries/{{gallery.id}}/details">Details</a>
+    <a href="#/galleries/{{gallery.id}}/details">
+      <span class="glyphicon glyphicon-dashboard"></span>
+      <span>Details</span>
+    </a>
 
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          Options <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a ng-click="edit()">Edit</a></li>
+      <div class="dropdown" dropdown on-toggle="toggled(open)">
+    <span class="dropdown-toggle" dropdown-toggle>
+      <span class="glyphicon glyphicon-cog"></span>
+      <span class="hidden-xs"> Options</span>
+    </span>
+    <ul class="dropdown-menu">
+      <li><a ng-click="edit()">Edit</a></li>
           <li class="divider"></li>
           <li><a ng-click="delete()">Remove selected Images</a></li>
           <li><a ng-click="changeGalleryImage()">Set Gallery Image</a></li>
           <li class="divider"></li>
           <li><a ng-click="deleteGallery();">Delete</a></li>
-        </ul>
-      </div>
-      
-    </div>
+    </ul>
   </div>
-</div>
+</menu>
 
 <div class="container">
   <div class="row">
@@ -66,7 +62,7 @@
   <div class="row">
   <div class="col-md-12">
 
-<thumbnails images="gallery.images" view="view" toolbar="true"></thumbnails>
+<thumbnails images="gallery.images" view="view" toolbar="false"></thumbnails>
   	
     </div>
   </div>
