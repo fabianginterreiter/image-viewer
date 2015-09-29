@@ -1,7 +1,7 @@
+<menu title="'Search'" images="images"></menu>
 
 <div class="jumbotron">
   <div class="container">
-    <h1>Search</h1>
     <p><strong>Found {{images.length}} images.</strong></p>
 
     <p ng-if="query.length > 0">Words: {{query}}</p>
@@ -18,7 +18,7 @@
     Galleries: <span ng-repeat="gallery in galleries | orderBy:'name'"><a  href="#/galleries/{{gallery.id}}">{{gallery.name}}</a> </span>
     <span ng-if="galleriesOnly">(only)</span>
 
-    </p>
+    </p> 
 
     <p ng-if="minDate">Min Date: {{minDate | formatDate}}</p>
     <p ng-if="maxDate">Max Date: {{maxDate | formatDate}}</p>
@@ -34,7 +34,7 @@
   <div class="row">
   <div class="col-md-12">
 
-<thumbnails images="images" view="view" toolbar="true"></thumbnails>
+<thumbnails images="images" view="view"></thumbnails>
 
 </div>
 </div>
