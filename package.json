@@ -5,11 +5,13 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha --require babel/register",
-    "tdd": "npm test -- --watch"
+    "tdd": "npm test -- --watch",
+    "postinstall": "node_modules/.bin/bower install && node_modules/.bin/gulp"
   },
   "dependencies": {
     "archiver": "^0.15.1",
     "body-parser": "^1.13.3",
+    "bower": "^1.7.2",
     "config": "*",
     "debug": "^2.2.0",
     "ejs": "*",
