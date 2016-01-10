@@ -25,7 +25,7 @@
     "pg": "*",
     "request": "*",
     "scribe-js": "*",
-    "sharp": "git+https://github.com/lovell/sharp.git",
+    "sharp": "https://github.com/lovell/sharp.git",
     "static-favicon": "*",
     "winston": "*"
   },
