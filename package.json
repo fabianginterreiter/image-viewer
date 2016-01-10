@@ -26,7 +26,6 @@
     "request": "*",
     "scribe-js": "*",
     "sharp": "git+https://github.com/lovell/sharp.git",
-    "sqlite3": "*",
     "static-favicon": "*",
     "winston": "*"
   },
