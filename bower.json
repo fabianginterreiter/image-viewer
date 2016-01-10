@@ -37,7 +37,7 @@
     "OpenLayers": "https://github.com/openlayers/ol3/releases/download/v3.7.0/v3.7.0-dist.zip",
     "at-table": "~1.0.4",
     "angular-jqcloud": "~1.0.1",
-    "angular-file-upload": "~1.2.0",
+    "angular-file-upload": "2.2.0",
     "ng-jcrop": "~2.0.4",
     "jcrop": "~2.0.0"
   },
