@@ -1,6 +1,5 @@
 {
-	"root2" : "/Users/fabian/Desktop/Bilder",
-	"root" : "/Volumes/Fotos",
+	"root" : "images",
 	"cache" : "cache",
 	"trash" : "/Trash"
 }
