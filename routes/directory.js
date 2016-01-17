@@ -264,7 +264,7 @@ class DirectoryLoader {
         }
 
         if (stat.isDirectory()) {
-          var entry = _.find(that.directories, 'name', file);
+          var entry = _.find(that.directories, ['name', file]);
 
           if (entry) {
             that.result.directories.push(entry);
@@ -284,7 +284,6 @@ class DirectoryLoader {
           var entry = _.find(that.images, ['name', file]);
 
           if (entry) {
-            console.log("Find: " + file + "#" + entry.name);
             that.result.images.push(entry);
             loaded();
           } else {
