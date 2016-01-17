@@ -281,9 +281,10 @@ class DirectoryLoader {
             return;
           }
 
-          var entry = _.find(that.images, 'name', file);
+          var entry = _.find(that.images, ['name', file]);
 
           if (entry) {
+            console.log("Find: " + file + "#" + entry.name);
             that.result.images.push(entry);
             loaded();
           } else {
