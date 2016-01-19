@@ -37,7 +37,7 @@ app.directive('menu', function() {
         }
       });
 
-$scope.allSelected = false;
+      $scope.allSelected = false;
       $scope.selectAll = function() {
         _.forEach($scope.images, function(image) {
           image.selected = !$scope.allSelected;
@@ -57,7 +57,7 @@ $scope.allSelected = false;
         return selected;
       };
 
-            $scope.top = function() {
+      $scope.top = function() {
         window.scrollTo(0,0);
       };
 
@@ -69,9 +69,9 @@ $scope.allSelected = false;
         GalleryService.addTags(getSelected()); 
       };
 
-        $scope.addToGallery = function() {
-    GalleryService.addImages(getSelected());
-  };
+      $scope.addImagesToGallery = function() {
+          GalleryService.addImages(getSelected());
+      };
 
   $scope.create = function () {
     GalleryService.create(getSelected());
