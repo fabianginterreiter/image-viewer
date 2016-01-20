@@ -21,6 +21,8 @@ var favorites = require('./routes/favorites')
 var config = require('config');
 
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+
 
 var app = express();
 
@@ -31,6 +33,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(session({
+  store: new RedisStore(),
   secret: 'key',
   secure: false,
   resave: false,
