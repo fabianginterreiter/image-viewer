@@ -22,3 +22,5 @@ npm install
 
 npm install pm2 --global
 
+pm2 start bin/www -i 0 --name "viewer"
+
