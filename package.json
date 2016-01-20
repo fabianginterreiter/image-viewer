@@ -13,6 +13,7 @@
     "body-parser": "^1.13.3",
     "bower": "^1.7.2",
     "config": "*",
+    "connect-redis": "^3.0.2",
     "debug": "^2.2.0",
     "ejs": "*",
     "exif": "*",
