@@ -11,11 +11,19 @@ var order = require("gulp-order");
 var jshint = require('gulp-jshint');
 var prettify = require('gulp-jsbeautifier');
 
-gulp.task('format-js', function() {
+gulp.task('format-js-app', function() {
   gulp.src(['client/app/**/*.js'])
     .pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
     .pipe(gulp.dest('client/app'))
 });
+
+gulp.task('format-js-router', function() {
+  gulp.src(['router/*.js'])
+    .pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
+    .pipe(gulp.dest('router'))
+});
+
+gulp.task('format-js', ['format-js-app', 'format-js-router']);
 
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
