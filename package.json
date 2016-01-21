@@ -41,6 +41,7 @@
     "gulp-clean": "*",
     "gulp-concat": "*",
     "gulp-inject": "*",
+    "gulp-jsbeautifier": "^1.0.1",
     "gulp-jshint": "*",
     "gulp-order": "*",
     "main-bower-files": "*",

@@ -9,6 +9,13 @@ var es = require('event-stream');
 var sort = require('sort-stream');
 var order = require("gulp-order");
 var jshint = require('gulp-jshint');
+var prettify = require('gulp-jsbeautifier');
+
+gulp.task('format-js', function() {
+  gulp.src(['client/app/**/*.js'])
+    .pipe(prettify({config: '.jsbeautifyrc', mode: 'VERIFY_AND_WRITE'}))
+    .pipe(gulp.dest('client/app'))
+});
 
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
