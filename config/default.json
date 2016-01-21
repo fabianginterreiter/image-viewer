@@ -1,5 +1,9 @@
 {
 	"root" : "images",
 	"cache" : "cache",
-	"trash" : "/Trash"
+	"trash" : "/Trash",
+  "storage" : {
+    "cache" : "ca",
+    "thumbnails" : "cache"
+  }
 }
