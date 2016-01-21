@@ -218,12 +218,55 @@ router.get('/:id/resize', function(req, res) {
   var id = req.param('id');
   var min = req.param('min');
 
-  imagesAction.setRoot(req.config.get('root'));
+  loadToPreview(req, id, function(err, path) {
+    var transformer = sharp().withMetadata().rotate();
 
-  imagesAction.resize(id, width, height, min, function(err, stream) {
-    stream.pipe(res);
+    if (width > 0 || height > 0) {
+      transformer.resize(width, height);
+    }
+
+    if (min === 'true') {
+      transformer.min();
+    } else {
+      transformer.max();
+    }
+
+    fs.createReadStream(path).pipe(transformer).pipe(res);
   });
 });
+
+function loadToPreview(req, id, callback) {
+
+  var fullpath = req.config.get('storage').cache + '/' + id + '.jpg';
+
+  fs.stat(fullpath, function(err, stats) {
+    console.log(stats)
+    if (stats) {
+      if (callback) {
+        callback(null, fullpath);
+      }
+    } else {
+      knex('images')
+        .select('directories.path AS path', 'images.name AS name')
+        .join('directories', 'images.directory_id', 'directories.id')
+        .where('images.id', id)
+        .then(function(rows) {
+
+          var image = rows[0];
+
+          var absolute = req.config.get('root') + image.path + image.name;
+
+          new sharp(absolute).resize(2000, 2000).max().quality(80).rotate().toFile(fullpath, function(err) {
+            if (callback) {
+              callback(err, fullpath);
+            }
+          });
+        }).catch(function(e) {
+          console.log(e);
+        });
+    }
+  });
+}
 
 router.get('/:id/thumb', function(req, res) {
   var maxWidth = getIntFromRequest(req, 'width', 500);
@@ -260,6 +303,9 @@ router.get('/:id/thumb', function(req, res) {
     }
   }
 });
+
+
+  
 
 router.post('/:id/tags', function(req, res) {
   var id = req.param('id');
