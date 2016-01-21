@@ -2,7 +2,7 @@ app.factory('Dialogs', function($modal) {
   var open = false;
 
   return {
-    alert : function(title, message, callback) {
+    alert: function(title, message, callback) {
       if (open) {
         if (callback) {
           callback(false);
@@ -16,7 +16,7 @@ app.factory('Dialogs', function($modal) {
         animation: true,
         templateUrl: 'templates/directives/dialogs/alert.html',
         controller: function($scope, $modalInstance, $timeout) {
-          $scope.close = function () {
+          $scope.close = function() {
             $modalInstance.close();
           };
           $scope.title = title;
@@ -33,7 +33,7 @@ app.factory('Dialogs', function($modal) {
         }
       });
     },
-    confirm : function(title, message, ok, cancel) {
+    confirm: function(title, message, ok, cancel) {
       if (open) {
         if (cancel) {
           cancel(false);
@@ -47,7 +47,7 @@ app.factory('Dialogs', function($modal) {
         animation: true,
         templateUrl: 'templates/directives/dialogs/confirm.html',
         controller: function($scope, $modalInstance, $timeout) {
-          $scope.ok = function () {
+          $scope.ok = function() {
             $modalInstance.close(true);
           };
           $scope.cancel = function() {
@@ -73,7 +73,7 @@ app.factory('Dialogs', function($modal) {
         }
       });
     },
-    delete : function(title, message, ok, cancel, time) {
+    delete: function(title, message, ok, cancel, time) {
       if (open) {
         if (cancel) {
           cancel(false);
@@ -87,7 +87,7 @@ app.factory('Dialogs', function($modal) {
         animation: true,
         templateUrl: 'templates/directives/dialogs/delete.html',
         controller: function($scope, $modalInstance, $timeout) {
-          $scope.ok = function () {
+          $scope.ok = function() {
             if (!$scope.waiting) {
               $modalInstance.close(true);
             }
@@ -115,7 +115,7 @@ app.factory('Dialogs', function($modal) {
             if ($scope.seconds > 0) {
               $timeout(function() {
                 countDown();
-              }, 1000);  
+              }, 1000);
             } else {
               $scope.waiting = false;
             }

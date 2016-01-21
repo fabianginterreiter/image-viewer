@@ -1,14 +1,14 @@
 app.factory('TagService', function($modal, $http, Dialogs) {
   return {
-    edit : function(tag, callback) {
+    edit: function(tag, callback) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/tags/edit.html',
-        controller: function ($scope, $modalInstance, $http) {
+        controller: function($scope, $modalInstance, $http) {
 
           $scope.text = tag.text;
 
-          $scope.save = function () {
+          $scope.save = function() {
             tag.text = $scope.text;
 
             $http.put('/api/tags/' + tag.id, tag).success(function(result) {
@@ -16,7 +16,7 @@ app.factory('TagService', function($modal, $http, Dialogs) {
             });
           };
 
-          $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
         }
@@ -32,11 +32,11 @@ app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dia
   var id = $routeParams.id;
 
   FilterService.filter($http, $routeParams, 'tags', function(err, tag) {
-      $scope.tag = tag;
-    });
+    $scope.tag = tag;
+  });
 
   $scope.edit = function() {
-  	TagService.edit($scope.tag);
+    TagService.edit($scope.tag);
   };
 
   $scope.delete = function() {

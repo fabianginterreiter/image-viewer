@@ -2,7 +2,7 @@ app.controller('SetPersonImageCtrl', ['$scope', '$http', '$routeParams', '$windo
   ImageViewerService.open();
 
   $http.get('/api/persons/' + $routeParams.id).success(function(data) {
-  	$scope.person = data;
+    $scope.person = data;
   });
 
   $http.get('/api/images/' + $routeParams.imageId).success(function(image) {
@@ -33,7 +33,7 @@ app.controller('SetPersonImageCtrl', ['$scope', '$http', '$routeParams', '$windo
 
     console.log(x + '#' + y + '#' + w + '#' + h);
 
-    $http.put('/api/persons/' + $routeParams.id + '/image/' + $routeParams.imageId + '?x=' + x + '&y=' + y + '&w=' + w+ '&h=' + h).success(function(data) {
+    $http.put('/api/persons/' + $routeParams.id + '/image/' + $routeParams.imageId + '?x=' + x + '&y=' + y + '&w=' + w + '&h=' + h).success(function(data) {
       $location.path('/persons/' + $routeParams.id);
     });
   };

@@ -1,6 +1,6 @@
 app.factory('FilterService', function() {
   return {
-    filter : function(http, routeParams, type, callback) {
+    filter: function(http, routeParams, type, callback) {
 
       var filter = false;
 

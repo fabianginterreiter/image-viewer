@@ -12,7 +12,7 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
   $scope.galleriesOnly = $routeParams.galleriesOnly === 'true';
 
   $scope.persons = [];
-  $scope.tags = [];
+  $scope.tags =   [];
   $scope.galleries = [];
 
 
@@ -53,19 +53,19 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
 
   var options = [];
   if (person_ids) {
-    options.push('persons='+person_ids);
+    options.push('persons=' + person_ids);
   }
   if (tagIds) {
-    options.push('tags='+tagIds);    
+    options.push('tags=' + tagIds);
   }
   if (galleryIds) {
-    options.push('galleries='+galleryIds);
+    options.push('galleries=' + galleryIds);
   }
   if (minDate) {
-    options.push('minDate='+minDate);
+    options.push('minDate=' + minDate);
   }
   if (maxDate) {
-    options.push('maxDate='+maxDate);
+    options.push('maxDate=' + maxDate);
   }
 
   if ($scope.personsOnly) {
@@ -90,7 +90,7 @@ app.controller('SearchResultCtrl', ['$scope', '$http', '$routeParams', '$locatio
   }
 
   $http.get('/api/images?action=search&' + options.join('&')).success(function(data) {
-  	$scope.images = data;
+    $scope.images = data;
   });
 
   $scope.edit = function() {

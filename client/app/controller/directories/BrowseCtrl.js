@@ -1,5 +1,3 @@
-
-
 app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$modal', '$log', '$window', 'DownloadService', 'Dialogs', 'GalleryService', 'usSpinnerService', 'FilterService', '$timeout', 'UploadService', 'ImageViewerService', function($scope, $http, $routeParams, $location, $modal, $log, $window, DownloadService, Dialogs, GalleryService, usSpinnerService, FilterService, $timeout, UploadService, ImageViewerService) {
   ImageViewerService.open();
 
@@ -16,7 +14,7 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     $scope.last = $scope.elements[$scope.elements.length - 1];
   } else {
     $scope.last = {
-      name : 'Home'
+      name: 'Home'
     };
   }
 
@@ -25,19 +23,19 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
       usSpinnerService.spin('browse');
     }
   }, 10);
-  
+
   if (!$routeParams.id) {
     $routeParams.id = 0;
   }
 
-	FilterService.filter($http, $routeParams, 'directories', function(err, data) {
+  FilterService.filter($http, $routeParams, 'directories', function(err, data) {
     $scope.id = $routeParams.id;
     $scope.name = data.name;
     $scope.images = data.images;
     $scope.directories = data.directories;
     $scope.navigation = data.navigation;
     $scope.directory = data;
-    
+
     usSpinnerService.stop('browse');
 
     $scope.loaded = true;
@@ -48,15 +46,15 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
       });
 
       data.images[index].selected = true;
-      
+
       $timeout(function() {
         var element = document.getElementById('image-' + $routeParams.image);
         if (element) {
-          element.scrollIntoView( true );
+          element.scrollIntoView(true);
         }
       }, 200);
     }
-	});
+  });
 
   $scope.isImage = function(file) {
     return (file && file.filename && file.filename.endsWith('JPG'));

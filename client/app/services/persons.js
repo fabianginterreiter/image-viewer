@@ -1,10 +1,10 @@
 app.factory('PersonsService', function($modal, $http) {
   return {
-    select : function(callback, cancel) {
+    select: function(callback, cancel) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/persons/select.html',
-        controller: function ($scope, $modalInstance, $http, $location) {
+        controller: function($scope, $modalInstance, $http, $location) {
           $http.get('/api/persons').success(function(data) {
             $scope.persons = data;
           });
@@ -17,7 +17,7 @@ app.factory('PersonsService', function($modal, $http) {
             }
           };
 
-           $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
 
             if (cancel) {

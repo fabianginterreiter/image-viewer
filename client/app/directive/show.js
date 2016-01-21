@@ -2,8 +2,8 @@ app.factory('ImageCache', function($log) {
   var cache = [];
   var images = [];
 
-  var preload  = function(id, width, height) {
-    if (images && images.length > 0) {
+  var preload = function(id, width, height) {
+    if (images && images.length > 0)  {
       var p = find(id);
       if (p > 0) {
         result.get(images[p - 1].id, width, height, true);
@@ -34,11 +34,11 @@ app.factory('ImageCache', function($log) {
   };
 
   var result = {
-    addImages : function(i) {
+    addImages: function(i) {
       images = i;
     },
 
-    get : function(id, width, height, noPreload) {
+    get: function(id, width, height, noPreload) {
       var src = url(id, width, height);
       if (!noPreload) {
         preload(id, width, height);
@@ -46,7 +46,7 @@ app.factory('ImageCache', function($log) {
 
       var element = cache[src];
       if (!element) {
-        $log.debug("Loading: " +src);
+        $log.debug("Loading: " + src);
         element = new Image();
         element.src = src;
         cache[src] = element;
@@ -62,23 +62,23 @@ app.factory('ImageCache', function($log) {
 });
 
 app.directive('imageonload', function() {
-    return {
-        restrict: 'A',
-        controller: function($scope, $element, usSpinnerService) {
-            $element.bind('load', function($event) {
-                usSpinnerService.stop('spinner-1');
-                $scope.$parent.image_width = event.target.naturalWidth;
-                $scope.$parent.image_height = $event.target.naturalHeight;
-            });
-        }
-    };
+  return {
+    restrict: 'A',
+    controller: function($scope, $element, usSpinnerService) {
+      $element.bind('load', function($event) {
+        usSpinnerService.stop('spinner-1');
+        $scope.$parent.image_width = event.target.naturalWidth;
+        $scope.$parent.image_height = $event.target.naturalHeight;
+      });
+    }
+  };
 });
 
 var preloaded = [];
 
 app.directive('show', function() {
   return {
-    controller : function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService, Dialogs, ImageService, PersonsService) {
+    controller: function($scope, $element, $attrs, $http, usSpinnerService, ImageCache, $timeout, $modalStack, $location, MapsService, GalleryService, Dialogs, ImageService, PersonsService) {
       var image = null;
       var fullscreen = false;
 
@@ -122,7 +122,7 @@ app.directive('show', function() {
         image = data;
         console.log("Loaded: " + image.id);
         $scope.image = data;
-        
+
         if (!image) {
           return;
         }
@@ -133,7 +133,7 @@ app.directive('show', function() {
 
       $scope.$watch('preload', function(preload) {
         ImageCache.addImages(preload);
-      }); 
+      });
 
       $scope.delete = function() {
         Dialogs.delete('Delete', 'Do you want to delete the current image?', function() {
@@ -166,9 +166,7 @@ app.directive('show', function() {
       addEventToDocument($scope, 'keydown', function(event) {
         if (event.keyCode === 46) {
           $scope.delete();
-        }
-
-        else if ($scope.selectable && event.keyCode === 77) {
+        } else if ($scope.selectable && event.keyCode === 77)  {
           $scope.image.selected = !$scope.image.selected;
           angular.element("#checkIcon").css('opacity', '1');
           setTimeout(function() {
@@ -178,50 +176,50 @@ app.directive('show', function() {
         }
       });
 
-      $scope.$watch(function () {
-            return angular.element('#image').width();
-          }, function (newValue, oldValue) {
-            if (newValue !== oldValue) {
-              update();
-            }
-          }, true);
-
-        window.onresize = function() {
+      $scope.$watch(function() {
+        return angular.element('#image').width();
+      }, function(newValue, oldValue) {
+        if (newValue !== oldValue) {
           update();
-          $scope.$apply();
-        };
+        }
+      }, true);
 
-        $scope.create = function() {
-          GalleryService.create($scope.image);
-        };
+      window.onresize = function()  {
+        update();
+        $scope.$apply();
+      };
 
-        $scope.addToGallery = function() {
-    GalleryService.addImages($scope.image);
-  };
-    $scope.setAsGalleryImage = function() {
-      GalleryService.setAsGalleryImage($scope.image);
-    };
+      $scope.create = function() {
+        GalleryService.create($scope.image);
+      };
 
-    $scope.setAsPersonImage = function(image) {
-      PersonsService.select(function(person) {
-        $location.path('/persons/' + person.id + '/image/' + $scope.image.id);
-      });
-    };
+      $scope.addToGallery = function() {
+        GalleryService.addImages($scope.image);
+      };
+      $scope.setAsGalleryImage = function() {
+        GalleryService.setAsGalleryImage($scope.image);
+      };
 
-    $scope.view = 'image';
+      $scope.setAsPersonImage = function(image) {
+        PersonsService.select(function(person) {
+          $location.path('/persons/' + person.id + '/image/' + $scope.image.id);
+        });
+      };
+
+      $scope.view = 'image';
 
       $scope.setView = function(type) {
         if (type === 'details') {
           if (!image.directory) {
             $http.get('/api/images/' + image.id).success(function(data) {
-              for(var k in data) {
-                image[k]=data[k];
+              for (var k in data) {
+                image[k] = data[k];
               }
 
               $scope.view = type;
             });
           } else {
-              console.log("set" + type);
+            console.log("set" + type);
 
             $scope.view = type;
           }

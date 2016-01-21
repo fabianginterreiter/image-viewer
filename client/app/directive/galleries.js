@@ -1,4 +1,4 @@
-app.directive('galleries', function() {
+app.directive('galleries', function()  {
   return {
     restrict: 'E',
     scope: {
@@ -12,9 +12,9 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
 
   var setGalleries = function(scope, gallery) {
     var defaultParent = {
-        id : 0,
-        name : ''
-      };
+      id: 0,
+      name: ''
+    };
 
     scope.parent = defaultParent;
 
@@ -42,17 +42,17 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
   var getList = function(data) {
     if (Array.isArray(data)) {
       return data;
-          } else {
-            return [ data ];  
-      }
+    } else {
+      return [data];
+    }
   }
 
   return {
-    create : function(data, callback) {
+    create: function(data, callback) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/galleries/create.html',
-        controller: function ($scope, $modalInstance, $http, $location) {
+        controller: function($scope, $modalInstance, $http, $location) {
           $scope.items = getList(data);
 
           setGalleries($scope);
@@ -60,12 +60,12 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
           $scope.name = '';
           $scope.description = '';
 
-          $scope.ok = function () {
+          $scope.ok = function() {
             var gallery = {
-              name : $scope.name,
-              description : $scope.description,
-              images : $scope.items,
-              parent_id : $scope.parent.id
+              name: $scope.name,
+              description: $scope.description,
+              images: $scope.items,
+              parent_id: $scope.parent.id
             };
 
             $http.post('/api/galleries', gallery).success(function(result) {
@@ -75,7 +75,7 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
             $modalInstance.close();
           };
 
-          $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
         }
@@ -86,17 +86,17 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
       });
     },
 
-    edit : function(gallery, callback) {
+    edit: function(gallery, callback) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/galleries/edit.html',
-        controller: function ($scope, $modalInstance, $http, $location) {
+        controller: function($scope, $modalInstance, $http, $location) {
           $scope.name = gallery.name;
           $scope.description = gallery.description;
-          
+
           setGalleries($scope, gallery);
 
-          $scope.ok = function () {
+          $scope.ok = function() {
             var data = {};
             data.id = gallery.id;
             data.name = $scope.name;
@@ -109,12 +109,12 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
             gallery.parent_id = data.parent_id;
 
             $http.put('/api/galleries/' + data.id, data).success(function(result) {
-              $modalInstance.close();  
+              $modalInstance.close();
               Dialogs.alert('Update', 'The Gallery ' + gallery.name + ' was updated successfully.');
             });
           };
 
-          $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
         }
@@ -125,12 +125,12 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
       });
     },
 
-    addTags : function(data, callback) {
+    addTags: function(data, callback) {
       var images = getList(data);
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/galleries/add_tags.html',
-        controller: function ($scope, $modalInstance, $http, $location) {
+        controller: function($scope, $modalInstance, $http, $location) {
           $scope.tags = [];
 
           $scope.add = function(gallery) {
@@ -156,7 +156,7 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
             $modalInstance.close();
           };
 
-           $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
 
@@ -167,7 +167,7 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
       });
     },
 
-    addImages : function(data, callback) {
+    addImages: function(data, callback) {
       var images = getList(data);
 
       var s = function(scope, galleries, path) {
@@ -191,7 +191,7 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/galleries/add.html',
-        controller: function ($scope, $modalInstance, $http, $location) {
+        controller: function($scope, $modalInstance, $http, $location) {
           $http.get('/api/galleries').success(function(data) {
             s($scope, data);
           });
@@ -206,14 +206,14 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
             $modalInstance.close();
           };
 
-           $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
         }
       });
     },
 
-    setAsGalleryImage : function(image, callback) {
+    setAsGalleryImage: function(image, callback) {
       var s = function(scope, galleries, path) {
         if (!scope.galleries) {
           scope.galleries = [];
@@ -235,7 +235,7 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/galleries/setAsGalleryImage.html',
-        controller: function ($scope, $modalInstance, $http, $location) {
+        controller: function($scope, $modalInstance, $http, $location) {
           $http.get('/api/galleries').success(function(data) {
             s($scope, data);
           });
@@ -251,7 +251,7 @@ app.factory('GalleryService', function($modal, $http, Dialogs) {
             $modalInstance.close();
           };
 
-           $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
         }

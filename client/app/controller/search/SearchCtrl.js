@@ -50,15 +50,15 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
   $scope.query = $routeParams.query;
 
   $scope.loadPersons = function(query) {
-  	return $http.get('/api/persons?query='+query);
+    return $http.get('/api/persons?query=' + query);
   };
 
   $scope.loadTags = function(query) {
-    return $http.get('/api/tags?query='+query);
+    return $http.get('/api/tags?query=' + query);
   };
 
   $scope.loadGalleries = function(query) {
-    return $http.get('/api/galleries?query='+query);
+    return $http.get('/api/galleries?query=' + query);
   };
 
   var getIds = function(objects) {
@@ -81,27 +81,27 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
     if ($scope.persons.length) {
       options.persons = getIds($scope.persons);
     }
-    
+
     if ($scope.tags.length) {
       options.tags = getIds($scope.tags);
     }
-    
+
     if ($scope.galleries.length) {
       options.galleries = getIds($scope.galleries)
     }
 
     if ($scope.personsOnly) {
-      options.personsOnly = 'true';  
+      options.personsOnly = 'true';
     }
 
     if ($scope.tagsOnly) {
-      options.tagsOnly = 'true';  
+      options.tagsOnly = 'true';
     }
 
     if ($scope.galleriesOnly) {
-      options.galleriesOnly = 'true';  
+      options.galleriesOnly = 'true';
     }
-    
+
     if ($scope.useMinDate) {
       options.minDate = getFormattedDate($scope.minDate);
     }
@@ -118,6 +118,6 @@ app.controller('SearchCtrl', ['$scope', '$http', '$routeParams', '$location', fu
       options.orientation = $scope.orientation;
     }
 
-  	$location.path('/search/result').search(options);
+    $location.path('/search/result').search(options);
   };
 }]);

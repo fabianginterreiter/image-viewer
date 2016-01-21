@@ -1,38 +1,38 @@
 String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+  return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
 
 var app = angular.module('imageApp', ['ngRoute', 'ui.bootstrap', 'angularSpinner', 'ngTagsInput', 'autocomplete', 'ngLoad', 'angular-table', 'angular-jqcloud', 'angularFileUpload', 'ngJcrop']);
 
 
-app.config(function(ngJcropConfigProvider){
+app.config(function(ngJcropConfigProvider) {
 
-    // [optional] To change the jcrop configuration
-    // All jcrop settings are in: http://deepliquid.com/content/Jcrop_Manual.html#Setting_Options
-    ngJcropConfigProvider.setJcropConfig({
-        bgColor: 'black',
-        bgOpacity: .4,
-        aspectRatio: 1
-    });
+  // [optional] To change the jcrop configuration
+  // All jcrop settings are in: http://deepliquid.com/content/Jcrop_Manual.html#Setting_Options
+  ngJcropConfigProvider.setJcropConfig({
+    bgColor: 'black',
+    bgOpacity: .4,
+    aspectRatio: 1
+  });
 
-    // [optional] To change the css style in the preview image
-    ngJcropConfigProvider.setPreviewStyle({
-        'width': '100px',
-        'height': '100px',
-        'overflow': 'hidden',
-        'margin-left': '5px'
-    });
+  // [optional] To change the css style in the preview image
+  ngJcropConfigProvider.setPreviewStyle({
+    'width': '100px',
+    'height': '100px',
+    'overflow': 'hidden',
+    'margin-left': '5px'
+  });
 
 });
 
-var httpInterceptor = function ($provide, $httpProvider) {
-  $provide.factory('httpInterceptor', function ($q) {
+var httpInterceptor = function($provide, $httpProvider) {
+  $provide.factory('httpInterceptor', function($q) {
     return {
-      response: function (response) {
+      response: function(response) {
         return response || $q.when(response);
       },
-      responseError: function (rejection) {
-        if(rejection.status === 401) {
+      responseError: function(rejection) {
+        if (rejection.status === 401) {
           SessionService.init();
           console.log("YOU ARE NOT AUTHORITED!");
         }
@@ -62,10 +62,10 @@ app.factory('SessionService', function($http, $modal, $log) {
         templateUrl: 'templates/users/index.html',
         backdrop: 'static',
         keyboard: false,
-        controller: function ($scope, $modalInstance, $http, $location, $route) {
+        controller: function($scope, $modalInstance, $http, $location, $route) {
           $scope.users = users;
 
-          $scope.select = function (user) {
+          $scope.select = function(user) {
             $http.post('/api/session', user).success(function(res) {
               currentUser = user;
               tell(user);
@@ -75,7 +75,9 @@ app.factory('SessionService', function($http, $modal, $log) {
           };
 
           $scope.create = function(name) {
-            $http.post('/api/users', { name : name }).success(function(user) {
+            $http.post('/api/users', {
+              name: name
+            }).success(function(user) {
               $scope.users.push(user);
               $scope.view = 'select';
             });
@@ -84,19 +86,19 @@ app.factory('SessionService', function($http, $modal, $log) {
       }).result.then(function() {
 
       });
-    });  
+    });
   };
 
   return {
-    watch : function(callback) {
+    watch: function(callback) {
       listeners.push(callback);
     },
 
-    getCurrentUser : function() {
+    getCurrentUser: function() {
       return currentUser;
     },
 
-    delete : function() {
+    delete: function() {
       tell(null);
       currentUser = null;
 
@@ -105,7 +107,7 @@ app.factory('SessionService', function($http, $modal, $log) {
       });
     },
 
-    init : function() {
+    init: function() {
       $http.get('/api/session').success(function(user) {
         if (user.id) {
           $log.info('User is logged in. ID: ' + user.id + ' Name: ' + user.name);

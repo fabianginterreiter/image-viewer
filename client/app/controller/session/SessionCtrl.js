@@ -3,11 +3,11 @@ app.controller('SessionCtrl', ['$scope', '$http', 'SessionService', function($sc
   SessionService.watch(function(user) {
     if (user) {
       $scope.user = user;
-      $scope.name = user.name;      
+      $scope.name = user.name;
     }
   });
 
   $scope.change = function() {
-  	SessionService.delete();
+    SessionService.delete();
   }
 }]);

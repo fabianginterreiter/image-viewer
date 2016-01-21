@@ -1,6 +1,6 @@
 app.factory('ImageViewerService', function($modalStack, $timeout) {
   return {
-    open : function() {
+    open: function() {
       $timeout(function() {
         $modalStack.dismissAll();
       }, 25);

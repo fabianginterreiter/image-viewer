@@ -1,21 +1,21 @@
 app.factory('UploadService', function($modal, $http, Dialogs) {
   return {
-    upload : function(directory, callback) {
+    upload: function(directory, callback) {
       $modal.open({
         animation: true,
         templateUrl: 'templates/directives/upload.html',
-        controller: function ($scope, $modalInstance, $http, $location, FileUploader) {
+        controller: function($scope, $modalInstance, $http, $location, FileUploader) {
           $scope.directory = directory;
 
           $scope.uploader = new FileUploader();
 
           $scope.uploader.url = '/api/directories/' + directory.id + '/images';
 
-          $scope.ok = function () {
+          $scope.ok = function() {
             $modalInstance.close();
           };
 
-          $scope.cancel = function () {
+          $scope.cancel = function() {
             $modalInstance.dismiss('cancel');
           };
         }

@@ -1,6 +1,6 @@
 app.directive('statistics', function() {
   return {
-    controller : function($scope, $http) {
+    controller: function($scope, $http) {
       $scope.imagesWithGps = 0;
       $scope.imagesWithoutGps = 0;
 
@@ -39,10 +39,10 @@ app.directive('statistics', function() {
     },
 
     scope: {
-      object : '=object',
-      type : '=type'
+      object: '=object',
+      type: '=type'
     },
 
-    templateUrl : 'templates/directives/statistics.html'
+    templateUrl: 'templates/directives/statistics.html'
   };
 });

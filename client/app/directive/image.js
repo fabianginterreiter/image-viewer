@@ -1,4 +1,4 @@
-app.controller('ImageViewerCtrl', ['$scope', '$modalInstance', '$http', 'image', 'images', 'selectable', 'Dialogs', function ($scope, $modalInstance, $http, image, images, selectable, Dialogs) {
+app.controller('ImageViewerCtrl', ['$scope', '$modalInstance', '$http', 'image', 'images', 'selectable', 'Dialogs', function($scope, $modalInstance, $http, image, images, selectable, Dialogs) {
   $scope.images = images;
   $scope.image = image;
   $scope.selectable = selectable != 'false';
@@ -11,15 +11,14 @@ app.controller('ImageViewerCtrl', ['$scope', '$modalInstance', '$http', 'image',
     }
   }
 
-  angular.element("body").keydown(function(event){
-      if (event.keyCode === 39) {
-        $scope.next();
-        $scope.$apply();
-      }
-      else if (event.keyCode === 37) {
-        $scope.previous();
-        $scope.$apply();
-      }
+  angular.element("body").keydown(function(event) {
+    if (event.keyCode === 39) {
+      $scope.next();
+      $scope.$apply();
+    } else if (event.keyCode === 37) {
+      $scope.previous();
+      $scope.$apply();
+    }
   });
 
   $scope.mm = function() {
@@ -35,7 +34,7 @@ app.controller('ImageViewerCtrl', ['$scope', '$modalInstance', '$http', 'image',
     }, 2000);
   };
 
-  
+
 
   $scope.next = function() {
     if ($scope.hasNext()) {
@@ -59,44 +58,44 @@ app.controller('ImageViewerCtrl', ['$scope', '$modalInstance', '$http', 'image',
     }
   };
 
-  $scope.cancel = function () {
+  $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
   };
 }]);
 
 app.directive('viewImage', function() {
   return {
-        link: function(scope, element, attributes, $modal) {
-            scope.$watch(attributes.viewImage, function(image) {
-              scope.image = image;
-            });
+    link: function(scope, element, attributes, $modal) {
+      scope.$watch(attributes.viewImage, function(image) {
+        scope.image = image;
+      });
 
-            element.click(function() {
-              scope.click();
-            });
+      element.click(function() {
+        scope.click();
+      });
 
-            scope.selectable = attributes.selectable;
-        },
-        controller : ['$scope' , '$modal' , function($scope, $modal) {
-          $scope.click = function() {
-            var modalInstance = $modal.open({
-                animation: true,
-                templateUrl: 'templates/directives/image.html',
-                controller: 'ImageViewerCtrl',
-                size: 'lg',
-                resolve: {
-                  selectable: function() {
-                    return $scope.selectable;
-                  },
-                  image: function () {
-                    return $scope.image;
-                  },
-                  images: function() {
-                    return $scope.images;
-                  }
-                }
-              });
-          };
-        }]
-    };
+      scope.selectable = attributes.selectable;
+    },
+    controller: ['$scope', '$modal', function($scope, $modal) {
+      $scope.click = function() {
+        var modalInstance = $modal.open({
+          animation: true,
+          templateUrl: 'templates/directives/image.html',
+          controller: 'ImageViewerCtrl',
+          size: 'lg',
+          resolve: {
+            selectable: function() {
+              return $scope.selectable;
+            },
+            image: function() {
+              return $scope.image;
+            },
+            images: function() {
+              return $scope.images;
+            }
+          }
+        });
+      };
+    }]
+  };
 });

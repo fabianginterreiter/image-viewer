@@ -6,69 +6,69 @@ app.directive('map', function() {
       points: '='
     },
 
-    controller : function($scope, $http) {
- // Geometries
- // http://www.acuriousanimal.com/thebookofopenlayers3/chapter04_03_styling.html
-            
+    controller: function($scope, $http) {
+      // Geometries
+      // http://www.acuriousanimal.com/thebookofopenlayers3/chapter04_03_styling.html
 
-          var textStyle = new ol.style.Text({
-              textAlign: 'center'
-            });
 
-            $scope.clear = function() {
-              vectorSource.clear();
-            };
+      var textStyle = new ol.style.Text({
+        textAlign: 'center'
+      });
 
-            // Source and vector layer
-            var vectorSource = new ol.source.Vector({
-                projection: 'EPSG:4326',
-                features: []
-            });
+      $scope.clear = function() {
+        vectorSource.clear();
+      };
 
-            var style = new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(255, 100, 50, 0.3)'
-                }),
-                stroke: new ol.style.Stroke({
-                    width: 2,
-                    color: 'rgba(255, 100, 50, 0.8)'
-                }),
-                image: new ol.style.Circle({
-                    fill: new ol.style.Fill({
-                        color: 'rgba(55, 200, 150, 0.5)'
-                    }),
-                    stroke: new ol.style.Stroke({
-                        width: 1,
-                        color: 'rgba(55, 200, 150, 0.8)'
-                    })
-                }),
-                text: new ol.style.Text({
-                  textAlign: 'center'
-                })
-            });
+      // Source and vector layer
+      var vectorSource = new ol.source.Vector({
+        projection: 'EPSG:4326',
+        features: []
+      });
 
-            var vectorLayer = new ol.layer.Vector({
-              source: vectorSource,
-              style: style
-            });
+      var style = new ol.style.Style({
+        fill: new ol.style.Fill({
+          color: 'rgba(255, 100, 50, 0.3)'
+        }),
+        stroke: new ol.style.Stroke({
+          width: 2,
+          color: 'rgba(255, 100, 50, 0.8)'
+        }),
+        image: new ol.style.Circle({
+          fill: new ol.style.Fill({
+            color: 'rgba(55, 200, 150, 0.5)'
+          }),
+          stroke: new ol.style.Stroke({
+            width: 1,
+            color: 'rgba(55, 200, 150, 0.8)'
+          })
+        }),
+        text: new ol.style.Text({
+          textAlign: 'center'
+        })
+      });
 
-            // Maps
-            var map = new ol.Map({
-                target: 'map',  // The DOM element that will contains the map
-                renderer: 'canvas', // Force the renderer to be used
-                layers: [
-                    // Add a new Tile layer getting tiles from OpenStreetMap source
-                    new ol.layer.Tile({
-                        source: new ol.source.OSM()
-                    }),
-                    vectorLayer
-                ],
-                // Create a view centered on the specified location and zoom level
-                view: new ol.View({
-                    center: ol.proj.transform([2.1833, 41.3833], 'EPSG:4326', 'EPSG:3857'),
-                    zoom: 4
-                })
-            });
+      var vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: style
+      });
+
+      // Maps
+      var map = new ol.Map({
+        target: 'map', // The DOM element that will contains the map
+        renderer: 'canvas', // Force the renderer to be used
+        layers: [
+          // Add a new Tile layer getting tiles from OpenStreetMap source
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }),
+          vectorLayer
+        ],
+        // Create a view centered on the specified location and zoom level
+        view: new ol.View({
+          center: ol.proj.transform([2.1833, 41.3833], 'EPSG:4326', 'EPSG:3857'),
+          zoom: 4
+        })
+      });
 
 
       $scope.$watch('points', function(oldPoints, newPoints) {
@@ -76,8 +76,8 @@ app.directive('map', function() {
         $scope.clear();
 
 
-          _.forEach(newPoints, function(point) {
-            /*var view = map.getView();
+        _.forEach(newPoints, function(point) {
+          /*var view = map.getView();
         var projection = view.getProjection();
         var resolutionAtEquator = view.getResolution();
         var center = map.getView().getCenter();
@@ -86,20 +86,20 @@ app.directive('map', function() {
         var radius = (point.radius / ol.proj.METERS_PER_UNIT.m) * resolutionFactor;*/
 
 
-            var n = point.images.length;
-            var radius = map.getView().getResolution() * 10 * (n > 6 ? 6 : n);
+          var n = point.images.length;
+          var radius = map.getView().getResolution() * 10 * (n > 6 ? 6 : n);
 
-              var point = new ol.geom.Circle(
-                  ol.proj.transform([point.longitude, point.latitude], 'EPSG:4326', 'EPSG:3857'),
-                  radius
-              );
+          var point = new ol.geom.Circle(
+            ol.proj.transform([point.longitude, point.latitude], 'EPSG:4326', 'EPSG:3857'),
+            radius
+          );
 
-              var pointFeature = new ol.Feature(point);
+          var pointFeature = new ol.Feature(point);
 
-              vectorSource.addFeature(pointFeature);
-          });
+          vectorSource.addFeature(pointFeature);
+        });
 
-            
+
       });
 
       map.on('moveend', function(event) {
@@ -118,9 +118,9 @@ app.directive('map', function() {
         ], 'EPSG:3857', 'EPSG:4326');
 
         $scope.move({
-          lon1: lonlat[0], 
-          lat1: lonlat[1], 
-          lon2: lonlat2[0], 
+          lon1: lonlat[0],
+          lat1: lonlat[1],
+          lon2: lonlat2[0],
           lat2: lonlat2[1]
         });
       });
@@ -172,9 +172,9 @@ var calcCenter = function(images) {
   });
 
   var result = {
-    longitude : minLon + (maxLon - minLon) / 2,
-    latitude : minLat + (maxLat - minLat) / 2,
-    radius : 0
+    longitude: minLon + (maxLon - minLon) / 2,
+    latitude: minLat + (maxLat - minLat) / 2,
+    radius: 0
   };
 
   console.log("Cacluation");
@@ -190,18 +190,20 @@ var calcCenter = function(images) {
   return result;
 }
 
-function toRad(x) {return x * Math.PI / 180;}
+function toRad(x) {
+  return x * Math.PI / 180;
+}
 
 function SphericalCosinus(lat1, lon1, lat2, lon2) {
 
-    var R = 6371; // km
-    var dLon = toRad(lon2 - lon1),
-        lat1 = toRad(lat1),
-        lat2 = toRad(lat2),
-        d = Math.acos(Math.sin(lat1)*Math.sin(lat2) + Math.cos(lat1)*Math.cos(lat2) * Math.cos(dLon)) * R;
+  var R = 6371; // km
+  var dLon = toRad(lon2 - lon1),
+    lat1 = toRad(lat1),
+    lat2 = toRad(lat2),
+    d = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(dLon)) * R;
 
 
-    return d;
+  return d;
 }
 
 
@@ -233,7 +235,7 @@ app.controller('MapsCtrl', ['$scope', '$http', function($scope, $http) {
           points.push({
             longitude: image.longitude,
             latitude: image.latitude,
-            images: [ image ]
+            images: [image]
           });
         }
       });
@@ -242,11 +244,10 @@ app.controller('MapsCtrl', ['$scope', '$http', function($scope, $http) {
     });
   };
 
-  $scope.points = [
-  ];
+  $scope.points = [];
 
 
- /* $scope.search = function(value) {
+  /* $scope.search = function(value) {
   	$http.get('http://nominatim.openstreetmap.org/search?format=json&q=' + value).success(function(data) {
   		if (data && data.length > 0) {
   			$scope.lat = parseFloat(data[0].lat, 10);
@@ -284,7 +285,7 @@ app.controller('MapsCtrl', ['$scope', '$http', function($scope, $http) {
   	}); 
   };*/
 
-  	/*
+  /*
 
   	map.on('singleclick', function(evt) {
       var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');

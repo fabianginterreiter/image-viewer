@@ -2,11 +2,11 @@ app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'Do
   ImageViewerService.open();
 
   FilterService.filter($http, $routeParams, 'galleries', function(err, gallery) {
-      $scope.gallery = gallery;
-      usSpinnerService.stop('browse');
-    });
+    $scope.gallery = gallery;
+    usSpinnerService.stop('browse');
+  });
 
-    setTimeout(function() {
+  setTimeout(function() {
     if (!$scope.images) {
       usSpinnerService.spin('browse');
     }
@@ -28,7 +28,7 @@ app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'Do
     GalleryService.edit($scope.gallery);
   };
 
-  
+
 
   $scope.delete = function() {
     Dialogs.confirm('Delete', 'Do you want to delete the selected image from this gallery?', function() {

@@ -1,10 +1,10 @@
 app.directive('persons', function() {
   return {
-    controller : function($scope, $http, $timeout) {
+    controller: function($scope, $http, $timeout) {
       var click_y = 0;
       var click_x = 0;
 
-      
+
       $scope.personSelecting = false;
 
       $scope.click = function(event) {
@@ -70,7 +70,7 @@ app.directive('persons', function() {
 
       $scope.$watch('show', function(value) {
         if (value) {
-          loadPersons();  
+          loadPersons();
         }
       });
 
@@ -80,7 +80,7 @@ app.directive('persons', function() {
         }
       });
 
-    	$scope.deletePerson = function(person) {
+      $scope.deletePerson = function(person) {
         $http.delete('/api/images/' + $scope.image.id + '/persons/' + person.id).success(function(data) {
           _.remove($scope.image.persons, function(n) {
             return n.person_id === person.id;
@@ -88,13 +88,13 @@ app.directive('persons', function() {
         });
       };
     },
-    scope : {
-      width : '=width',
-      height : '=height',
-      show : '=show',
-      image : '=image',
-      left : '=left'
+    scope: {
+      width: '=width',
+      height: '=height',
+      show: '=show',
+      image: '=image',
+      left: '=left'
     },
-    templateUrl : 'templates/directives/persons.html'
+    templateUrl: 'templates/directives/persons.html'
   };
 });

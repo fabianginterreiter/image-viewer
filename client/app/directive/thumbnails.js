@@ -1,6 +1,6 @@
 app.directive('thumbnails', function() {
   return {
-    controller : function($scope, $element, $attrs, $window, $location, $routeParams, DownloadService, GalleryService) {
+    controller: function($scope, $element, $attrs, $window, $location, $routeParams, DownloadService, GalleryService) {
       var calc = function(images) {
         var sl = [];
 
@@ -10,7 +10,7 @@ app.directive('thumbnails', function() {
 
         var addAA = function(images, height) {
           if (images.length > 0) {
-            _.forEach(images,function(image) {
+            _.forEach(images, function(image) {
               image.thumb_width = height * image.scale;
               image.thumb_height = height;
             });
@@ -33,7 +33,7 @@ app.directive('thumbnails', function() {
 
         _.forEach(images, function(image) {
           if (maxRows > 0 && rows >= maxRows) {
-            image.hide =true;
+            image.hide = true;
             return;
           }
 
@@ -45,19 +45,19 @@ app.directive('thumbnails', function() {
 
           image.scale = image.orientation === 8 || image.orientation === 6 ? image.height / image.width : image.width / image.height;
 
-          scaleSum+=image.scale;
+          scaleSum += image.scale;
           sl.push(image);
 
           var k = (width - sl.length * 4 - 4) / scaleSum;
           if (k < maxHeight) {
             addAA(sl, k);
-            scaleSum = 0; 
+            scaleSum = 0;
             sl = [];
             rows++;
           }
         });
 
-        addAA(sl, maxHeight); 
+        addAA(sl, maxHeight);
       };
 
       $scope.reload = function() {
@@ -94,7 +94,7 @@ app.directive('thumbnails', function() {
       };
 
       $scope.top = function() {
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       };
 
       $scope.download = function(width) {
@@ -105,17 +105,17 @@ app.directive('thumbnails', function() {
         GalleryService.addTags(getSelected());
       };
 
-        $scope.addToGallery = function() {
-    GalleryService.addImages(getSelected());
-  };
+      $scope.addToGallery = function() {
+        GalleryService.addImages(getSelected());
+      };
 
-  $scope.create = function () {
-    GalleryService.create(getSelected());
-  };
+      $scope.create = function() {
+        GalleryService.create(getSelected());
+      };
 
-  $scope.setView = function(type) {
-    $scope.view = type;
-  };
+      $scope.setView = function(type) {
+        $scope.view = type;
+      };
 
 
       $scope.$watchCollection('images', function(images) {
@@ -129,10 +129,10 @@ app.directive('thumbnails', function() {
       $scope.$watch('images', function(images) {
         setTimeout(function() {
           if ($routeParams.y) {
-              console.log('ScrollTo:' + $routeParams.y);
-              window.scrollTo(0, $routeParams.y);
-            }
-          }, 10);
+            console.log('ScrollTo:' + $routeParams.y);
+            window.scrollTo(0, $routeParams.y);
+          }
+        }, 10);
       });
     },
     restrict: 'E',

@@ -1,6 +1,6 @@
 app.directive('fixed', function() {
   return {
-    link : function(scope, element, attributes, $window) {
+    link: function(scope, element, attributes, $window) {
       var child = element.children()[0];
       var offsetHeight = child.offsetHeight;
       scope.distance = element.offset().top - scope.top;
@@ -13,12 +13,12 @@ app.directive('fixed', function() {
 
       scope.$watch(function() {
         return element.offset().top;
-      }, function(value) {
+      }, function(value)  {
         scope.distance = value - scope.top;
       }, true);
     },
 
-    controller : function($scope, $window) {
+    controller: function($scope, $window) {
       angular.element($window).bind('scroll', function(e) {
         if (angular.element($window).scrollTop() > $scope.distance) {
           if ($scope.child && $scope.child.css('position') !== 'fixed') {

@@ -1,6 +1,6 @@
 app.directive('filterInformation', function() {
   return {
-    controller : function($scope, $http, $routeParams) {
+    controller: function($scope, $http, $routeParams) {
       var id = $routeParams.id;
       $scope.id = id;
       var person = $routeParams.personId;
@@ -17,19 +17,19 @@ app.directive('filterInformation', function() {
       if (directory) {
         $http.get('/api/' + $scope.type + '/' + id + '/directories/' + directory).success(function(data) {
           $scope.directory = data;
-        }); 
+        });
       }
 
       if (tag) {
         $http.get('/api/' + $scope.type + '/' + id + '/tags/' + tag).success(function(data) {
           $scope.tag = data;
-        }); 
+        });
       }
 
       if (gallery) {
         $http.get('/api/' + $scope.type + '/' + id + '/galleries/' + gallery).success(function(data) {
           $scope.gallery = data;
-        }); 
+        });
       }
 
       if ($routeParams.gps) {
@@ -39,9 +39,9 @@ app.directive('filterInformation', function() {
     },
 
     scope: {
-      type : '=type'
+      type: '=type'
     },
 
-    templateUrl : 'templates/directives/filterInformation.html'
+    templateUrl: 'templates/directives/filterInformation.html'
   };
 });

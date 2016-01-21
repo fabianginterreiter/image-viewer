@@ -1,9 +1,8 @@
 app.directive('menu', function() {
   return {
-    link: function(scope, element, attrs) {
-    }, 
+    link: function(scope, element, attrs) {},
 
-    controller : function($scope, $http, $timeout, DownloadService, GalleryService, Dialogs, ImageService) {
+    controller: function($scope, $http, $timeout, DownloadService, GalleryService, Dialogs, ImageService) {
       var open = false;
       var menu = angular.element('#menu');
 
@@ -58,7 +57,7 @@ app.directive('menu', function() {
       };
 
       $scope.top = function() {
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       };
 
       $scope.download = function(width) {
@@ -66,18 +65,18 @@ app.directive('menu', function() {
       };
 
       $scope.addTags = function() {
-        GalleryService.addTags(getSelected()); 
+        GalleryService.addTags(getSelected());
       };
 
       $scope.addImagesToGallery = function() {
-          GalleryService.addImages(getSelected());
+        GalleryService.addImages(getSelected());
       };
 
-  $scope.create = function () {
-    GalleryService.create(getSelected());
-  };
+      $scope.create = function() {
+        GalleryService.create(getSelected());
+      };
 
-  $scope.setCoordinates = function() {
+      $scope.setCoordinates = function() {
         MapsService.setCoordinates($scope.image);
       };
 
@@ -85,7 +84,7 @@ app.directive('menu', function() {
         ImageService.edit($scope.image);
       };
 
-$scope.delete = function() {
+      $scope.delete = function() {
         Dialogs.delete('Delete', 'Do you want to delete the current image?', function() {
           $http.delete('/api/images/' + $scope.image.id).success(function() {
             $scope.image.deleted = true;
@@ -100,22 +99,22 @@ $scope.delete = function() {
       };
 
 
-       $scope.createGallery = function() {
-          GalleryService.create($scope.image);
-        };
+      $scope.createGallery = function() {
+        GalleryService.create($scope.image);
+      };
 
-        $scope.addToGallery = function() {
-    GalleryService.addImages($scope.image);
-  };
-    $scope.setAsGalleryImage = function() {
-      GalleryService.setAsGalleryImage($scope.image);
-    };
+      $scope.addToGallery = function() {
+        GalleryService.addImages($scope.image);
+      };
+      $scope.setAsGalleryImage = function() {
+        GalleryService.setAsGalleryImage($scope.image);
+      };
 
-    $scope.setAsPersonImage = function(image) {
-      PersonsService.select(function(person) {
-        $location.path('/persons/' + person.id + '/image/' + $scope.image.id);
-      });
-    };
+      $scope.setAsPersonImage = function(image) {
+        PersonsService.select(function(person) {
+          $location.path('/persons/' + person.id + '/image/' + $scope.image.id);
+        });
+      };
     },
     restrict: 'E',
     scope: {
@@ -128,6 +127,6 @@ $scope.delete = function() {
     transclude: true,
 
     templateUrl: 'templates/directives/menu.html'
-    
+
   };
 });

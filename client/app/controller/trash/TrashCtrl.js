@@ -23,14 +23,14 @@ app.controller('TrashCtrl', ['$scope', '$http', 'Dialogs', function($scope, $htt
 
   $scope.restore = function() {
 
-  	var selected = getSelected();
+    var selected = getSelected();
 
-  	var ids = [];
+    var ids = [];
     selected.forEach(function(image) {
       ids.push(image.id);
     });
 
-  	$http.put('/api/trash/restore/' + ids.join('+')).success(function(data) {
+    $http.put('/api/trash/restore/' + ids.join('+')).success(function(data) {
 
     });
   };
