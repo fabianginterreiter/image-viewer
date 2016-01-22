@@ -39,6 +39,10 @@ app.controller('TagCtrl', ['$scope', '$http', '$routeParams', 'TagService', 'Dia
     TagService.edit($scope.tag);
   };
 
+  $scope.preload = function() {
+    $http.get('/api/tags/' + id + '?preload=true');
+  };
+
   $scope.delete = function() {
     Dialogs.delete('Delete', 'Do you really want to delete: ' + $scope.tag.text, function() {
       $http.delete('/api/tags/' + $scope.tag.id).success(function() {
