@@ -25,6 +25,12 @@ gulp.task('format-js-router', function() {
 
 gulp.task('format-js', ['format-js-app', 'format-js-router']);
 
+gulp.task('format-html', function() {
+  gulp.src('client/**/*.html')
+    .pipe(prettify({indentSize: 2}))
+    .pipe(gulp.dest('./client'))
+});
+
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
