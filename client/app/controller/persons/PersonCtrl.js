@@ -43,9 +43,12 @@ app.controller('PersonCtrl', ['$scope', '$http', '$routeParams', '$window', 'Dow
   };
 
   $scope.edit = function() {
-    console.log("wuf");
     PersonService.edit($scope.person);
   };
+
+  $scope.preload = function() {
+    $http.get('/api/persons/' + $routeParams.id + '?preload=true');
+  }
 
   $scope.delete = function() {
     Dialogs.delete('Test', 'Deletsososo', function() {
