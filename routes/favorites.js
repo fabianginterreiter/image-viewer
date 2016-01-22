@@ -5,15 +5,7 @@ var FavoritesAction = require('../actions/FavoritesAction');
 
 var console = process.console;
 
-var knex = require('knex')({
-  client: 'postgres',
-  connection: {
-    host     : 'localhost',
-    user     : 'postgres',
-    password : '',
-    database : 'images'
-  }
-});
+var knex = require('../utils/Knex');
 
 var favoritesAction = new FavoritesAction(knex);
 

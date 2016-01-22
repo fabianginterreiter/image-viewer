@@ -13,16 +13,7 @@ var ImagesAction = require('../actions/ImagesAction');
 
 var console = process.console;
 
-var knex = require('knex')({
-  client: 'postgres',
-  connection: {
-    host     : 'localhost',
-    user     : 'postgres',
-    password : '',
-    database : 'images'
-  },
-  debug: true
-});
+var knex = require('../utils/Knex');
 
 function getCachePath(req, image) {
   return req.config.get('cache') + '/' + image.id + '.jpg';

@@ -7,18 +7,7 @@ var PersonsAction = require('../actions/PersonsAction');
 
 var console = process.console;
 
-var knex = require('knex')({
-  client: 'postgres',
-  connection: {
-    host     : 'localhost',
-    user     : 'postgres',
-    password : '',
-    database : 'images'
-  },
-  debug : true
-});
-
-
+var knex = require('../utils/Knex');
 
 var personsAction = new PersonsAction(database, knex);
 

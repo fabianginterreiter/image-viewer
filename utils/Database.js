@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var pg = require('pg');
+var config = require('config');
 
 class Database {
   constructor(url, username, password, database) {
@@ -24,6 +25,6 @@ class Database {
   }
 }
 
-var database = new Database('localhost', 'postgres', '', 'images');
+var database = new Database(config.get('database').host, config.get('database').user, config.get('database').password, config.get('database').database);
 
 module.exports = database;
