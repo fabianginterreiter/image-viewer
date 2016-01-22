@@ -10,6 +10,7 @@ var _ = require('lodash');
 var database = require('../utils/Database');
 var request = require('request');
 var ImagesAction = require('../actions/ImagesAction');
+var ImageUtil = require('../utils/image');
 
 var console = process.console;
 
@@ -209,7 +210,7 @@ router.get('/:id/resize', function(req, res) {
   var id = req.param('id');
   var min = req.param('min');
 
-  loadToPreview(req, id, function(err, path) {
+  ImageUtil.loadToPreview(req.config, id, function(err, path) {
     var transformer = sharp().withMetadata().rotate();
 
     if (width > 0 || height > 0) {
@@ -226,38 +227,7 @@ router.get('/:id/resize', function(req, res) {
   });
 });
 
-function loadToPreview(req, id, callback) {
 
-  var fullpath = req.config.get('storage').cache + '/' + id + '.jpg';
-
-  fs.stat(fullpath, function(err, stats) {
-    console.log(stats)
-    if (stats) {
-      if (callback) {
-        callback(null, fullpath);
-      }
-    } else {
-      knex('images')
-        .select('directories.path AS path', 'images.name AS name')
-        .join('directories', 'images.directory_id', 'directories.id')
-        .where('images.id', id)
-        .then(function(rows) {
-
-          var image = rows[0];
-
-          var absolute = req.config.get('root') + image.path + image.name;
-
-          new sharp(absolute).resize(2000, 2000).max().quality(80).rotate().toFile(fullpath, function(err) {
-            if (callback) {
-              callback(err, fullpath);
-            }
-          });
-        }).catch(function(e) {
-          console.log(e);
-        });
-    }
-  });
-}
 
 router.get('/:id/thumb', function(req, res) {
   var maxWidth = getIntFromRequest(req, 'width', 500);
