@@ -4,6 +4,7 @@ var _ = require('lodash');
 var fs = require('fs');
 var database = require('../utils/Database');
 var PersonsAction = require('../actions/PersonsAction');
+var ImageUtil = require('../utils/image');
 
 var console = process.console;
 
@@ -31,6 +32,13 @@ router.get('/:id', function(req, res) {
 
   personsAction.get(req.session.user, id, function(err, result) {
     handleCallback(res, err, result);
+
+    var preload = req.param('preload');
+    if (preload === 'true') {
+      setTimeout(function() {
+        ImageUtil.preloadImages(req.config, result.images);
+      }, 50);
+    }
   });
 });
 

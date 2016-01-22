@@ -28,7 +28,9 @@ app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'Do
     GalleryService.edit($scope.gallery);
   };
 
-
+  $scope.preload = function() {
+    $http.get('/api/galleries/' + $routeParams.id + '?preload=true');
+  };
 
   $scope.delete = function() {
     Dialogs.confirm('Delete', 'Do you want to delete the selected image from this gallery?', function() {

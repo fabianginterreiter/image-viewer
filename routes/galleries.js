@@ -4,7 +4,7 @@ var mapper = require('../utils/mapper');
 var _ = require('lodash');
 var database = require('../utils/Database');
 var sharp = require('sharp');
-
+var ImageUtil = require('../utils/image');
 var console = process.console;
 
 router.post('', function(req, res) {
@@ -97,6 +97,13 @@ router.get('/:id', function(req, res) {
             done();
             gallery.parents = parents;
             res.send(gallery);
+
+            var preload = req.param('preload');
+            if (preload === 'true') {
+              setTimeout(function() {
+                ImageUtil.preloadImages(req.config, gallery.images);
+              }, 50);
+            }
           });
         });
       });
