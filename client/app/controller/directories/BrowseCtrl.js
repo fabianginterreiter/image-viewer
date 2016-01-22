@@ -5,6 +5,10 @@ app.controller('BrowseCtrl', ['$scope', '$http', '$routeParams', '$location', '$
     DownloadService.images(getSelected(), width);
   };
 
+  $scope.preload = function() {
+    $http.get('/api/directories/' + $routeParams.id + '?preload=true');
+  };
+
   $scope.loaded = false;
 
   var elements = [];

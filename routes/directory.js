@@ -8,6 +8,7 @@ var mapper = require('../utils/mapper');
 var ExifImage = require('exif').ExifImage;
 var sharp = require('sharp');
 var database = require('../utils/Database');
+var ImageUtil = require('../utils/image');
 
 var console = process.console;
 
@@ -402,6 +403,13 @@ function start(req, res, id) {
         res.status(500).send('Something broke!');
       } else {
         res.send(result);  
+
+        var preload = req.param('preload');
+        if (preload === 'true') {
+          setTimeout(function() {
+            ImageUtil.preloadImages(req.config, result.images);
+          }, 50);
+        }
       }
     });
   });
