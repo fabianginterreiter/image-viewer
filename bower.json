@@ -60,7 +60,7 @@
         "dist/angular-table.min.js"
       ]
     },
-    "jcrop" : {
+    "jcrop": {
       "main": [
         "css/jquery.Jcrop.min.css",
         "css/Jcrop.gif",
@@ -74,5 +74,8 @@
         "ng-tags-input.bootstrap.min.css"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "1.4.9"
   }
 }
