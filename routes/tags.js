@@ -5,6 +5,7 @@ var router = express.Router();
 var _ = require('lodash');
 var database = require('../utils/Database');
 var TagController = require('../controllers/tag');
+var ImageUtil = require('../utils/image');
 
 var console = process.console;
 
@@ -48,6 +49,7 @@ router.post('/', function(req, res) {
 router.get('/:id', function(req, res) {
   var id = req.param('id');
 
+
   new TagController(database).get(id, function(err, tag) {
 
     if (err) {
@@ -59,6 +61,13 @@ router.get('/:id', function(req, res) {
     }
 
     res.send(tag);
+    
+    var preload = req.param('preload');
+    if (preload === 'true') {
+      setTimeout(function() {
+        ImageUtil.preloadImages(req.config, tag.images);
+      }, 50);
+    }
   });
 });
 
