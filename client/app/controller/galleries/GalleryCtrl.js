@@ -29,7 +29,7 @@ app.controller('GalleryCtrl', ['$scope', '$http', '$routeParams', '$window', 'Do
   };
 
   $scope.preload = function() {
-    $http.get('/api/galleries/' + id + '?preload=true');
+    $http.get('/api/galleries/' + $routeParams.id + '?preload=true');
   };
 
   $scope.delete = function() {
