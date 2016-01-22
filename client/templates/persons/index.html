@@ -1,30 +1,29 @@
 <menu title="'Persons'" />
 
 <div class="container">
-<div class="row">
-<div class="col-md-12">
-<ol class="breadcrumb">
-  <li><a href="#/persons">Persons</a></li>
-</ol>
-</div>
-</div>
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="#/persons">Persons</a></li>
+      </ol>
+    </div>
+  </div>
 
 
-<div class="row">
-<div class="col-md-6">
-<p>
-<input type="text" class="form-control" placeholder="Search" ng-model="search">
-</p>
-<div class="list-group">
-<a href="#/persons/{{person.id}}" class="list-group-item" ng-repeat="person in persons | orderBy:'count':'desc' | filter:search" style="vertical-align: middle;">
-  <img ng-if="person.image_id" ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="30" height="30">
-  <span class="badge">{{person.count}}</span>
-  {{person.name}}
-</a>
-</div>
+  <div class="row">
+    <div class="col-md-6">
+      <p>
+        <input type="text" class="form-control" placeholder="Search" ng-model="search">
+      </p>
+      <div class="list-group">
+        <a href="#/persons/{{person.id}}" class="list-group-item" ng-repeat="person in persons | orderBy:'count':'desc' | filter:search" style="vertical-align: middle;">
+          <img ng-if="person.image_id" ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="30" height="30">
+          <span class="badge">{{person.count}}</span> {{person.name}}
+        </a>
+      </div>
 
 
-<!--<input type="text" class="form-control" ng-change="updateFilteredList()" ng-model="query" placeholder="Search">
+      <!--<input type="text" class="form-control" ng-change="updateFilteredList()" ng-model="query" placeholder="Search">
 <table class="table" at-table at-paginated at-list="filteredList" at-config="config">
 <thead>
 </thead>
@@ -38,25 +37,26 @@
 
 <at-pagination at-list="filteredList" at-config="config"></at-pagination>-->
 
-</div>
+    </div>
 
-<div class="col-md-6">
-<table class="table">
-<thead>
-<tr>
-<th>Image</th><th>Number of Persons</th>
-</tr>
-</thead>
-<tbody>
-<tr ng-repeat="image in images track by $index">
-  <td><a href="#/images/{{image.id}}">{{image.name}}</a></td>
-  <td>{{image.count}}</td>
-</tr>
-</tbody>
-</table>
+    <div class="col-md-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Number of Persons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="image in images track by $index">
+            <td><a href="#/images/{{image.id}}">{{image.name}}</a></td>
+            <td>{{image.count}}</td>
+          </tr>
+        </tbody>
+      </table>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </div>

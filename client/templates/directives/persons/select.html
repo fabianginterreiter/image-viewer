@@ -9,12 +9,11 @@
 
   <div class="list-group">
     <a ng-click="select(person)" class="list-group-item" ng-repeat="person in persons | filter:search | limitTo:10 | orderBy:['name']">
-      <img ng-if="person.image_id" ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="30" height="30">
-      {{person.name}}
+      <img ng-if="person.image_id" ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="30" height="30"> {{person.name}}
     </a>
   </div>
 
-  
+
 </div>
 
 <div class="modal-footer">

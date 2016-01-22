@@ -7,7 +7,7 @@
   <div class="dropdown" dropdown on-toggle="toggled(open)">
     <span class="dropdown-toggle" dropdown-toggle>
       <span class="glyphicon glyphicon-cog"></span>
-      <span class="hidden-xs"> Options</span>
+    <span class="hidden-xs"> Options</span>
     </span>
     <ul class="dropdown-menu">
       <li><a ng-click="edit()">Edit</a></li>
@@ -18,16 +18,16 @@
 </menu>
 
 <div class="container">
-<div class="row">
-<div class="col-md-12">
-<ol class="breadcrumb">
-  <li><a href="#/tags">Tags</a></li>
-  <li><a href="#/tags/{{tag.id}}">{{tag.text}}</a></li>
-  <li class="active">Details</li>
-</ol>
-</div>
-</div>
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="#/tags">Tags</a></li>
+        <li><a href="#/tags/{{tag.id}}">{{tag.text}}</a></li>
+        <li class="active">Details</li>
+      </ol>
+    </div>
+  </div>
 
-<statistics object="tag" type="'tags'"></statistics>
+  <statistics object="tag" type="'tags'"></statistics>
 
 </div>

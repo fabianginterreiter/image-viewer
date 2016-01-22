@@ -1,4 +1,5 @@
 <html ng-app="imageApp">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +14,7 @@
 
   <link href="stylesheets/style.css" rel="stylesheet">
 </head>
+
 <body>
   <nav class="navbar navbar-inverse navbar-fixed-top" style="background: linear-gradient(to bottom,#3c3c3c 0,#222 100%); !important; position: absolute;">
     <div class="container">
@@ -27,7 +29,7 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav" ng-controller="NavCtrl">
-        <li ng-class="{'active' : isActive('favorites')}"><a href="#/favorites">Favorites</a></li>
+          <li ng-class="{'active' : isActive('favorites')}"><a href="#/favorites">Favorites</a></li>
           <li ng-class="{'active' : isActive('galleries')}"><a href="#/galleries">Galleries</a></li>
           <li ng-class="{'active' : isActive('tags')}"><a href="#/tags">Tags</a></li>
           <li ng-class="{'active' : isActive('persons')}"><a href="#/persons">Persons</a></li>
@@ -45,18 +47,18 @@
           <li class="dropdown" ng-controller="SessionCtrl">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
-            <span style="position: relative;">
+              <span style="position: relative;">
             <img ng-if="user.image_id" ng-src="/api/persons/{{user.person_id}}/image" class="img-circle" width="40" height="40" style="position: absolute; top: -11px;">
             </span>
 
-            <span style="padding-left: 48px;">{{name}}</span> <span class="caret"></span></a>
+              <span style="padding-left: 48px;">{{name}}</span> <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="#">Settings</a></li>
               <li class="divider"></li>
               <li><a ng-click="change()">Change User</a></li>
             </ul>
           </li>
-          
+
         </ul>
       </div>
 
@@ -71,4 +73,5 @@
   <!-- app:js -->
   <!-- endinject -->
 </body>
+
 </html>

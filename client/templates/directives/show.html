@@ -1,29 +1,29 @@
 <div ng-if="image">
-<div class="options" ng-style="{'visibility': {{toolbar ? 'visible' : 'hidden'}}}">
-  <favorite image="image" class="left"></favorite>
+  <div class="options" ng-style="{'visibility': {{toolbar ? 'visible' : 'hidden'}}}">
+    <favorite image="image" class="left"></favorite>
 
-  <div class="left" ng-click="image.selected = !image.selected" ng-if="selectable">
-    <span class="glyphicon glyphicon-check" ng-if="image.selected"></span>
-    <span ng-if="!image.selected" class="glyphicon glyphicon-unchecked"></span>
-    <span class="hidden-xs"> Select</span>
-  </div>
+    <div class="left" ng-click="image.selected = !image.selected" ng-if="selectable">
+      <span class="glyphicon glyphicon-check" ng-if="image.selected"></span>
+      <span ng-if="!image.selected" class="glyphicon glyphicon-unchecked"></span>
+      <span class="hidden-xs"> Select</span>
+    </div>
 
-  <a class="left" href="#/images/{{image.id}}" ng-if="link">
-    <span class="glyphicon glyphicon-link"></span>
-    <span class="hidden-xs"> Link</span>
-  </a>
+    <a class="left" href="#/images/{{image.id}}" ng-if="link">
+      <span class="glyphicon glyphicon-link"></span>
+      <span class="hidden-xs"> Link</span>
+    </a>
 
-  <div class="left" ng-click="showPersons = !showPersons;" >
-    <span class="glyphicon glyphicon-check" ng-if="showPersons"></span>
-    <span ng-if="!showPersons" class="glyphicon glyphicon-unchecked"></span>
-    <span class="hidden-xs"> Show Persons</span>
-  </div>
+    <div class="left" ng-click="showPersons = !showPersons;">
+      <span class="glyphicon glyphicon-check" ng-if="showPersons"></span>
+      <span ng-if="!showPersons" class="glyphicon glyphicon-unchecked"></span>
+      <span class="hidden-xs"> Show Persons</span>
+    </div>
 
-  <div class="left">
-    <span class="dropdown" dropdown on-toggle="toggled(open)">
+    <div class="left">
+      <span class="dropdown" dropdown on-toggle="toggled(open)">
       <span class="dropdown-toggle" dropdown-toggle>
         <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
-        <span class="hidden-xs"> Download</span>
+      <span class="hidden-xs"> Download</span>
       </span>
       <ul class="dropdown-menu">
         <li><a href="/api/images/{{image.id}}/resize" download="{{image.name}}">Original Size</a></li>
@@ -32,14 +32,14 @@
         <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">1280</a></li>
         <li><a href="/api/images/{{image.id}}/resize?width=1280" download="{{image.name}}">800</a></li>
       </ul>
-    </span>
-  </div>
+      </span>
+    </div>
 
-  <div class="left">
-    <span class="dropdown" dropdown on-toggle="toggled(open)">
+    <div class="left">
+      <span class="dropdown" dropdown on-toggle="toggled(open)">
       <span class="dropdown-toggle" dropdown-toggle>
         <span class="glyphicon glyphicon-eye-open" style="margin-bottom: -1px"></span>
-        <span class="hidden-xs"> View</span>
+      <span class="hidden-xs"> View</span>
       </span>
       <ul class="dropdown-menu">
         <li><a ng-click="setView('image')"><span class="glyphicon glyphicon-th"></span> Image</a></li>
@@ -49,14 +49,14 @@
         <li class="divider"></li>
         <li><a href="#/directories/{{image.directory_id}}?image={{image.id}}"><span class="glyphicon glyphicon-list-alt"></span> View in Directories</a></li>
       </ul>
-    </span>
-  </div>
+      </span>
+    </div>
 
-  <div class="left">
-    <span class="dropdown" dropdown on-toggle="toggled(open)">
+    <div class="left">
+      <span class="dropdown" dropdown on-toggle="toggled(open)">
       <span class="dropdown-toggle" dropdown-toggle>
         <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
-        <span class="hidden-xs"> Options</span>
+      <span class="hidden-xs"> Options</span>
       </span>
       <ul class="dropdown-menu">
         <li><a ng-click="edit()">Edit</a></li>
@@ -71,75 +71,68 @@
         <li ng-if="!image.deleted"><a ng-click="delete()">Delete</a></li>
         <li ng-if="image.deleted"><a ng-click="restore()">Restore</a></li>
       </ul>
-    </span>
-  </div>
-
-  <div class="right" ng-click="setFullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></div>
-</div>
-
-<div ng-switch="view">
-
-  <div ng-switch-when="details">
-    <h3>Details</h3>
-    <div class="row">
-      <div class="col-md-12">
-        <a href="#/directories/{{image.directory.id}}">{{image.directory.name}}</a>
-
-Width: {{image.width}}
-Height: {{image.height}}
-Size: {{image.size | getFilesize}}
-Created at: {{image.created_at}}
-
-{{image.fullpath}}
-      </div>
+      </span>
     </div>
 
-    <div class="row">
-      <div class="col-md-4">
-        <h4>Persons</h4>
-        <ul>
-          <li ng-repeat="person in image.persons | orderBy:'name'"><a href="#/persons/{{person.id}}">{{person.name}}</a></li>
-        </ul>
-      </div>
-
-      <div class="col-md-4">
-        <h4>Tags</h4>
-        <ul>
-          <li ng-repeat="tag in image.tags"><a href="#/tags/{{tag.id}}">{{tag.text}}</a></li>
-        </ul>
-      </div>
-
-      <div class="col-md-4">
-        <h4>Galleries</h4>
-        <ul>
-          <li ng-repeat="gallery in image.galleries"><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
-        </ul>
-      </div>
-    </div>
+    <div class="right" ng-click="setFullscreen()"><span class="glyphicon glyphicon-fullscreen"></span></div>
   </div>
 
-  <div ng-switch-when="exif">
-    <h3>Exif</h3>
-    <div class="row">
-      <div class="col-md-12">
-        {{image.exif}}    
-      </div>
-    </div>
-  </div>
+  <div ng-switch="view">
 
-  <div ng-switch-default>
-    <div style="position: relative; display: block; text-align: center;" id="images">
-      <div id="image">
-        <img ng-src="{{src}}" ng-load="loaded($event);">
-
-        <div style="position: absolute; top: 50%; left: 0; right: 0; text-align: center;">
-          <span class="glyphicon" ng-class="{'glyphicon-unchecked' : !image.selected, 'glyphicon-check' : image.selected}" style="font-size: 60px; color: white; opacity:0; transition:opacity 0.1s linear;" id="checkIcon"></span>
+    <div ng-switch-when="details">
+      <h3>Details</h3>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="#/directories/{{image.directory.id}}">{{image.directory.name}}</a> Width: {{image.width}} Height: {{image.height}} Size: {{image.size | getFilesize}} Created at: {{image.created_at}} {{image.fullpath}}
         </div>
       </div>
 
-      <persons left="offsetLeft" width="image_width" height="image_height" show="showPersons" image="image"></persons>
-      
-      <div class="deleted glyphicon glyphicon-trash" ng-if="image.deleted"></div>
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Persons</h4>
+          <ul>
+            <li ng-repeat="person in image.persons | orderBy:'name'"><a href="#/persons/{{person.id}}">{{person.name}}</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4">
+          <h4>Tags</h4>
+          <ul>
+            <li ng-repeat="tag in image.tags"><a href="#/tags/{{tag.id}}">{{tag.text}}</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4">
+          <h4>Galleries</h4>
+          <ul>
+            <li ng-repeat="gallery in image.galleries"><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="exif">
+      <h3>Exif</h3>
+      <div class="row">
+        <div class="col-md-12">
+          {{image.exif}}
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-default>
+      <div style="position: relative; display: block; text-align: center;" id="images">
+        <div id="image">
+          <img ng-src="{{src}}" ng-load="loaded($event);">
+
+          <div style="position: absolute; top: 50%; left: 0; right: 0; text-align: center;">
+            <span class="glyphicon" ng-class="{'glyphicon-unchecked' : !image.selected, 'glyphicon-check' : image.selected}" style="font-size: 60px; color: white; opacity:0; transition:opacity 0.1s linear;" id="checkIcon"></span>
+          </div>
+        </div>
+
+        <persons left="offsetLeft" width="image_width" height="image_height" show="showPersons" image="image"></persons>
+
+        <div class="deleted glyphicon glyphicon-trash" ng-if="image.deleted"></div>
       </div>
     </div>
     <tags image="image"></tags>

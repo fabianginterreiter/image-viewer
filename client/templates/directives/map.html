@@ -1,10 +1,11 @@
 <div style="height: 600px; position: relative;">
 
-<div style="position: absolute; top: 5px; left: 20px; z-index: 200;">
-	<form ng-submit="search(value)">
-<input type="text" ng-model="value"></form>
-</div>
+  <div style="position: absolute; top: 5px; left: 20px; z-index: 200;">
+    <form ng-submit="search(value)">
+      <input type="text" ng-model="value">
+    </form>
+  </div>
 
-<div style="position: absolute; top: 5px; right: 5px; z-index: 200;"><span ng-click="clear()">Clear</span></div>
+  <div style="position: absolute; top: 5px; right: 5px; z-index: 200;"><span ng-click="clear()">Clear</span></div>
 
-<div id="map"></div>
+  <div id="map"></div>

@@ -1,18 +1,18 @@
 <div style="position: absolute; z-index: 500; top: 0px;" ng-style="{'width' : width + 'px', 'height' : height + 'px', 'left' : left + 'px'}">
-	<div style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;" ng-click="click($event)"></div>
+  <div style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;" ng-click="click($event)"></div>
 
-	<div ng-if="show" ng-repeat="person in image.persons" style="position: absolute; background: #AFAFAF; color: #434343; z-index: 50; padding: 1px 5px; border: 1px solid #787878;" ng-style="{'left': person.x * width + 'px', 'top': person.y * height + 'px'}"><a href="#/persons/{{person.id}}">{{person.name}}</a> <a ng-click="deletePerson(person)">X</a></div>
+  <div ng-if="show" ng-repeat="person in image.persons" style="position: absolute; background: #AFAFAF; color: #434343; z-index: 50; padding: 1px 5px; border: 1px solid #787878;" ng-style="{'left': person.x * width + 'px', 'top': person.y * height + 'px'}"><a href="#/persons/{{person.id}}">{{person.name}}</a> <a ng-click="deletePerson(person)">X</a></div>
 
-	<div style="position: absolute; width: 300px; z-index: 100;" ng-style="{'visibility': personSelecting ? 'visibile' : 'hidden'}" class="panel panel-default" id="person_definer">
-      	<div class="panel-heading">
-          <button type="button" class="close" ng-click="personClose()"><span aria-hidden="true">&times;</span></button>
-      	  Mark Person
-      	</div>
-      	<div class="panel-body">
-      		<autocomplete ng-model="person" data="persons" on-type="updatePersons" attr-input-class="form-control" attr-class="p_i" on-select="personSelect" attr-input-id="personSelector"></autocomplete>
-      		<button type="button" class="btn btn-success" ng-click="personSelect(person)"><span class="glyphicon glyphicon-plus"></span></button>
-      		<div style="clear:both;"></div>
-      	</div>
-      </div>
+  <div style="position: absolute; width: 300px; z-index: 100;" ng-style="{'visibility': personSelecting ? 'visibile' : 'hidden'}" class="panel panel-default" id="person_definer">
+    <div class="panel-heading">
+      <button type="button" class="close" ng-click="personClose()"><span aria-hidden="true">&times;</span></button>
+      Mark Person
+    </div>
+    <div class="panel-body">
+      <autocomplete ng-model="person" data="persons" on-type="updatePersons" attr-input-class="form-control" attr-class="p_i" on-select="personSelect" attr-input-id="personSelector"></autocomplete>
+      <button type="button" class="btn btn-success" ng-click="personSelect(person)"><span class="glyphicon glyphicon-plus"></span></button>
+      <div style="clear:both;"></div>
+    </div>
+  </div>
 
- </div>
+</div>

@@ -1,57 +1,57 @@
-
 <div ng-if="gallery">
-<menu title="gallery.name">
-      <div class="dropdown" dropdown on-toggle="toggled(open)">
-    <span class="dropdown-toggle" dropdown-toggle>
+  <menu title="gallery.name">
+    <div class="dropdown" dropdown on-toggle="toggled(open)">
+      <span class="dropdown-toggle" dropdown-toggle>
       <span class="glyphicon glyphicon-cog"></span>
       <span class="hidden-xs"> Download</span>
-    </span>
-    <ul class="dropdown-menu">
-<li><a ng-click="downloadGallery()">Fullsize</a></li>
-          <li class="divider"></li>
-          <li><a ng-click="downloadGallery(1920)">1920</a></li>
-          <li><a ng-click="downloadGallery(1280)">1280</a></li>
-          <li><a ng-click="downloadGallery(800)">800</a></li>
-    </ul>
-  </div>
+      </span>
+      <ul class="dropdown-menu">
+        <li><a ng-click="downloadGallery()">Fullsize</a></li>
+        <li class="divider"></li>
+        <li><a ng-click="downloadGallery(1920)">1920</a></li>
+        <li><a ng-click="downloadGallery(1280)">1280</a></li>
+        <li><a ng-click="downloadGallery(800)">800</a></li>
+      </ul>
+    </div>
 
-      
+
     <a href="#/galleries/{{gallery.id}}/details">
       <span class="glyphicon glyphicon-dashboard"></span>
       <span>Details</span>
     </a>
 
-      <div class="dropdown" dropdown on-toggle="toggled(open)">
-    <span class="dropdown-toggle" dropdown-toggle>
+    <div class="dropdown" dropdown on-toggle="toggled(open)">
+      <span class="dropdown-toggle" dropdown-toggle>
       <span class="glyphicon glyphicon-cog"></span>
       <span class="hidden-xs"> Options</span>
-    </span>
-    <ul class="dropdown-menu">
-      <li><a ng-click="edit()">Edit</a></li>
-          <li class="divider"></li>
-          <li><a ng-click="delete()">Remove selected Images</a></li>
-          <li><a ng-click="changeGalleryImage()">Set Gallery Image</a></li>
-          <li class="divider"></li>
-          <li><a ng-click="deleteGallery();">Delete</a></li>
-    </ul>
-  </div>
-</menu>
-
-<div class="container">
-
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <li><a href="#/galleries">Galleries</a></li>
-
-      <li ng-repeat="g in gallery.parents | orderBy:'-order'"><a href="#/galleries/{{g.id}}">{{g.name}}</a></li>
-
-      <li><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
-      <li class="active">Details</li>
-    </ol>
+      </span>
+      <ul class="dropdown-menu">
+        <li><a ng-click="edit()">Edit</a></li>
+        <li class="divider"></li>
+        <li><a ng-click="delete()">Remove selected Images</a></li>
+        <li><a ng-click="changeGalleryImage()">Set Gallery Image</a></li>
+        <li class="divider"></li>
+        <li><a ng-click="deleteGallery();">Delete</a></li>
+      </ul>
     </div>
+  </menu>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-12">
+        <ol class="breadcrumb">
+          <li><a href="#/galleries">Galleries</a></li>
+
+          <li ng-repeat="g in gallery.parents | orderBy:'-order'"><a href="#/galleries/{{g.id}}">{{g.name}}</a></li>
+
+          <li><a href="#/galleries/{{gallery.id}}">{{gallery.name}}</a></li>
+          <li class="active">Details</li>
+        </ol>
+      </div>
+    </div>
+
+    <statistics object="gallery" type="'galleries'"></statistics>
+
   </div>
-
-<statistics object="gallery" type="'galleries'"></statistics>
-
-</div></div>
+</div>

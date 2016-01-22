@@ -1,29 +1,30 @@
 <div class="modal-header">
-<div class="pull-right">
+  <div class="pull-right">
 
-<div class="btn-group" role="group">
-<button ng-click="previous()" class="btn btn-info btn-sm glyphicon glyphicon-chevron-left" ng-class="{'disabled' : !hasPrevious()}"></button>
-<button ng-click="next()" class="btn btn-info btn-sm glyphicon glyphicon-chevron-right" ng-class="{'disabled' : !hasNext()}"></button>
-</div>
-<button ng-click="cancel()" class="btn btn-default btn-sm glyphicon glyphicon-remove"></button>
-</div>
-  
+    <div class="btn-group" role="group">
+      <button ng-click="previous()" class="btn btn-info btn-sm glyphicon glyphicon-chevron-left" ng-class="{'disabled' : !hasPrevious()}"></button>
+      <button ng-click="next()" class="btn btn-info btn-sm glyphicon glyphicon-chevron-right" ng-class="{'disabled' : !hasNext()}"></button>
+    </div>
+    <button ng-click="cancel()" class="btn btn-default btn-sm glyphicon glyphicon-remove"></button>
+  </div>
+
   <h4 class="modal-title">
     <span ng-if="image.title">{{image.title}} <small>({{image.name}})</small></span>
     <span ng-if="!image.title">{{image.name}}</span>
+  </h4>
 </div>
 
 
 
 <div class="modal-body">
-<div class="row">
-<div class="col-xs-12">
-<div style="position: relative;" ng-mousemove="mm()">
-  <show image="image" preload="images" toolbar="true" selectable="selectable" link="true" />
-</div>
-</div>
-</div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div style="position: relative;" ng-mousemove="mm()">
+        <show image="image" preload="images" toolbar="true" selectable="selectable" link="true" />
+      </div>
+    </div>
+  </div>
 
-<div class="modal-footer">
-  <button class="btn btn-warning" ng-click="cancel()">Close</button>
-</div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" ng-click="cancel()">Close</button>
+  </div>

@@ -1,5 +1,5 @@
-
-<menu title="'Search'"></menu>
+<menu title="'Search'">
+</menu>
 
 <div class="container">
   <div class="row">
@@ -21,17 +21,19 @@
       <tags-input ng-model="persons" style="height: 40px;" display-property="name" add-from-autocomplete-only="true" placeholder="Add a Person">
         <auto-complete source="loadPersons($query)"></auto-complete>
       </tags-input>
-      <input type="checkbox" id="personsOnly" ng-model="personsOnly" value="true"> <label for="personsOnly">Persons only</label>
+      <input type="checkbox" id="personsOnly" ng-model="personsOnly" value="true">
+      <label for="personsOnly">Persons only</label>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-12">
-      <h3>Tags</h3> 
+      <h3>Tags</h3>
       <tags-input ng-model="tags" style="height: 40px;" display-property="text" add-from-autocomplete-only="true" placeholder="Add a tag">
         <auto-complete source="loadTags($query)"></auto-complete>
       </tags-input>
-      <input type="checkbox" id="tagsOnly" ng-model="tagsOnly" value="true"> <label for="tagsOnly">Tags only</label>
+      <input type="checkbox" id="tagsOnly" ng-model="tagsOnly" value="true">
+      <label for="tagsOnly">Tags only</label>
     </div>
   </div>
 
@@ -41,7 +43,8 @@
       <tags-input ng-model="galleries" style="height: 40px;" display-property="name" add-from-autocomplete-only="true" placeholder="Add a gallery">
         <auto-complete source="loadGalleries($query)"></auto-complete>
       </tags-input>
-      <input type="checkbox" id="galleriesOnly" ng-model="galleriesOnly" value="true"> <label for="galleriesOnly">Galleries only</label>
+      <input type="checkbox" id="galleriesOnly" ng-model="galleriesOnly" value="true">
+      <label for="galleriesOnly">Galleries only</label>
     </div>
   </div>
 
@@ -50,7 +53,8 @@
       <h3>Date</h3>
       <div style="display:inline-block">
         <div>
-          <input type="checkbox" ng-model="useMinDate" id="useMinDate"> <label for="useMinDate">Min Date</label>
+          <input type="checkbox" ng-model="useMinDate" id="useMinDate">
+          <label for="useMinDate">Min Date</label>
         </div>
         <div style="display:inline-block; position: relative;">
           <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 10; opacity:0.2; background-color: #999999" ng-if="!useMinDate"></div>
@@ -59,7 +63,8 @@
       </div>
       <div style="display:inline-block">
         <div>
-          <input type="checkbox" ng-model="useMaxDate" id="useMaxDate"> <label for="useMaxDate">Max Date</label>
+          <input type="checkbox" ng-model="useMaxDate" id="useMaxDate">
+          <label for="useMaxDate">Max Date</label>
         </div>
         <div style="display:inline-block; position: relative;">
           <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 10; opacity:0.2; background-color: #999999" ng-if="!useMaxDate"></div>

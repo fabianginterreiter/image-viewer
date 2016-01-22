@@ -7,18 +7,18 @@
     <p ng-if="query.length > 0">Words: {{query}}</p>
 
     <p ng-if="persons.length > 0">
-    Persons: <span ng-repeat="person in persons | orderBy:'name'"><a  href="#/persons/{{person.id}}">{{person.name}}</a> </span>
-    <span ng-if="personsOnly">(only)</span>
+      Persons: <span ng-repeat="person in persons | orderBy:'name'"><a  href="#/persons/{{person.id}}">{{person.name}}</a> </span>
+      <span ng-if="personsOnly">(only)</span>
     </p>
     <p ng-if="tags.length > 0">
-    Tags: <span ng-repeat="tag in tags | orderBy:'text'"><a  href="#/tags/{{tag.id}}">{{tag.text}}</a> </span>
-    <span ng-if="tagsOnly">(only)</span>
+      Tags: <span ng-repeat="tag in tags | orderBy:'text'"><a  href="#/tags/{{tag.id}}">{{tag.text}}</a> </span>
+      <span ng-if="tagsOnly">(only)</span>
     </p>
     <p ng-if="galleries.length > 0">
-    Galleries: <span ng-repeat="gallery in galleries | orderBy:'name'"><a  href="#/galleries/{{gallery.id}}">{{gallery.name}}</a> </span>
-    <span ng-if="galleriesOnly">(only)</span>
+      Galleries: <span ng-repeat="gallery in galleries | orderBy:'name'"><a  href="#/galleries/{{gallery.id}}">{{gallery.name}}</a> </span>
+      <span ng-if="galleriesOnly">(only)</span>
 
-    </p> 
+    </p>
 
     <p ng-if="minDate">Min Date: {{minDate | formatDate}}</p>
     <p ng-if="maxDate">Max Date: {{maxDate | formatDate}}</p>
@@ -32,10 +32,10 @@
 
 <div class="container">
   <div class="row">
-  <div class="col-md-12">
+    <div class="col-md-12">
 
-<thumbnails images="images" view="view"></thumbnails>
+      <thumbnails images="images" view="view"></thumbnails>
 
-</div>
-</div>
+    </div>
+  </div>
 </div>

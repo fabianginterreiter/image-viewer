@@ -6,7 +6,7 @@
           <div class="col-md-12">
             <h2 style="font-style: normal; font-weight: 200; letter-spacing: -0.014em; font-size: 32px; color: #333; text-decoration: none; padding: 12px 0; margin: 0; float: left;">
 <a ng-if="person && person.image_id" href="#/images/{{person.image_id}}"><img ng-src="/api/persons/{{person.id}}/image" class="img-circle" width="50" height="50" style="margin-top: -8px;"></a>
-            {{title}}</h2>   
+            {{title}}</h2>
 
             <!--<div class="glyphicon glyphicon-th" style="float: right; padding: 19px; height: 32px; width: 32px; font-size: 16px;" ng-click="open()"></div>-->
 
@@ -16,12 +16,14 @@
 
             <div style="float: right;" class="submenu" ng-if="image">
               <div>
-                <div><favorite image="image"></favorite></div>
+                <div>
+                  <favorite image="image"></favorite>
+                </div>
 
                 <div class="dropdown" dropdown on-toggle="toggled(open)">
                   <span class="dropdown-toggle" dropdown-toggle>
                     <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
-                    <span class="hidden-xs"> Download</span>
+                  <span class="hidden-xs"> Download</span>
                   </span>
                   <ul class="dropdown-menu">
                     <li><a href="/api/images/{{image.id}}/resize" download="{{image.name}}">Original Size</a></li>
@@ -35,7 +37,7 @@
                 <div class="dropdown" dropdown on-toggle="toggled(open)">
                   <span class="dropdown-toggle" dropdown-toggle>
                     <span class="glyphicon glyphicon-save-file" style="margin-bottom: -1px"></span>
-                    <span class="hidden-xs"> Options</span>
+                  <span class="hidden-xs"> Options</span>
                   </span>
                   <ul class="dropdown-menu">
                     <li><a ng-click="edit()">Edit</a></li>
@@ -67,7 +69,7 @@
                 <div class="dropdown" dropdown on-toggle="toggled(open)">
                   <span class="dropdown-toggle" dropdown-toggle>
                     <span class="glyphicon glyphicon-save-file"></span>
-                    <span class="hidden-xs"> Download</span>
+                  <span class="hidden-xs"> Download</span>
                   </span>
                   <ul class="dropdown-menu">
                     <li><a ng-click="download()">Fullsize</a></li>
@@ -81,7 +83,7 @@
                 <div class="dropdown" dropdown on-toggle="toggled(open)">
                   <span class="dropdown-toggle" dropdown-toggle>
                     <span class="glyphicon glyphicon-menu-hamburger"></span>
-                    <span class="hidden-xs"> Options</span>
+                  <span class="hidden-xs"> Options</span>
                   </span>
                   <ul class="dropdown-menu">
                     <li><a ng-click="create()">Create Gallery</a></li>
@@ -92,28 +94,28 @@
                 </div>
               </div>
             </div>
-             
+
           </div>
         </div>
         <div class="row" style="visibility: hidden;" class="hidden">
           <div class="col-md-12 options" style="height: 50px;">
-            
 
-          <div class="left" ng-init="view = 'preview'">
-            <span class="dropdown" dropdown on-toggle="toggled(open)">
+
+            <div class="left" ng-init="view = 'preview'">
+              <span class="dropdown" dropdown on-toggle="toggled(open)">
               <span class="dropdown-toggle" dropdown-toggle>
                 <span class="glyphicon glyphicon-eye-open" style="margin-bottom: -1px"></span>
-                <span class="hidden-xs"> View</span>
+              <span class="hidden-xs"> View</span>
               </span>
               <ul class="dropdown-menu">
                 <li><a ng-click="setView('preview')"><span class="glyphicon glyphicon-th"></span> Preview</a></li>
                 <li class="divider"></li>
                 <li><a ng-click="setView('details')"><span class="glyphicon glyphicon-list-alt"></span> Details</a></li>
               </ul>
-            </span>
-          </div>
+              </span>
+            </div>
 
-          
+
           </div>
         </div>
       </div>

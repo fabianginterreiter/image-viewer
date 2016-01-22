@@ -24,7 +24,7 @@
         <div class="col-md-12">
           <ul>
             <li ng-repeat="gallery in galleries | orderBy:'name'" ng-include="'field_renderer.html'"></li>
-          </ul>  
+          </ul>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
       <div class="row" ng-if="galleries.length > 0">
         <div class="col-md-12">
           <galleries galleries="galleries"></galleries>
-       </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>

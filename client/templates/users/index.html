@@ -1,21 +1,20 @@
 <div ng-init="view = 'select'">
-<div class="modal-header">
-  <h3 class="modal-title">Select Person <button ng-click="view = 'create'" class="btn btn-info">Create</button></h3>
-</div>
-
-<div class="modal-body" ng-if="view === 'select'">
-  <div class="list-group" ng-if="users.length > 0">
-    <a ng-click="select(user)" class="list-group-item" ng-repeat="user in users | orderBy:['name']">
-     <img ng-if="user.image_id" ng-src="/api/persons/{{user.person_id}}/image" class="img-circle" width="60" height="60">
-      {{user.name}}
-    </a>
+  <div class="modal-header">
+    <h3 class="modal-title">Select Person <button ng-click="view = 'create'" class="btn btn-info">Create</button></h3>
   </div>
-  <div ng-if="users.length === 0">There are no users.</div>
-</div>
 
-<div class="modal-body" ng-if="view === 'create'">
+  <div class="modal-body" ng-if="view === 'select'">
+    <div class="list-group" ng-if="users.length > 0">
+      <a ng-click="select(user)" class="list-group-item" ng-repeat="user in users | orderBy:['name']">
+        <img ng-if="user.image_id" ng-src="/api/persons/{{user.person_id}}/image" class="img-circle" width="60" height="60"> {{user.name}}
+      </a>
+    </div>
+    <div ng-if="users.length === 0">There are no users.</div>
+  </div>
 
-<input type="text" ng-model="name" class="form-control">
-<button class="btn btn-default" ng-click="create(name)">Create</button>
-</div>
+  <div class="modal-body" ng-if="view === 'create'">
+
+    <input type="text" ng-model="name" class="form-control">
+    <button class="btn btn-default" ng-click="create(name)">Create</button>
+  </div>
 </div>

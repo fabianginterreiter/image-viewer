@@ -4,8 +4,7 @@
 </script>
 
 <div style="height: 40px; margin: 10px 0">
-  <tags-input ng-model="image.tags" on-tag-added="onTagAdded($tag)" 
-      on-tag-removed="onTagRemoved($tag)" template="my-custom-template">
+  <tags-input ng-model="image.tags" on-tag-added="onTagAdded($tag)" on-tag-removed="onTagRemoved($tag)" template="my-custom-template">
     <auto-complete source="loadTags($query)"></auto-complete>
   </tags-input>
 </div>
