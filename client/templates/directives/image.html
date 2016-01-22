@@ -8,7 +8,9 @@
 <button ng-click="cancel()" class="btn btn-default btn-sm glyphicon glyphicon-remove"></button>
 </div>
   
-  <h4 class="modal-title">{{image.title}} <small ng-if="image.title !== image.name">({{image.name}})</small></h4>
+  <h4 class="modal-title">
+    <span ng-if="image.title">{{image.title}} <small>({{image.name}})</small></span>
+    <span ng-if="!image.title">{{image.name}}</span>
 </div>
 
 
